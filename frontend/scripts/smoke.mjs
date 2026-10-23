@@ -10,6 +10,7 @@ try{
  await page.goto('http://127.0.0.1:8000',{waitUntil:'domcontentloaded'});
  console.log('Application loaded.');
  await page.getByRole('heading',{name:'Home Dashboard',exact:true}).waitFor();
+ await page.getByLabel('Active design').selectOption('demo-student-ev');
  await page.getByText('Assembly inputs complete',{exact:false}).waitFor();
  await page.locator('canvas').first().waitFor();
  await mkdir('../docs/screenshots',{recursive:true});
@@ -29,6 +30,8 @@ try{
  const row=page.getByRole('row').filter({hasText:'Browser smoke test / sensor'});
  await row.waitFor();await row.getByTitle('Delete',{exact:true}).click();await row.waitFor({state:'hidden'});
  await page.locator('nav').getByRole('button',{name:'Simulation Lab',exact:true}).click();
+ await page.locator('label').filter({hasText:'Vehicle design'}).locator('select').selectOption('demo-student-ev');
+ await page.waitForFunction(()=>Array.from(document.querySelectorAll('button')).find(b=>b.textContent==='Run simulation'&&!b.disabled));
  await page.getByRole('button',{name:'Run simulation',exact:true}).click();
  await page.getByRole('heading',{name:'Performance Results',exact:true}).waitFor();
  await page.getByText('Cycle energy consumption',{exact:true}).waitFor();

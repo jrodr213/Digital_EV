@@ -13,7 +13,7 @@ class Component(Record):
     category: str = Field(min_length=1, max_length=80)
     manufacturer: str = ''
     model: str = ''
-    mass_kg: float = Field(ge=0)
+    mass_kg: float | None = Field(None, ge=0)
     price: float | None = Field(None, ge=0)
     notes: str = ''
     datasheet: str = ''
@@ -27,9 +27,10 @@ class Vehicle(Record):
     id: str | None = None
     name: str = Field(min_length=1, max_length=160)
     component_ids: list[str]
-    payload_kg: float = Field(ge=0)
-    auxiliary_w: float = Field(ge=0)
+    payload_kg: float | None = Field(None, ge=0)
+    auxiliary_w: float | None = Field(None, ge=0)
     notes: str = ''
+    custom_parameters: dict[str, Any] = Field(default_factory=dict)
 
 
 class DriveCycle(Record):

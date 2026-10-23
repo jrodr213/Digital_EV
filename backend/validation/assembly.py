@@ -7,6 +7,12 @@ def assemble(vehicle, components):
     grouped = {}
     for c in components:
         grouped.setdefault(c['category'], []).append(c)
+        if c.get('mass_kg') is None:
+            errors.append(f'{c["name"]}: missing installed assembly mass [kg].')
+    if vehicle.get('payload_kg') is None:
+        errors.append('Passenger/cargo payload is unknown [kg]. Enter an explicit value, including zero for an unmanned test.')
+    if vehicle.get('auxiliary_w') is None:
+        errors.append('Auxiliary electrical load is unknown [W].')
     if len(vehicle['component_ids']) != len(set(vehicle['component_ids'])):
         errors.append('Duplicate components are not supported. Use an aggregate assembly part.')
     for category, fields in REQUIRED.items():
@@ -19,6 +25,7 @@ def assemble(vehicle, components):
             val = c['specs'].get(field)
             if val is None:
                 errors.append(f'{c["name"]}: missing {field} [{FIELDS[category][field]}].')
+                continue
             elif field == 'regen':
                 if not isinstance(val, bool): errors.append('regen must be true or false.')
             elif field == 'driven_wheels':
@@ -32,7 +39,11 @@ def assemble(vehicle, components):
             expected = FIELDS[category][field]
             if expected not in ['text','boolean','JSON'] and c.get('units',{}).get(field) != expected:
                 errors.append(f'{c["name"]}: {field} must declare canonical unit {expected}. Convert imported values explicitly.')
-    base = {'errors': errors, 'warnings': warnings, 'mass_kg': sum(c['mass_kg'] for c in components) + vehicle['payload_kg'], 'components': components}
+    known_mass = sum(c['mass_kg'] for c in components if c.get('mass_kg') is not None)
+    mass_complete = all(c.get('mass_kg') is not None for c in components) and vehicle.get('payload_kg') is not None
+    base = {'errors': errors, 'warnings': warnings, 'mass_kg': known_mass + vehicle['payload_kg'] if mass_complete else None, 'known_component_mass_kg': known_mass, 'mass_complete': mass_complete, 'components': components}
+    if vehicle.get('custom_parameters', {}).get('document_project'):
+        warnings.extend(['Document-sourced provisional assembly: dimensions, battery and missing component ratings have not been supplied. No demo-car values are used.', 'Prices are historical planning allowances from the supplied documents, not verified supplier quotes. Kit, spare and off-vehicle items are tracked separately from installed assembly mass.'])
     if errors: return base
     p = {k: v[0]['specs'] for k,v in grouped.items() if k in REQUIRED}
     b,m,i,d,ch,t = (p[k] for k in REQUIRED)

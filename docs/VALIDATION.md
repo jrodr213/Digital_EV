@@ -16,7 +16,7 @@ Executed on Windows, Python 3.12, official FASTSim Windows wheel 3.1.0, project-
 | Acceleration, hill, load scenarios | Successful engine runs |
 | API integration | Component import validation, run, saved result, CSV, report, experiment ranking and 404 checks pass |
 | Engine failure | Deliberate engine failure returns 422 and saves no substitute results |
-| Backend suite | **24 passed**, one dependency deprecation warning |
+| Backend suite | **32 passed**, including the later document-sourced draft tests; one dependency deprecation warning |
 | Frontend unit suite | **4 passed**: unavailable-value presentation, numeric precision, request serialization, engine-error propagation |
 | TypeScript + Vite production build | Successful |
 | npm dependency audit | 0 reported vulnerabilities after updating Vitest to 5.0.5 |
@@ -58,3 +58,5 @@ Browser evidence is saved in [dashboard](screenshots/dashboard.png), [results](s
 ## Remaining validation boundaries
 
 No real manufacturer dataset, bench test, measured vehicle trace or CAD geometry was supplied. Thermal, handling, braking and structural validation have not been performed. The scalar power-flow approximation can exceed a custom motor's torque/RPM envelope; warnings and separate estimates expose that limitation. Asymmetric battery efficiency, torque/RPM maps, regen-disabled builds and interactive placement/CAD import are not implemented in the supported adapter. See [MODELS.md](MODELS.md).
+
+The later [team-document draft](TEAM_BUILD.md) adds source-annotated component candidates and incomplete assemblies; the supported behavior is saving/inspecting them while blocking simulation. It does not establish manufacturer specifications or measured performance. Both the original demo browser check and the new team-draft browser check pass with those records loaded.

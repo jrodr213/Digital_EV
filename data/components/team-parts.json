@@ -1,0 +1,1039 @@
+[
+  {
+    "id": "team-motor-budget",
+    "name": "Provisional traction motor / eBay 256877952903",
+    "category": "motor",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": 100.0,
+    "notes": "Selected only as the budget-preferred provisional option. The document does not establish continuous/peak power, torque, RPM, efficiency, motor mass or whether a controller is included.",
+    "datasheet": "https://www.ebay.com/itm/256877952903",
+    "hypothetical": false,
+    "specs": {
+      "listed_voltage_v": 48,
+      "listed_power_w": 2000
+    },
+    "units": {
+      "listed_voltage_v": "V",
+      "listed_power_w": "W"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Parts List - Group 3 10_22_26.docx",
+          "location": "Wheel Motors, final eBay option; also Budgeting options motor choices"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "provisional selection",
+      "currency": "USD",
+      "price_basis": "Budgeting options: about $100 per motor; allowance, not a quote",
+      "document_price_claims": [
+        {
+          "document": "Budgeting options .docx",
+          "value_usd": 100,
+          "qualifier": "about"
+        },
+        {
+          "document": "Parts List - Group 3 10_22_26.docx",
+          "text": "$99 ($94?)"
+        }
+      ],
+      "installed_quantity": 1
+    }
+  },
+  {
+    "id": "team-motor-kunray",
+    "name": "Alternative / KUNRAY MY1020 / 1000–1600 W variants",
+    "category": "motor",
+    "manufacturer": "KUNRAY",
+    "model": "MY1020 (variant unresolved)",
+    "mass_kg": null,
+    "price": 116.0,
+    "notes": "Catalog range spans variants. No exact voltage/power pairing or duty rating chosen.",
+    "datasheet": "https://cnkunray.com/products/kunray-my1020-high-speed-brushless-motor-36v-48v-1000w-1500w-1600w-for-electric-scooter-go-karts-motorcycle-motor-ebike-conversion-kit?VariantsId=12356",
+    "hypothetical": false,
+    "specs": {
+      "listed_voltage_range_v": [
+        36,
+        48
+      ],
+      "listed_power_range_w": [
+        1000,
+        1600
+      ]
+    },
+    "units": {
+      "listed_voltage_range_v": "V",
+      "listed_power_range_w": "W"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Parts List - Group 3 10_22_26.docx",
+          "location": "Wheel Motors, first option"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "candidate",
+      "currency": "USD",
+      "price_basis": "Group 3 listed price"
+    }
+  },
+  {
+    "id": "team-motor-2000-42a",
+    "name": "Alternative / 48 V, 2000 W listing / eBay 366657347716",
+    "category": "motor",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": 94.16,
+    "notes": "Document says rated for 42 A but does not identify phase versus DC or continuous versus peak current. Do not map to inverter or battery current.",
+    "datasheet": "https://www.ebay.com/itm/366657347716",
+    "hypothetical": false,
+    "specs": {
+      "listed_voltage_v": 48,
+      "listed_power_w": 2000,
+      "listed_current_a": 42
+    },
+    "units": {
+      "listed_voltage_v": "V",
+      "listed_power_w": "W",
+      "listed_current_a": "A"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Parts List - Group 3 10_22_26.docx",
+          "location": "Wheel Motors, second option"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "candidate",
+      "currency": "USD",
+      "shipping_allowance_usd": 85,
+      "price_basis": "Group 3: $94.16 plus $85 shipping"
+    }
+  },
+  {
+    "id": "team-motor-vevor-1800",
+    "name": "Alternative / VEVOR 48 V, 1800 W motor kit",
+    "category": "motor",
+    "manufacturer": "VEVOR",
+    "model": "",
+    "mass_kg": null,
+    "price": 119.0,
+    "notes": "Linked kit title mentions controller/throttle. Electrical limits and installed content are unverified.",
+    "datasheet": "https://www.vevor.com/brushless-dc-motor-c_11227/48v-1800w-electric-brushless-dc-motor-kit-with-controller-foot-pedal-throttle-p_010397677266",
+    "hypothetical": false,
+    "specs": {
+      "listed_voltage_v": 48,
+      "listed_power_w": 1800
+    },
+    "units": {
+      "listed_voltage_v": "V",
+      "listed_power_w": "W"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Parts List - Group 3 10_22_26.docx",
+          "location": "Wheel Motors, third option"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "candidate",
+      "currency": "USD",
+      "price_basis": "Group 3 listed price"
+    }
+  },
+  {
+    "id": "team-motor-vevor-2000",
+    "name": "Alternative / VEVOR 48 V, 2000 W, 4300 rpm kit",
+    "category": "motor",
+    "manufacturer": "VEVOR",
+    "model": "",
+    "mass_kg": null,
+    "price": 116.0,
+    "notes": "4300 rpm is a listing speed, not established as a maximum RPM. Kit controller limits are unknown.",
+    "datasheet": "https://www.ebay.com/itm/286452810794",
+    "hypothetical": false,
+    "specs": {
+      "listed_voltage_v": 48,
+      "listed_power_w": 2000,
+      "listed_speed_rpm": 4300
+    },
+    "units": {
+      "listed_voltage_v": "V",
+      "listed_power_w": "W",
+      "listed_speed_rpm": "rpm"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Parts List - Group 3 10_22_26.docx",
+          "location": "Wheel Motors, VEVOR 2000 W option and its embedded hyperlinks"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "candidate",
+      "currency": "USD",
+      "alternative_reference": "https://www.vevor.com/brushless-dc-motor-c_11227/2000w-electric-brushless-dc-motor-kit-48v-4300rpm-motor-with-speed-controller-p_010866619255",
+      "price_basis": "Group 3 listed price"
+    }
+  },
+  {
+    "id": "team-steering-budget",
+    "name": "Provisional steering gearmotor / AliExpress 3256806630223349",
+    "category": "steering",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": 47.0,
+    "notes": "Steer-by-wire is a proposed topology only. Exact variant, voltage, torque, current, feedback, ratio and actuation limits are missing. The optional racing wheel/pedals mentioned in the budget document are not assumed available.",
+    "datasheet": "https://www.aliexpress.us/item/3256806630223349.html",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Budgeting options .docx",
+          "location": "Steering motor paragraph; also Group 3 AliExpress option"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "provisional selection",
+      "currency": "USD",
+      "price_basis": "Budget document: about $47",
+      "installed_quantity": 1
+    }
+  },
+  {
+    "id": "team-steering-ion",
+    "name": "Alternative / Saturn ION steering assist motor",
+    "category": "steering",
+    "manufacturer": "",
+    "model": "Saturn ION application",
+    "mass_kg": null,
+    "price": 89.0,
+    "notes": "Alternative only. URL product descriptors have not been promoted to verified engineering specifications.",
+    "datasheet": "https://www.ebay.com/itm/405052778126",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Parts List - Group 3 10_22_26.docx",
+          "location": "Steering Motor options"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "candidate",
+      "currency": "USD",
+      "price_basis": "Group 3 listed price"
+    }
+  },
+  {
+    "id": "team-steering-cobalt",
+    "name": "Alternative / Chevy Cobalt steering assist motor",
+    "category": "steering",
+    "manufacturer": "",
+    "model": "Chevy Cobalt application",
+    "mass_kg": null,
+    "price": 100.0,
+    "notes": "Alternative only. URL product descriptors have not been promoted to verified engineering specifications.",
+    "datasheet": "https://www.ebay.com/itm/147580227817",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Parts List - Group 3 10_22_26.docx",
+          "location": "Steering Motor options"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "candidate",
+      "currency": "USD",
+      "price_basis": "Group 3 listed price"
+    }
+  },
+  {
+    "id": "team-steering-dorman",
+    "name": "Alternative / Dorman 905-050 assist motor/module",
+    "category": "steering",
+    "manufacturer": "Dorman",
+    "model": "905-050",
+    "mass_kg": null,
+    "price": 80.0,
+    "notes": "Alternative only. URL product descriptors have not been promoted to verified engineering specifications.",
+    "datasheet": "https://www.walmart.com/ip/18874267249",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Parts List - Group 3 10_22_26.docx",
+          "location": "Steering Motor options"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "candidate",
+      "currency": "USD",
+      "price_basis": "Group 3 listed price"
+    }
+  },
+  {
+    "id": "team-steering-stepperonline",
+    "name": "Alternative / StepperOnline brushed gearmotor option",
+    "category": "steering",
+    "manufacturer": "",
+    "model": "PB84-84242200-G43",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Alternative only. URL product descriptors have not been promoted to verified engineering specifications.",
+    "datasheet": "https://www.omc-stepperonline.com/brushed-24v-dc-gear-motor-20nm-2832-23oz-in-51rpm-w-43-1-planetary-gearbox-ip66-155-c-311-f-pb84-84242200-g43",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Parts List - Group 3 10_22_26.docx",
+          "location": "Steering Motor options"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "candidate",
+      "currency": "USD",
+      "price_basis": "Not supplied"
+    }
+  },
+  {
+    "id": "team-fan-budget",
+    "name": "Provisional circuitry cooling fan / eBay 336510135781",
+    "category": "cooling",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": 25.0,
+    "notes": "Budget calls for one fan (~$25); Group 3 describes a two-fan 12-inch listing at $26.60. Package contents, installed quantity, current, dimensions and airflow need review.",
+    "datasheet": "https://www.ebay.com/itm/336510135781",
+    "hypothetical": false,
+    "specs": {
+      "listed_voltage_v": 12
+    },
+    "units": {
+      "listed_voltage_v": "V"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Budgeting options .docx",
+          "location": "Cooling fan paragraph; also Group 3 Fan Motor final option"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "provisional selection",
+      "currency": "USD",
+      "price_basis": "Budgeting options: about $25 allowance",
+      "installed_quantity": null,
+      "document_price_claims": [
+        {
+          "document": "Budgeting options .docx",
+          "value_usd": 25,
+          "quantity_text": "one fan"
+        },
+        {
+          "document": "Parts List - Group 3 10_22_26.docx",
+          "value_usd": 26.6,
+          "quantity_text": "2x 12-inch"
+        }
+      ]
+    }
+  },
+  {
+    "id": "team-fan-amazon",
+    "name": "Alternative / 12 V, 1800 rpm, 6-inch fan",
+    "category": "cooling",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": 30.0,
+    "notes": "",
+    "datasheet": "https://www.amazon.com/dp/B074QG3CJS",
+    "hypothetical": false,
+    "specs": {
+      "listed_voltage_v": 12,
+      "listed_speed_rpm": 1800,
+      "listed_diameter_in": 6
+    },
+    "units": {
+      "listed_voltage_v": "V",
+      "listed_speed_rpm": "rpm",
+      "listed_diameter_in": "in"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Parts List - Group 3 10_22_26.docx",
+          "location": "Fan Motor, first option"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "candidate",
+      "currency": "USD",
+      "price_basis": "Group 3 listed price"
+    }
+  },
+  {
+    "id": "team-fan-surplus",
+    "name": "Alternative / PM268 / 12 V fan motor",
+    "category": "cooling",
+    "manufacturer": "",
+    "model": "PM268",
+    "mass_kg": null,
+    "price": 12.95,
+    "notes": "The supplied dimensions and current refer to this alternative only, not the selected eBay fan.",
+    "datasheet": "https://surpluscenter.com/4550-rpm-12-vdc-fan-motor-pm268-12v-92/?sku=500287",
+    "hypothetical": false,
+    "specs": {
+      "listed_voltage_v": 12,
+      "listed_speed_rpm": 4550,
+      "listed_current_a": 1.5,
+      "listed_size_in": [
+        7.5,
+        6.5,
+        4.875
+      ]
+    },
+    "units": {
+      "listed_voltage_v": "V",
+      "listed_speed_rpm": "rpm",
+      "listed_current_a": "A",
+      "listed_size_in": "in"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Parts List - Group 3 10_22_26.docx",
+          "location": "Fan Motor, second option"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "candidate",
+      "currency": "USD",
+      "price_basis": "Group 3 listed price"
+    }
+  },
+  {
+    "id": "team-esp32",
+    "name": "ESP32 DevKitC WROOM-32 / two onboard, one spare",
+    "category": "embedded_controllers",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": 20.0,
+    "notes": "Original WROOM-32 specified; document excludes S3 for its PS4 Bluetooth Classic plan. Purchase one three-pack. Board power and installed two-board mass are unknown.",
+    "datasheet": "https://www.amazon.com/s?k=ESP32+DevKitC+WROOM-32+3+pack",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Group4_Parts_List.xlsx",
+          "location": "Parts!B4:H4"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "planned",
+      "currency": "USD",
+      "price_basis": "Workbook estimated purchase line subtotal / USD",
+      "procurement_quantity": 1,
+      "package_units": 3,
+      "installed_quantity": 2,
+      "installation_scope": "on_vehicle",
+      "purchase_status": "Not ordered"
+    }
+  },
+  {
+    "id": "team-camera",
+    "name": "Wi-Fi camera / model TBD (ESP32-CAM fallback only)",
+    "category": "vision",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": 15.0,
+    "notes": "Camera model remains TBD. Search link is a fallback, not a selected or ordered ESP32-CAM.",
+    "datasheet": "https://www.amazon.com/s?k=ESP32-CAM+with+MB+programmer",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Group4_Parts_List.xlsx",
+          "location": "Parts!B5:H5"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "planned; model TBD",
+      "currency": "USD",
+      "price_basis": "Workbook estimated purchase line subtotal / USD",
+      "procurement_quantity": 1,
+      "package_units": 1,
+      "installed_quantity": 1,
+      "installation_scope": "on_vehicle",
+      "purchase_status": "Not ordered"
+    }
+  },
+  {
+    "id": "team-dualshock",
+    "name": "Sony DualShock 4 / operator controller",
+    "category": "operator_controls",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": 40.0,
+    "notes": "Official used unit allowed; skip purchase if already available. Availability not established.",
+    "datasheet": "https://www.amazon.com/s?k=Sony+DualShock+4+wireless+controller",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Group4_Parts_List.xlsx",
+          "location": "Parts!B6:H6"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "planned",
+      "currency": "USD",
+      "price_basis": "Workbook estimated purchase line subtotal / USD",
+      "procurement_quantity": 1,
+      "package_units": 1,
+      "installed_quantity": 0,
+      "installation_scope": "off_vehicle",
+      "purchase_status": "Not ordered"
+    }
+  },
+  {
+    "id": "team-microsd",
+    "name": "32 GB microSD / computer OS storage",
+    "category": "storage",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": 10.0,
+    "notes": "Purpose says Pi operating system, but no Raspberry Pi or other computer is selected in this list.",
+    "datasheet": "https://www.amazon.com/s?k=microSD+32GB+A1",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Group4_Parts_List.xlsx",
+          "location": "Parts!B7:H7"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "planned",
+      "currency": "USD",
+      "price_basis": "Workbook estimated purchase line subtotal / USD",
+      "procurement_quantity": 1,
+      "package_units": 1,
+      "installed_quantity": null,
+      "installation_scope": "undecided",
+      "purchase_status": "Not ordered"
+    }
+  },
+  {
+    "id": "team-router",
+    "name": "GL.iNet travel router / Opal or Mango TBD",
+    "category": "communications",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": 30.0,
+    "notes": "Vehicle/lab network planned. Router model, location and power demand not finalized.",
+    "datasheet": "https://www.amazon.com/s?k=GL.iNet+travel+router+Opal",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Group4_Parts_List.xlsx",
+          "location": "Parts!B8:H8"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "planned; model TBD",
+      "currency": "USD",
+      "price_basis": "Workbook estimated purchase line subtotal / USD",
+      "procurement_quantity": 1,
+      "package_units": 1,
+      "installed_quantity": null,
+      "installation_scope": "undecided",
+      "purchase_status": "Not ordered"
+    }
+  },
+  {
+    "id": "team-level-shifter",
+    "name": "Logic-level shifters / five-pack",
+    "category": "signal_interface",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": 6.0,
+    "notes": "Listed purpose: interface 5 V sensors with 3.3 V ESP32 pins. Number fitted and actual sensor interfaces are unknown.",
+    "datasheet": "https://www.amazon.com/s?k=logic+level+converter+bi-directional+3.3V+5V+5+pack",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Group4_Parts_List.xlsx",
+          "location": "Parts!B9:H9"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "planned",
+      "currency": "USD",
+      "price_basis": "Workbook estimated purchase line subtotal / USD",
+      "procurement_quantity": 1,
+      "package_units": 5,
+      "installed_quantity": null,
+      "installation_scope": "on_vehicle",
+      "purchase_status": "Not ordered"
+    }
+  },
+  {
+    "id": "team-breadboard",
+    "name": "Breadboard and jumper kit / prototype inventory",
+    "category": "prototyping",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": 12.0,
+    "notes": "Prototyping stock; not counted as installed vehicle hardware.",
+    "datasheet": "https://www.amazon.com/s?k=breadboard+jumper+wire+kit",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Group4_Parts_List.xlsx",
+          "location": "Parts!B10:H10"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "planned",
+      "currency": "USD",
+      "price_basis": "Workbook estimated purchase line subtotal / USD",
+      "procurement_quantity": 1,
+      "package_units": 1,
+      "installed_quantity": 0,
+      "installation_scope": "prototype",
+      "purchase_status": "Not ordered"
+    }
+  },
+  {
+    "id": "team-estop",
+    "name": "Latching red E-stop button / ratings TBD",
+    "category": "safety_controls",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": 8.0,
+    "notes": "Physical button is listed. Contact ratings, motor-power isolation path and stop-system behavior are not specified or validated.",
+    "datasheet": "https://www.amazon.com/s?k=emergency+stop+button+latching",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Group4_Parts_List.xlsx",
+          "location": "Parts!B11:H11"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "planned",
+      "currency": "USD",
+      "price_basis": "Workbook estimated purchase line subtotal / USD",
+      "procurement_quantity": 1,
+      "package_units": 1,
+      "installed_quantity": 1,
+      "installation_scope": "on_vehicle",
+      "purchase_status": "Not ordered"
+    }
+  },
+  {
+    "id": "team-battery",
+    "name": "Battery pack / specifications pending",
+    "category": "battery",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Placeholder only. No manufacturer, model, mass, cost or engineering ratings are assumed.",
+    "datasheet": "",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "User request and gaps in supplied documents",
+          "location": "No specification supplied"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "missing",
+      "currency": "USD",
+      "placeholder": true
+    }
+  },
+  {
+    "id": "team-inverter",
+    "name": "Traction motor controller / specifications pending",
+    "category": "inverter",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Placeholder only. No manufacturer, model, mass, cost or engineering ratings are assumed.",
+    "datasheet": "",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "User request and gaps in supplied documents",
+          "location": "No specification supplied"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "missing",
+      "currency": "USD",
+      "placeholder": true
+    }
+  },
+  {
+    "id": "team-chassis",
+    "name": "Mechanical chassis and body / design pending",
+    "category": "chassis",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Placeholder only. No manufacturer, model, mass, cost or engineering ratings are assumed.",
+    "datasheet": "",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "User request and gaps in supplied documents",
+          "location": "No specification supplied"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "missing",
+      "currency": "USD",
+      "placeholder": true
+    }
+  },
+  {
+    "id": "team-tires",
+    "name": "Wheels and tires / design pending",
+    "category": "tires",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Placeholder only. No manufacturer, model, mass, cost or engineering ratings are assumed.",
+    "datasheet": "",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "User request and gaps in supplied documents",
+          "location": "No specification supplied"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "missing",
+      "currency": "USD",
+      "placeholder": true
+    }
+  },
+  {
+    "id": "team-suspension",
+    "name": "Suspension / design pending",
+    "category": "suspension",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Placeholder only. No manufacturer, model, mass, cost or engineering ratings are assumed.",
+    "datasheet": "",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "User request and gaps in supplied documents",
+          "location": "No specification supplied"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "missing",
+      "currency": "USD",
+      "placeholder": true
+    }
+  },
+  {
+    "id": "team-brakes",
+    "name": "Braking system / design pending",
+    "category": "brakes",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Placeholder only. No manufacturer, model, mass, cost or engineering ratings are assumed.",
+    "datasheet": "",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "User request and gaps in supplied documents",
+          "location": "No specification supplied"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "missing",
+      "currency": "USD",
+      "placeholder": true
+    }
+  },
+  {
+    "id": "team-sensors",
+    "name": "Sensor suite / specifications pending",
+    "category": "sensors",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Placeholder only. No manufacturer, model, mass, cost or engineering ratings are assumed.",
+    "datasheet": "",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "User request and gaps in supplied documents",
+          "location": "No specification supplied"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "missing",
+      "currency": "USD",
+      "placeholder": true
+    }
+  },
+  {
+    "id": "team-aux-supply",
+    "name": "Auxiliary power supply / design pending",
+    "category": "auxiliary",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Placeholder only. No manufacturer, model, mass, cost or engineering ratings are assumed.",
+    "datasheet": "",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "User request and gaps in supplied documents",
+          "location": "No specification supplied"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "missing",
+      "currency": "USD",
+      "placeholder": true
+    }
+  },
+  {
+    "id": "team-drive-belt",
+    "name": "Proposed belt drive to rear wheels; no differential specified",
+    "category": "drivetrain",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": 20.0,
+    "notes": "Concept only. Gear ratio, wheel diameter, efficiency, torque rating, axle geometry and handling are unknown.",
+    "datasheet": "",
+    "hypothetical": false,
+    "specs": {
+      "drive_type": "belt",
+      "driven_wheels": "RWD"
+    },
+    "units": {
+      "driven_wheels": "text"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Budgeting options .docx",
+          "location": "belt option"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "proposed topology",
+      "currency": "USD",
+      "price_basis": "Derived allowance: $120 motor+belt minus ~$100 motor"
+    }
+  },
+  {
+    "id": "team-drive-differential",
+    "name": "Proposed single motor with fabricated differential",
+    "category": "drivetrain",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Concept only. Gear ratio, wheel diameter, efficiency, torque rating, axle geometry and handling are unknown.",
+    "datasheet": "",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Budgeting options .docx",
+          "location": "differential option"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "proposed topology",
+      "currency": "USD",
+      "price_basis": "Differential fabrication cost not supplied"
+    }
+  },
+  {
+    "id": "team-motor-dual-assembly",
+    "name": "Provisional pair / two eBay 256877952903 motors",
+    "category": "motor",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": 200.0,
+    "notes": "Two candidate motors represented as one assembly. No aggregate continuous rating, mass, efficiency, controller count or torque sharing has been assumed.",
+    "datasheet": "https://www.ebay.com/itm/256877952903",
+    "hypothetical": false,
+    "specs": {
+      "listed_voltage_v": 48,
+      "listed_power_per_motor_w": 2000
+    },
+    "units": {
+      "listed_voltage_v": "V",
+      "listed_power_per_motor_w": "W"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Budgeting options .docx",
+          "location": "Two-motor direct-drive option"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "alternative assembly",
+      "currency": "USD",
+      "installed_quantity": 2,
+      "price_basis": "Budget document: about $200 for two motors"
+    }
+  },
+  {
+    "id": "team-drive-dual-direct",
+    "name": "Proposed two-motor direct drive; geometry and control unresolved",
+    "category": "drivetrain",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Concept only. Gear ratio, wheel diameter, efficiency, torque rating, axle geometry and handling are unknown.",
+    "datasheet": "",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "source_references": [
+        {
+          "document": "Budgeting options .docx",
+          "location": "dual-direct option"
+        }
+      ],
+      "verification_status": "document claim only; manufacturer datasheet not verified",
+      "part_status": "proposed topology",
+      "currency": "USD",
+      "price_basis": "No separate drive-material allowance listed"
+    }
+  }
+]

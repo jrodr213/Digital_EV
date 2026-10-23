@@ -2,6 +2,8 @@
 
 Components are editable JSON documents persisted in SQLite. The API schema at `/docs` defines base fields: `id`, `name`, `category`, `manufacturer`, `model`, `mass_kg`, optional `price`, `notes`, `datasheet`, `hypothetical`, `specs`, `units`, and `custom_parameters`. Unknown top-level fields are rejected to catch typos. Unknown specification/custom-parameter keys are retained. A custom category is any nonempty category name; it does not automatically gain simulation physics.
 
+Missing installed `mass_kg`, vehicle `payload_kg` and `auxiliary_w` may be null (blank in the editor or CSV). A draft can be saved with unknown inputs. Total mass is unavailable until every installed mass and payload is known; the backend never sums missing values as zero to produce a vehicle mass. Simulation requires explicit values. Vehicle `custom_parameters` can retain source references and a procurement-component list, separate from installed component IDs. See [the imported team draft](TEAM_BUILD.md) for an example with incomplete real-world proposals.
+
 `backend/components/catalog.py` and `/api/catalog` list supported fields, units and required calculation fields. Core categories are battery, motor, inverter, drivetrain, chassis and tires. Other categories cover suspension, brakes, steering, cooling, auxiliary electronics, sensors, embedded controllers and user-defined parts. A category represents one complete assembly. Multiple motors/pack modules should be represented by a reviewed aggregate assembly; this adapter requires exactly one of each core category.
 
 ## JSON import

@@ -72,7 +72,8 @@ async def import_components(file:UploadFile):
             for row in data:
                 for key in ['specs','units','custom_parameters']:
                     if key in row: row[key]=json.loads(row[key] or '{}')
-                if row.get('price')=='': row['price']=None
+                for key in ['price','mass_kg']:
+                    if row.get(key)=='': row[key]=None
         else: data=json.loads(text)
         if not isinstance(data,list) or len(data)>1000: raise ValueError('Expected an array of at most 1000 components.')
         validated=[Component.model_validate(c).model_dump() for c in data]

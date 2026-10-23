@@ -1,6 +1,8 @@
 # EV / Twin engineering workbench
 
-A local Windows application for assembling a custom student EV from reviewed component specifications and testing it with the official **FASTSim 3.1.0** Python API. React + TypeScript, FastAPI, SQLite, Plotly and Three.js. All included parts are **hypothetical demonstration data**, not manufactured products.
+A local Windows application for assembling a custom student EV from reviewed component specifications and testing it with the official **FASTSim 3.1.0** Python API. React + TypeScript, FastAPI, SQLite, Plotly and Three.js. The original demo dataset uses **hypothetical demonstration parts**, not manufactured products.
+
+The supplied team documents now also have a separate [provisional team build](docs/TEAM_BUILD.md): three saved concepts, document-sourced parts/options, a purchase plan and explicit missing-system placeholders. These records are unverified document claims, not hypothetical manufacturer specifications. The team draft is already loaded in the current workspace; use `python -m scripts.load_team_project` after setup on a fresh checkout. Missing mass, payload and auxiliary demand remain unknown and block simulation. No demo physics is substituted.
 
 ## Run on Windows
 

@@ -1,0 +1,208 @@
+[
+  {
+    "id": "team-ev-belt",
+    "name": "TEAM / Single motor + rear belt drive / draft",
+    "component_ids": [
+      "team-motor-budget",
+      "team-drive-belt",
+      "team-steering-budget",
+      "team-fan-budget",
+      "team-esp32",
+      "team-camera",
+      "team-level-shifter",
+      "team-estop",
+      "team-battery",
+      "team-inverter",
+      "team-chassis",
+      "team-tires",
+      "team-suspension",
+      "team-brakes",
+      "team-sensors",
+      "team-aux-supply"
+    ],
+    "payload_kg": null,
+    "auxiliary_w": null,
+    "notes": "Provisional assembly from the three supplied documents. The belt variant follows the budget preference, not a finalized design decision. No purchase or hardware validation is implied.",
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "preferred_draft": true,
+      "source_documents": [
+        "Budgeting options .docx",
+        "Parts List - Group 3 10_22_26.docx",
+        "Group4_Parts_List.xlsx"
+      ],
+      "procurement_component_ids": [
+        "team-motor-budget",
+        "team-steering-budget",
+        "team-fan-budget",
+        "team-esp32",
+        "team-camera",
+        "team-dualshock",
+        "team-microsd",
+        "team-router",
+        "team-level-shifter",
+        "team-breadboard",
+        "team-estop",
+        "team-drive-belt"
+      ],
+      "partial_budget_usd": 333.0,
+      "budget_excludes": [
+        "Battery and BMS",
+        "Mechanical chassis, wheels, tires, brakes and suspension",
+        "Sensor suite",
+        "Traction controller unless separately confirmed included",
+        "Auxiliary supply, wiring, fuses and connectors",
+        "Unlisted compute hardware",
+        "Shipping and taxes",
+        "Unspecified fabrication/materials"
+      ],
+      "budget_note": "Planning allowances only; not a complete vehicle cost. Group 4 includes spares and off-vehicle/prototype items. Camera budget remains although model is TBD.",
+      "unresolved_systems": [
+        "Mechanical design and installed masses",
+        "Battery/BMS and power distribution",
+        "Sensors and feedback",
+        "Traction controller ratings and motor duty ratings",
+        "Auxiliary load and passenger/cargo payload"
+      ],
+      "topology": "Proposed belt drive to rear wheels; no differential specified",
+      "vehicle_mode": "schematic draft; simulation blocked until required data supplied"
+    }
+  },
+  {
+    "id": "team-ev-differential",
+    "name": "TEAM / Single motor + differential / draft",
+    "component_ids": [
+      "team-motor-budget",
+      "team-drive-differential",
+      "team-steering-budget",
+      "team-fan-budget",
+      "team-esp32",
+      "team-camera",
+      "team-level-shifter",
+      "team-estop",
+      "team-battery",
+      "team-inverter",
+      "team-chassis",
+      "team-tires",
+      "team-suspension",
+      "team-brakes",
+      "team-sensors",
+      "team-aux-supply"
+    ],
+    "payload_kg": null,
+    "auxiliary_w": null,
+    "notes": "Provisional assembly from the three supplied documents. The belt variant follows the budget preference, not a finalized design decision. No purchase or hardware validation is implied.",
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "preferred_draft": false,
+      "source_documents": [
+        "Budgeting options .docx",
+        "Parts List - Group 3 10_22_26.docx",
+        "Group4_Parts_List.xlsx"
+      ],
+      "procurement_component_ids": [
+        "team-motor-budget",
+        "team-steering-budget",
+        "team-fan-budget",
+        "team-esp32",
+        "team-camera",
+        "team-dualshock",
+        "team-microsd",
+        "team-router",
+        "team-level-shifter",
+        "team-breadboard",
+        "team-estop",
+        "team-drive-differential"
+      ],
+      "partial_budget_usd": 313.0,
+      "budget_excludes": [
+        "Battery and BMS",
+        "Mechanical chassis, wheels, tires, brakes and suspension",
+        "Sensor suite",
+        "Traction controller unless separately confirmed included",
+        "Auxiliary supply, wiring, fuses and connectors",
+        "Unlisted compute hardware",
+        "Shipping and taxes",
+        "Unspecified fabrication/materials"
+      ],
+      "budget_note": "Planning allowances only; not a complete vehicle cost. Group 4 includes spares and off-vehicle/prototype items. Camera budget remains although model is TBD.",
+      "unresolved_systems": [
+        "Mechanical design and installed masses",
+        "Battery/BMS and power distribution",
+        "Sensors and feedback",
+        "Traction controller ratings and motor duty ratings",
+        "Auxiliary load and passenger/cargo payload"
+      ],
+      "topology": "Proposed single motor with fabricated differential",
+      "vehicle_mode": "schematic draft; simulation blocked until required data supplied"
+    }
+  },
+  {
+    "id": "team-ev-dual-direct",
+    "name": "TEAM / Two motors / direct-drive concept / draft",
+    "component_ids": [
+      "team-motor-dual-assembly",
+      "team-drive-dual-direct",
+      "team-steering-budget",
+      "team-fan-budget",
+      "team-esp32",
+      "team-camera",
+      "team-level-shifter",
+      "team-estop",
+      "team-battery",
+      "team-inverter",
+      "team-chassis",
+      "team-tires",
+      "team-suspension",
+      "team-brakes",
+      "team-sensors",
+      "team-aux-supply"
+    ],
+    "payload_kg": null,
+    "auxiliary_w": null,
+    "notes": "Provisional assembly from the three supplied documents. The belt variant follows the budget preference, not a finalized design decision. No purchase or hardware validation is implied.",
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "preferred_draft": false,
+      "source_documents": [
+        "Budgeting options .docx",
+        "Parts List - Group 3 10_22_26.docx",
+        "Group4_Parts_List.xlsx"
+      ],
+      "procurement_component_ids": [
+        "team-motor-dual-assembly",
+        "team-steering-budget",
+        "team-fan-budget",
+        "team-esp32",
+        "team-camera",
+        "team-dualshock",
+        "team-microsd",
+        "team-router",
+        "team-level-shifter",
+        "team-breadboard",
+        "team-estop"
+      ],
+      "partial_budget_usd": 413.0,
+      "budget_excludes": [
+        "Battery and BMS",
+        "Mechanical chassis, wheels, tires, brakes and suspension",
+        "Sensor suite",
+        "Traction controller unless separately confirmed included",
+        "Auxiliary supply, wiring, fuses and connectors",
+        "Unlisted compute hardware",
+        "Shipping and taxes",
+        "Unspecified fabrication/materials"
+      ],
+      "budget_note": "Planning allowances only; not a complete vehicle cost. Group 4 includes spares and off-vehicle/prototype items. Camera budget remains although model is TBD.",
+      "unresolved_systems": [
+        "Mechanical design and installed masses",
+        "Battery/BMS and power distribution",
+        "Sensors and feedback",
+        "Traction controller ratings and motor duty ratings",
+        "Auxiliary load and passenger/cargo payload"
+      ],
+      "topology": "Proposed two-motor direct drive; geometry and control unresolved",
+      "vehicle_mode": "schematic draft; simulation blocked until required data supplied"
+    }
+  }
+]
