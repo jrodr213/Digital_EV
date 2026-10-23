@@ -1,0 +1,22 @@
+{
+  "id": "demo-student-ev",
+  "name": "DEMO / Student EV",
+  "component_ids": [
+    "demo-battery",
+    "demo-motor",
+    "demo-inverter",
+    "demo-drivetrain",
+    "demo-chassis",
+    "demo-tires",
+    "demo-suspension",
+    "demo-brakes",
+    "demo-steering",
+    "demo-cooling",
+    "demo-auxiliary",
+    "demo-sensors",
+    "demo-embedded_controllers"
+  ],
+  "payload_kg": 75.0,
+  "auxiliary_w": 300.0,
+  "notes": "Hypothetical demonstration; all assembly masses include parts only. Payload is added once."
+}

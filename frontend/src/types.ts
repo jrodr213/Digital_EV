@@ -1,0 +1,5 @@
+export type Part={id?:string;name:string;category:string;manufacturer:string;model:string;mass_kg:number;price:number|null;notes:string;datasheet:string;hypothetical:boolean;specs:Record<string,any>;units:Record<string,string>;custom_parameters:Record<string,any>};
+export type Vehicle={id?:string;name:string;component_ids:string[];payload_kg:number;auxiliary_w:number;notes:string};
+export type Assembly={errors:string[];warnings:string[];mass_kg:number;nominal_voltage_v?:number;usable_energy_kwh?:number;mechanical_power_kw?:number;wheel_torque_nm?:number;effective_efficiency?:number};
+export type Result={id:string;name:string;created_at:string;summary:Record<string,any>;analytical:Record<string,any>;warnings:string[];assumptions:string[];samples:Record<string,number>[];assembly:Assembly;request:Record<string,any>;vehicle_snapshot:Vehicle};
+export type Catalog={fields:Record<string,Record<string,string>>;required:Record<string,string[]>};

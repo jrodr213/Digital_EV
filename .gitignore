@@ -1,0 +1,12 @@
+.venv/
+.vendor/
+.tools/
+node_modules/
+frontend/dist/
+__pycache__/
+.pytest_cache/
+.test-tmp*/
+*.tsbuildinfo
+data/*.sqlite*
+data/simulation_results/*
+!data/simulation_results/.gitkeep
