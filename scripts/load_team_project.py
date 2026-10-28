@@ -1,4 +1,4 @@
-"""Load bundled team drafts without modifying existing components or designs."""
+"""Load missing team records, then apply the additive sensor-layout migration."""
 import json
 from backend.database.store import Store, ROOT
 from backend.schemas.entities import Component, Vehicle
@@ -16,6 +16,9 @@ def load(store=None):
         new=[r for r in items if r['id'] not in existing]
         for r in new: store.put(kind,r)
         counts[kind]=len(new)
+    from scripts.load_sensor_project import load as load_sensors
+    sensor_counts = load_sensors(store)
+    counts['components'] += sensor_counts['components']
     return counts
 
 

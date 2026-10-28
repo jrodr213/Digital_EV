@@ -4,6 +4,8 @@ A local Windows application for assembling a custom student EV from reviewed com
 
 The supplied team documents now also have a separate [provisional team build](docs/TEAM_BUILD.md): three saved concepts, document-sourced parts/options, a purchase plan and explicit missing-system placeholders. These records are unverified document claims, not hypothetical manufacturer specifications. The team draft is already loaded in the current workspace; use `python -m scripts.load_team_project` after setup on a fresh checkout. Missing mass, payload and auxiliary demand remain unknown and block simulation. No demo physics is substituted.
 
+The team cars also include all eight [requested sensor products and estimated mounting locations](docs/TEAM_BUILD.md#sensor-placement-estimates). The 3D viewer shows twelve proposed mounts with hover descriptions, product references and a placement list below the car. Locations and quantities are estimates; installed mass and electrical demand remain unknown. The team loader includes these sensors and preserves existing edits.
+
 ## Run on Windows
 
 Install Python **3.12** and Node.js **22.16 or newer** (with npm), then open PowerShell in this repository:
@@ -16,6 +18,14 @@ powershell -ExecutionPolicy Bypass -File .\scripts\Start.ps1
 Open **http://127.0.0.1:8000**. API documentation: **http://127.0.0.1:8000/docs**. Keep the terminal running; Ctrl+C stops it. The backend serves the built frontend, so only one server is needed. Setup requires internet; after installation and build, the application and bundled standard cycles work locally using system fonts.
 
 The current workspace already has `.venv`, a project-local Node runtime under `.tools`, installed packages and a built frontend. `Start.ps1` is sufficient here. These ignored dependencies are not committed; fresh clones use Setup. No FASTSim source changes are necessary.
+
+### Preview inside VS Code over SSH
+
+Open this folder in your Remote - SSH window. The workspace starts the **EV / Twin: Start preview** task when the folder opens, reuses an existing healthy server, and configures port 8000 to open an editor preview. The integrated browser uses the SSH connection to reach the Windows app; no separate Mac SSH forwarding command is needed. Automatic startup requires a trusted workspace.
+
+To open the app at any time, press **F5** and choose **EV / Twin: View car in VS Code**, or click **http://127.0.0.1:8000** in VS Code. The browser opens beside your code. Select **3D Vehicle Viewer** to inspect the sensor layout. If the folder was already open when these settings were added, run **Tasks: Run Task → EV / Twin: Start preview**, or reload the window once.
+
+These settings use VS Code's [integrated browser and remote proxy](https://code.visualstudio.com/docs/debugtest/integrated-browser) and [automatic tasks](https://code.visualstudio.com/docs/debugtest/tasks).
 
 ## Use the workspace
 

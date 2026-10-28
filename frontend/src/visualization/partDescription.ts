@@ -22,6 +22,11 @@ const roles:Record<string,string>={
 
 export function describePart(part:Part){
  const facts:{label:string;value:string}[]=[];
+ const sensor=!!part.custom_parameters.sensor_type;
+ if(sensor){
+  facts.push({label:'Estimated mounts',value:part.custom_parameters.sensor_mounts?.map((m:any)=>m.label).join(' · ')??'Not supplied'});
+  facts.push({label:'Proposed quantity',value:String(part.custom_parameters.installed_quantity??'Not supplied')});
+ }
  if(part.manufacturer)facts.push({label:'Manufacturer',value:part.manufacturer});
  if(part.model)facts.push({label:'Model',value:part.model});
  const specs=Object.entries(part.specs).filter(([key,value])=>
@@ -36,6 +41,6 @@ export function describePart(part:Part){
  }
  facts.push({label:'Installed mass',value:part.mass_kg==null?'Not supplied':fmt(part.mass_kg)+' kg'});
  const pending=!!part.custom_parameters.placeholder;
- const status=pending?'Specifications pending':part.hypothetical?'Hypothetical demonstration part':part.custom_parameters.document_project?'Document claims · unverified':'User-supplied specifications';
- return {role:roles[part.category]??'A component included in the selected vehicle assembly.',facts,status,pending};
+ const status=pending?'Specifications pending':sensor?'Selected product · estimated mounting':part.hypothetical?'Hypothetical demonstration part':part.custom_parameters.document_project?'Document claims · unverified':'User-supplied specifications';
+ return {role:part.custom_parameters.sensor_summary??roles[part.category]??'A component included in the selected vehicle assembly.',facts,status,pending};
 }

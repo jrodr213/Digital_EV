@@ -24,14 +24,23 @@ try{
    const tooltip=page.getByRole('tooltip');
    if(!await tooltip.count())continue;
    const title=await tooltip.locator('strong').innerText();
-   if(!points.has(title))points.set(title,{x:box.x+x,y:box.y+y});
+   if(!points.has(title))points.set(title,{x,y});
   }
   if([...points.keys()].some(s=>s.startsWith('Provisional traction motor'))&&[...points.keys()].some(s=>s.startsWith('Battery pack'))&&[...points.keys()].some(s=>s.startsWith('Wheels and tires')))break;
  }
  const find=prefix=>[...points].find(([name])=>name.startsWith(prefix))?.[1];
  const motor=find('Provisional traction motor'),battery=find('Battery pack'),tires=find('Wheels and tires');
  assert.ok(motor,'Motor surface not picked');assert.ok(battery,'Battery placeholder not picked');assert.ok(tires,'Wheel/hub surfaces not picked');
- await page.mouse.move(motor.x,motor.y);
+ // Inspectors can scroll the longer placement panel. Resolve canvas-relative
+ // points again before moving the pointer instead of reusing stale page pixels.
+ async function pointAt(point){
+  await canvas.scrollIntoViewIfNeeded();
+  const current=await canvas.boundingBox();assert.ok(current);
+  const position={x:current.x+point.x,y:current.y+point.y};
+  await page.mouse.move(position.x,position.y);
+  return position;
+ }
+ await pointAt(motor);
  const tooltip=page.getByRole('tooltip');
  await tooltip.getByText('Converts electrical power into mechanical torque to drive the wheels.',{exact:true}).waitFor();
  await tooltip.getByText('48 V',{exact:true}).waitFor();
@@ -42,20 +51,20 @@ try{
  assert.ok(tipBox.y>=box.y&&tipBox.y+tipBox.height<=box.y+box.height+1);
  await mkdir('../docs/screenshots',{recursive:true});
  await viewport.screenshot({path:'../docs/screenshots/team-hover.png'});
- await page.mouse.click(motor.x,motor.y);
+ const clicked=await pointAt(motor);await page.mouse.click(clicked.x,clicked.y);
  await page.locator('.inspect').getByText('Provisional traction motor / eBay 256877952903',{exact:true}).waitFor();
  await page.locator('.inspect').getByRole('button',{name:'Close',exact:true}).click();
- await page.mouse.move(battery.x,battery.y);
+ await pointAt(battery);
  await tooltip.getByText('Specifications pending',{exact:true}).waitFor();
  await tooltip.getByText('Not supplied',{exact:true}).waitFor();
  assert.ok(!(await tooltip.innerText()).includes('0 kg'),'Unknown mass shown as zero');
- await page.mouse.move(tires.x,tires.y);
+ await pointAt(tires);
  await page.evaluate(()=>new Promise(requestAnimationFrame));
  await tooltip.getByText('Wheels and tires / design pending',{exact:true}).waitFor();
- await page.mouse.move(box.x+5,box.y+5);
+ await pointAt({x:5,y:5});
  await tooltip.waitFor({state:'hidden'});
- await page.mouse.move(motor.x,motor.y);await page.mouse.down();
- await page.mouse.move(motor.x+80,motor.y+20,{steps:8});
+ const drag=await pointAt(motor);await page.mouse.down();
+ await page.mouse.move(drag.x+80,drag.y+20,{steps:8});
  await tooltip.waitFor({state:'hidden'});await page.mouse.up();
  assert.equal(await page.locator('.inspect').count(),0,'Orbit drag selected a part');
  await page.mouse.wheel(0,100);

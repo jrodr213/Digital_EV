@@ -5,11 +5,14 @@ import type {Part,Result} from '../types';
 import {fmt} from '../api';
 import {HoverCard} from './HoverCard';
 import type {HoveredPart} from './HoverCard';
+import {sensorEntries,mountPosition,createSensorObject} from './sensorLayout';
 
 export function VehicleViewer({parts,result,compact=false}:{parts:Part[];result?:Result;compact?:boolean}){
  const mount=useRef<HTMLDivElement>(null),state=useRef({speed:0,time:0}),[playing,setPlaying]=useState(false),[cursor,setCursor]=useState(0),[selected,setSelected]=useState<Part|null>(null),[failure,setFailure]=useState('');
  const samples=result?.samples??[];
  const [hovered,setHovered]=useState<HoveredPart|null>(null);
+ const directionPins=useRef(new Map<string,HTMLSpanElement>());
+ const sensors=sensorEntries(parts);
  const documentDraft=parts.some(p=>p.custom_parameters.document_project);
  const pending=parts.filter(p=>p.custom_parameters.placeholder);
  useEffect(()=>{setCursor(0);setPlaying(false)},[result?.id]);
@@ -18,6 +21,7 @@ export function VehicleViewer({parts,result,compact=false}:{parts:Part[];result?
  useEffect(()=>{
   const host=mount.current;if(!host)return;
   setHovered(null);
+  setSelected(null);setFailure('');
   let renderer:THREE.WebGLRenderer;try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true})}catch{setFailure('WebGL is unavailable. Enable hardware acceleration to view the schematic.');return}
   const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(36,1,.1,100);camera.position.set(5,3.8,5.3);
   renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setClearColor(0x111a20,1);host.appendChild(renderer.domElement);
@@ -27,7 +31,7 @@ export function VehicleViewer({parts,result,compact=false}:{parts:Part[];result?
   const chassis=parts.find(p=>p.category==='chassis')?.specs??{},drive=parts.find(p=>p.category==='drivetrain')?.specs??{};
   // Viewer defaults are visual geometry only, never simulation input.
   const length=chassis.length_m??3.2,width=chassis.width_m??1.5,wb=chassis.wheelbase_m??2.1,track=chassis.track_m??1.25,r=(drive.wheel_diameter_m??.56)/2;
-  const meshes:THREE.Mesh[]=[],wheels:THREE.Mesh[]=[];
+  const meshes:THREE.Object3D[]=[],wheels:THREE.Mesh[]=[];
   const material=(color:number,opacity=1)=>new THREE.MeshStandardMaterial({color,metalness:.35,roughness:.4,transparent:opacity<1,opacity});
   function box(size:number[],pos:number[],color:number,category:string,opacity=1){const part=parts.find(p=>p.category===category);const mat=material(color,opacity);if(part?.custom_parameters.placeholder){mat.wireframe=true;mat.color.setHex(0xbd9866)}const mesh=new THREE.Mesh(new THREE.BoxGeometry(...size as [number,number,number]),mat);mesh.position.set(...pos as [number,number,number]);mesh.userData.category=category;mesh.userData.partId=part?.id;scene.add(mesh);meshes.push(mesh);return mesh}
   box([length,.15,width],[0,.48,0],0x67838e,'chassis',.45);
@@ -45,7 +49,7 @@ export function VehicleViewer({parts,result,compact=false}:{parts:Part[];result?
    box([.26,.05,.26],[wb/2-.3,.9,-.35],0x8297a9,'cooling');
    box([.12,.13,.12],[0,.93,-.4],0xda8580,'safety_controls');
    box([.22,.13,.2],[.36,.7,-.3],0x9697c9,'auxiliary');
-   box([.18,.18,.18],[-wb*.36,.66,.4],0x9697c9,'sensors');
+   if(parts.some(p=>p.category==='sensors'&&p.custom_parameters.placeholder))box([.18,.18,.18],[-wb*.36,.66,.4],0x9697c9,'sensors');
    if(drive.drive_type==='belt'){
     box([.6,.03,.04],[wb/2-.4,.4,-.13],0x71bfa0,'drivetrain');
     box([.6,.03,.04],[wb/2-.4,.4,.13],0x71bfa0,'drivetrain');
@@ -55,6 +59,13 @@ export function VehicleViewer({parts,result,compact=false}:{parts:Part[];result?
    const wheel=new THREE.Mesh(new THREE.CylinderGeometry(r,r,.19,32),material(0x20272e));wheel.rotation.x=Math.PI/2;wheel.position.set(x,r+.02,z);wheel.userData.category='tires';scene.add(wheel);meshes.push(wheel);wheels.push(wheel);
    const hub=new THREE.Mesh(new THREE.CylinderGeometry(r*.5,r*.5,.2,8),material(0x9eafb9));wheel.add(hub);
    box([.08,.3,.08],[x,.45,z*.82],0xe6a55a,'suspension');
+  }
+  const dimensions={length,width,wb,track,r};
+  for(const sensor of sensorEntries(parts))for(const site of sensor.mounts){
+   const object=createSensorObject(sensor.kind,site.site);
+   object.position.set(...mountPosition(site.site,dimensions));
+   object.userData.category='sensors';object.userData.partId=sensor.part.id;
+   scene.add(object);meshes.push(object);
   }
   const ray=new THREE.Raycaster(),pointer=new THREE.Vector2();let down=[0,0];
   const canvas=renderer.domElement;
@@ -96,8 +107,48 @@ export function VehicleViewer({parts,result,compact=false}:{parts:Part[];result?
   canvas.addEventListener('pointermove',move);canvas.addEventListener('pointerleave',clearHover);
   controls.addEventListener('start',clearHover);
   const resize=()=>{camera.aspect=host.clientWidth/Math.max(host.clientHeight,1);camera.updateProjectionMatrix();renderer.setSize(host.clientWidth,host.clientHeight)};const observer=new ResizeObserver(resize);observer.observe(host);resize();
-  let frame=0,last=performance.now();function draw(now:number){const dt=Math.min((now-last)/1000,.1);last=now;wheels.forEach(w=>w.rotateY(state.current.speed/r*dt));grid.position.x=-(state.current.time*state.current.speed)%(.4);controls.update();renderer.render(scene,camera);frame=requestAnimationFrame(draw)}frame=requestAnimationFrame(draw);
+  const projected=new THREE.Vector3();
+  function projectLabel(element:HTMLElement|undefined,position:THREE.Vector3){
+   if(!element)return;
+   projected.copy(position).project(camera);
+   const visible=projected.z>-1&&projected.z<1&&Math.abs(projected.x)<.97&&Math.abs(projected.y)<.94;
+   element.style.visibility=visible?'visible':'hidden';
+   element.style.left=(projected.x+1)*host!.clientWidth/2+'px';
+   element.style.top=(1-projected.y)*host!.clientHeight/2+'px';
+  }
+  let frame=0,last=performance.now();function draw(now:number){
+   const dt=Math.min((now-last)/1000,.1);last=now;
+   wheels.forEach(w=>w.rotateY(state.current.speed/r*dt));grid.position.x=-(state.current.time*state.current.speed)%(.4);
+   controls.update();renderer.render(scene,camera);
+   projectLabel(directionPins.current.get('front'),new THREE.Vector3(-length/2-.28,.08,0));
+   projectLabel(directionPins.current.get('rear'),new THREE.Vector3(length/2+.28,.08,0));
+   frame=requestAnimationFrame(draw);
+  }frame=requestAnimationFrame(draw);
   return()=>{cancelAnimationFrame(frame);observer.disconnect();canvas.removeEventListener('pointerdown',onDown);canvas.removeEventListener('pointerup',click);canvas.removeEventListener('pointermove',move);canvas.removeEventListener('pointerleave',clearHover);controls.removeEventListener('start',clearHover);controls.dispose();scene.traverse(o=>{if(o instanceof THREE.Mesh){o.geometry.dispose();(o.material as THREE.Material).dispose()}});grid.geometry.dispose();(grid.material as THREE.Material).dispose();renderer.dispose();renderer.domElement.remove()}
  },[parts]);
- return <section className={'panel viewer '+(compact?'compact':'')}><div className="panel-title">Assembly / spatial overview<span>SCHEMATIC · THREE.JS</span></div><div className="viewport" ref={mount}>{failure&&<p>{failure}</p>}{hovered&&<HoverCard hover={hovered}/>}</div><div className="viewer-legend"><span><i className="dot teal"/> Battery</span><span><i className="dot gold"/> Motor</span><span><i className="dot violet"/> Inverter</span><small>Drag to orbit · Scroll to zoom · Hover for description / Click to inspect</small></div>{documentDraft&&<div className="draft-view-notice"><b>Provisional parts assembly / geometry is illustrative</b><p>Outlined regions identify systems without specifications. All component sizes and positions are conceptual until mechanical drawings are supplied.</p><span>Pending: {pending.map(p=>p.category).join(', ')}</span></div>}{documentDraft&&!compact&&<div className="part-inspector-buttons">{parts.map(p=><button key={p.id} onClick={()=>setSelected(p)}>{p.category}{p.custom_parameters.placeholder?' / pending':''}</button>)}</div>}{selected&&<div className="inspect"><button onClick={()=>setSelected(null)}>Close</button><b>{selected.name}</b><p>{selected.mass_kg==null?'Installed mass unknown':fmt(selected.mass_kg)+' kg'} {selected.manufacturer&&' / '+selected.manufacturer}</p>{selected.notes&&<p>{selected.notes}</p>}{selected.datasheet&&<a href={selected.datasheet} target="_blank" rel="noreferrer">Supplied reference</a>}<pre>{JSON.stringify({specifications:selected.specs,units:selected.units,source:selected.custom_parameters.source_references,status:selected.custom_parameters.part_status},null,2)}</pre></div>}{!compact&&<div className="playback"><button disabled={!samples.length} onClick={()=>setPlaying(!playing)}>{playing?'Pause':'Play cycle'}</button><input aria-label="Simulation playback" type="range" min="0" max={Math.max(0,samples.length-1)} value={cursor} onChange={e=>{setPlaying(false);setCursor(+e.target.value)}}/><span>{fmt(samples[cursor]?.time_s)} s / {fmt(samples[cursor]?.speed_mph)} mph</span></div>}<p className="caption">Configuration visualization only. Geometry defaults are schematic; no 3D vehicle dynamics.</p></section>
+ return <section className={'panel viewer '+(compact?'compact':'')}>
+  <div className="panel-title">Assembly / spatial overview<span>SCHEMATIC · THREE.JS</span></div>
+  {sensors.length>0&&<div className="sensor-toolbar"><span>{sensors.length} sensor types · {sensors.reduce((n,s)=>n+s.mounts.length,0)} estimated mounts</span></div>}
+  <div className="viewport" ref={mount}>
+   {failure&&<p>{failure}</p>}
+   {sensors.length>0&&<div className="sensor-markers" hidden={!!failure}>
+    {['front','rear'].map(direction=><span key={direction} className="vehicle-direction" ref={el=>{if(el)directionPins.current.set(direction,el);else directionPins.current.delete(direction)}}>{direction.toUpperCase()}</span>)}
+   </div>}
+   {hovered&&<HoverCard hover={hovered}/>}
+  </div>
+  <div className="viewer-legend"><span><i className="dot teal"/> Battery</span><span><i className="dot gold"/> Motor</span><span><i className="dot violet"/> Inverter</span><small>Drag to orbit · Scroll to zoom · Hover for description / Click to inspect</small></div>
+  {sensors.length>0&&<details className="sensor-layout" open={!compact}>
+   <summary>Estimated sensor placement · {sensors.length} types</summary>
+   <p>Mounts and quantities are proposed. Small sensor models are enlarged for visibility. Hover or click a sensor to inspect it. Final brackets, clearances and wiring need measurements.</p>
+   <div className="sensor-layout-grid">{sensors.map(sensor=><button key={sensor.part.id} className="sensor-location" onClick={()=>setSelected(sensor.part)}><b className="sensor-number">{sensor.number}</b><span><strong>{sensor.name}</strong><small>{sensor.mounts.map(m=>m.label).join(' · ')}</small></span><em>×{sensor.mounts.length}</em></button>)}</div>
+  </details>}
+  {documentDraft&&<div className="draft-view-notice"><b>Provisional parts assembly / geometry is illustrative</b><p>Outlined regions identify systems without specifications. All component sizes and positions are conceptual until mechanical drawings are supplied.</p><span>Pending: {pending.map(p=>p.category).join(', ')}</span></div>}
+  {documentDraft&&!compact&&<div className="part-inspector-buttons">{parts.filter(p=>!p.custom_parameters.sensor_type).map(p=><button key={p.id} onClick={()=>setSelected(p)}>{p.category}{p.custom_parameters.placeholder?' / pending':''}</button>)}</div>}
+  {selected&&<div className="inspect"><button onClick={()=>setSelected(null)}>Close</button><b>{selected.name}</b><p>{selected.mass_kg==null?'Installed mass unknown':fmt(selected.mass_kg)+' kg'} {selected.manufacturer&&' / '+selected.manufacturer}</p>
+   {selected.custom_parameters.sensor_type&&<><h4>Estimated mounting locations</h4><ul>{sensorEntries([selected])[0]?.mounts.map(m=><li key={m.site}>{m.label}</li>)}</ul><p>Proposed quantity: {selected.custom_parameters.installed_quantity}. {selected.custom_parameters.quantity_basis}</p><p>{selected.custom_parameters.interface_notes}</p></>}
+   {selected.notes&&<p>{selected.notes}</p>}{selected.datasheet&&<a href={selected.datasheet} target="_blank" rel="noreferrer">Supplied reference</a>}<pre>{JSON.stringify({specifications:selected.specs,units:selected.units,source:selected.custom_parameters.source_references,status:selected.custom_parameters.part_status},null,2)}</pre>
+  </div>}
+  {!compact&&<div className="playback"><button disabled={!samples.length} onClick={()=>setPlaying(!playing)}>{playing?'Pause':'Play cycle'}</button><input aria-label="Simulation playback" type="range" min="0" max={Math.max(0,samples.length-1)} value={cursor} onChange={e=>{setPlaying(false);setCursor(+e.target.value)}}/><span>{fmt(samples[cursor]?.time_s)} s / {fmt(samples[cursor]?.speed_mph)} mph</span></div>}
+  <p className="caption">Configuration visualization only. Geometry defaults are schematic; no 3D vehicle dynamics.</p>
+ </section>
 }

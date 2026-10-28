@@ -78,7 +78,7 @@ def test_budgets_preserve_source_allowances_and_inventory(team):
 
 def test_loader_is_repeatable_and_does_not_overwrite_team_edits(tmp_path):
     store=Store(tmp_path/'load.sqlite')
-    assert load(store)=={'components':33,'vehicles':3}
+    assert load(store)=={'components':41,'vehicles':3}
     motor=store.get('components','team-motor-budget'); motor['notes']='Reviewed by team'
     store.put('components',motor)
     assert load(store)=={'components':0,'vehicles':0}

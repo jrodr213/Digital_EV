@@ -1,0 +1,17 @@
+{
+  "workbench.browser.openLocalhostLinks": true,
+  "workbench.browser.enableRemoteProxy": true,
+  "workbench.browser.dataStorage": "workspace",
+  "workbench.browser.newTabPlacement": "sideGroup",
+  "remote.autoForwardPorts": true,
+  "remote.autoForwardPortsSource": "output",
+  "remote.restoreForwardedPorts": true,
+  "remote.portsAttributes": {
+    "8000": {
+      "label": "EV / Twin car viewer",
+      "protocol": "http",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "task.allowAutomaticTasks": "on"
+}

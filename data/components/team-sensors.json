@@ -1,0 +1,449 @@
+[
+  {
+    "id": "team-sensor-infrared",
+    "name": "Infrared distance / Sharp GP2Y0A21YK0F",
+    "category": "sensors",
+    "manufacturer": "Sharp",
+    "model": "GP2Y0A21YK0F",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Aim forward and slightly outward with both optical windows exposed. Isolate the conductive sensor case from metal brackets with a rubber gasket. Sunlight and target reflectivity require testing.",
+    "datasheet": "https://www.adafruit.com/product/164",
+    "hypothetical": false,
+    "specs": {
+      "listed_distance_range_cm": [
+        10,
+        80
+      ],
+      "listed_supply_v": 5
+    },
+    "units": {
+      "listed_distance_range_cm": "cm",
+      "listed_supply_v": "V"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "sensor_type": "infrared",
+      "sensor_number": 1,
+      "sensor_short_name": "Infrared",
+      "sensor_summary": "Measures nearby obstacles at the front corners.",
+      "sensor_mounts": [
+        {
+          "site": "front_left",
+          "label": "Front left bumper corner"
+        },
+        {
+          "site": "front_right",
+          "label": "Front right bumper corner"
+        }
+      ],
+      "interface_notes": "Analog distance output; confirm ADC voltage limits and calibration.",
+      "installed_quantity": 2,
+      "quantity_basis": "Estimated prototype layout; user has not specified quantities.",
+      "installation_scope": "on_vehicle",
+      "part_status": "selected product / estimated mounting",
+      "verification_status": "Product-page specifications reviewed; fit, wiring and performance unverified.",
+      "source_references": [
+        {
+          "document": "User-supplied product page",
+          "location": "https://www.adafruit.com/product/164"
+        }
+      ],
+      "source_checked": "2026-10-28",
+      "placement_status": "estimate",
+      "currency": "USD"
+    }
+  },
+  {
+    "id": "team-sensor-ultrasonic",
+    "name": "Ultrasonic distance / RCWL-1601",
+    "category": "sensors",
+    "manufacturer": "Adafruit",
+    "model": "RCWL-1601",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Mount both transducer faces level with a clear view beyond the bumper. Trigger front and rear units sequentially to limit acoustic crosstalk. Final clearance and exposure protection need review.",
+    "datasheet": "https://www.adafruit.com/product/4007",
+    "hypothetical": false,
+    "specs": {
+      "listed_distance_range_cm": [
+        2,
+        450
+      ],
+      "listed_recommended_range_cm": [
+        10,
+        250
+      ],
+      "listed_supply_range_v": [
+        3,
+        5.5
+      ]
+    },
+    "units": {
+      "listed_distance_range_cm": "cm",
+      "listed_recommended_range_cm": "cm",
+      "listed_supply_range_v": "V"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "sensor_type": "ultrasonic",
+      "sensor_number": 2,
+      "sensor_short_name": "Ultrasonic",
+      "sensor_summary": "Measures obstacle clearance ahead of and behind the car.",
+      "sensor_mounts": [
+        {
+          "site": "front_center",
+          "label": "Front bumper center"
+        },
+        {
+          "site": "rear_center",
+          "label": "Rear bumper center"
+        }
+      ],
+      "interface_notes": "Trigger/echo GPIO; logic follows the supply voltage.",
+      "installed_quantity": 2,
+      "quantity_basis": "Estimated prototype layout; user has not specified quantities.",
+      "installation_scope": "on_vehicle",
+      "part_status": "selected product / estimated mounting",
+      "verification_status": "Product-page specifications reviewed; fit, wiring and performance unverified.",
+      "source_references": [
+        {
+          "document": "User-supplied product page",
+          "location": "https://www.adafruit.com/product/4007"
+        }
+      ],
+      "source_checked": "2026-10-28",
+      "placement_status": "estimate",
+      "currency": "USD"
+    }
+  },
+  {
+    "id": "team-sensor-gps",
+    "name": "GPS / Adafruit Ultimate GPS Breakout",
+    "category": "sensors",
+    "manufacturer": "Adafruit",
+    "model": "PA1616S / product 746",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Place the patch antenna upward on the highest practical nonmetallic mounting surface. Keep clear of motor/controller wiring and metal overhead. The upper-deck bracket shown is estimated; no roof geometry has been supplied.",
+    "datasheet": "https://www.adafruit.com/product/746",
+    "hypothetical": false,
+    "specs": {
+      "listed_board_size_mm": [
+        25.5,
+        35,
+        6.5
+      ],
+      "listed_max_update_hz": 10
+    },
+    "units": {
+      "listed_board_size_mm": "mm",
+      "listed_max_update_hz": "Hz"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "sensor_type": "gps",
+      "sensor_number": 3,
+      "sensor_short_name": "GPS",
+      "sensor_summary": "Reports outdoor vehicle location and ground speed.",
+      "sensor_mounts": [
+        {
+          "site": "upper_deck",
+          "label": "Upper deck, antenna facing sky"
+        }
+      ],
+      "interface_notes": "UART GPS data; confirm controller configuration and antenna reception.",
+      "installed_quantity": 1,
+      "quantity_basis": "Estimated prototype layout; user has not specified quantities.",
+      "installation_scope": "on_vehicle",
+      "part_status": "selected product / estimated mounting",
+      "verification_status": "Product-page specifications reviewed; fit, wiring and performance unverified.",
+      "source_references": [
+        {
+          "document": "User-supplied product page",
+          "location": "https://www.adafruit.com/product/746"
+        }
+      ],
+      "source_checked": "2026-10-28",
+      "placement_status": "estimate",
+      "currency": "USD"
+    }
+  },
+  {
+    "id": "team-sensor-temperature",
+    "name": "Temperature probes / waterproof DS18B20",
+    "category": "sensors",
+    "manufacturer": "Adafruit",
+    "model": "DS18B20 / product 642",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Clamp each probe to the external surface with suitable thermal contact and cable strain relief. These placements estimate surface temperatures, not cell-core or winding temperatures. Route clear of rotating parts and live conductors; leads may need extension.",
+    "datasheet": "https://www.adafruit.com/product/642",
+    "hypothetical": false,
+    "specs": {
+      "listed_temperature_range_c": [
+        -55,
+        125
+      ],
+      "listed_probe_size_mm": [
+        6,
+        30
+      ],
+      "listed_cable_length_cm": 90
+    },
+    "units": {
+      "listed_temperature_range_c": "°C",
+      "listed_probe_size_mm": "mm",
+      "listed_cable_length_cm": "cm"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "sensor_type": "temperature",
+      "sensor_number": 4,
+      "sensor_short_name": "Temperature",
+      "sensor_summary": "Monitors battery-enclosure and motor-housing surface temperatures.",
+      "sensor_mounts": [
+        {
+          "site": "battery_surface",
+          "label": "Battery enclosure surface"
+        },
+        {
+          "site": "motor_surface",
+          "label": "Motor housing surface"
+        }
+      ],
+      "interface_notes": "1-Wire bus with a 4.7 kΩ pull-up; each probe has its own address.",
+      "installed_quantity": 2,
+      "quantity_basis": "Estimated prototype layout; user has not specified quantities.",
+      "installation_scope": "on_vehicle",
+      "part_status": "selected product / estimated mounting",
+      "verification_status": "Product-page specifications reviewed; fit, wiring and performance unverified.",
+      "source_references": [
+        {
+          "document": "User-supplied product page",
+          "location": "https://www.adafruit.com/product/642"
+        }
+      ],
+      "source_checked": "2026-10-28",
+      "placement_status": "estimate",
+      "currency": "USD"
+    }
+  },
+  {
+    "id": "team-sensor-force",
+    "name": "Contact force / Interlink FSR 402",
+    "category": "sensors",
+    "manufacturer": "Interlink Electronics",
+    "model": "FSR 402",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Place under a small load-spreading pad with mechanical overload stops. This force-sensing resistor does not measure tire pressure, vehicle weight or crash loads. Calibrate the completed pad assembly.",
+    "datasheet": "https://buyinterlinkelectronics.com/products/fsr-model-402",
+    "hypothetical": false,
+    "specs": {
+      "listed_force_range_n": [
+        0.2,
+        20
+      ],
+      "listed_active_diameter_mm": 12.7
+    },
+    "units": {
+      "listed_force_range_n": "N",
+      "listed_active_diameter_mm": "mm"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "sensor_type": "force",
+      "sensor_number": 5,
+      "sensor_short_name": "Contact force",
+      "sensor_summary": "Detects light contact at a compliant bumper pad.",
+      "sensor_mounts": [
+        {
+          "site": "bumper_contact",
+          "label": "Front bumper compliant contact pad"
+        }
+      ],
+      "interface_notes": "Resistance measurement using a voltage divider and ADC.",
+      "installed_quantity": 1,
+      "quantity_basis": "Estimated prototype layout; user has not specified quantities.",
+      "installation_scope": "on_vehicle",
+      "part_status": "selected product / estimated mounting",
+      "verification_status": "Product-page specifications reviewed; fit, wiring and performance unverified.",
+      "source_references": [
+        {
+          "document": "User-supplied product page",
+          "location": "https://buyinterlinkelectronics.com/products/fsr-model-402"
+        }
+      ],
+      "source_checked": "2026-10-28",
+      "placement_status": "estimate",
+      "currency": "USD"
+    }
+  },
+  {
+    "id": "team-sensor-rotary",
+    "name": "Steering angle / Adafruit AS5600",
+    "category": "sensors",
+    "manufacturer": "Adafruit",
+    "model": "AS5600 / product 6357",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Fix the board to the chassis and center a correctly polarized rotating magnet over the chip, within the specified sensing gap. Prefer a steering output pivot within one revolution. A multi-turn steering column needs turn tracking or gearing. Magnet and bracket fit remain to be designed.",
+    "datasheet": "https://www.adafruit.com/product/6357",
+    "hypothetical": false,
+    "specs": {
+      "listed_angle_range_deg": [
+        0,
+        360
+      ],
+      "listed_max_magnet_gap_mm": 3
+    },
+    "units": {
+      "listed_angle_range_deg": "°",
+      "listed_max_magnet_gap_mm": "mm"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "sensor_type": "rotary",
+      "sensor_number": 6,
+      "sensor_short_name": "Steering angle",
+      "sensor_summary": "Measures the angle of the steering output pivot.",
+      "sensor_mounts": [
+        {
+          "site": "steering_pivot",
+          "label": "Fixed bracket at steering output pivot"
+        }
+      ],
+      "interface_notes": "I²C magnetic angle reading; align and calibrate the magnet before use.",
+      "installed_quantity": 1,
+      "quantity_basis": "Estimated prototype layout; user has not specified quantities.",
+      "installation_scope": "on_vehicle",
+      "part_status": "selected product / estimated mounting",
+      "verification_status": "Product-page specifications reviewed; fit, wiring and performance unverified.",
+      "source_references": [
+        {
+          "document": "User-supplied product page",
+          "location": "https://www.adafruit.com/product/6357"
+        }
+      ],
+      "source_checked": "2026-10-28",
+      "placement_status": "estimate",
+      "currency": "USD"
+    }
+  },
+  {
+    "id": "team-sensor-hall",
+    "name": "Axle speed / Dagu Hall sensor module",
+    "category": "sensors",
+    "manufacturer": "Dagu",
+    "model": "HC144 / RB-Dag-142",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Keep the sensor stationary and retain a target magnet securely on a rotating axle collar. The schematic target and clearance are illustrative; determine the operating gap experimentally. Avoid interference with the wheel-encoder magnets.",
+    "datasheet": "https://www.robotshop.com/products/speed-measurement-hall-sensor-module",
+    "hypothetical": false,
+    "specs": {
+      "listed_supply_range_v": [
+        3.3,
+        5
+      ],
+      "listed_board_size_mm": [
+        34,
+        25
+      ]
+    },
+    "units": {
+      "listed_supply_range_v": "V",
+      "listed_board_size_mm": "mm"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "sensor_type": "hall",
+      "sensor_number": 7,
+      "sensor_short_name": "Axle Hall",
+      "sensor_summary": "Detects a passing axle magnet for an independent speed pulse.",
+      "sensor_mounts": [
+        {
+          "site": "rear_axle",
+          "label": "Fixed bracket beside rear drive axle"
+        }
+      ],
+      "interface_notes": "Digital/analog Hall outputs; derive speed from calibrated pulses per revolution.",
+      "installed_quantity": 1,
+      "quantity_basis": "Estimated prototype layout; user has not specified quantities.",
+      "installation_scope": "on_vehicle",
+      "part_status": "selected product / estimated mounting",
+      "verification_status": "Product-page specifications reviewed; fit, wiring and performance unverified.",
+      "source_references": [
+        {
+          "document": "User-supplied product page",
+          "location": "https://www.robotshop.com/products/speed-measurement-hall-sensor-module"
+        }
+      ],
+      "source_checked": "2026-10-28",
+      "placement_status": "estimate",
+      "currency": "USD"
+    }
+  },
+  {
+    "id": "team-sensor-wheel_encoder",
+    "name": "Wheel encoders / SparkFun DAGU kit",
+    "category": "sensors",
+    "manufacturer": "Dagu / SparkFun",
+    "model": "ROB-12629",
+    "mass_kg": null,
+    "price": null,
+    "notes": "One kit provides two Hall sensors and two 8-pole magnets with rubber hubs. Mount magnets on rotating hubs and sensors on stationary brackets. Hub fit, retention, air gap, cable extensions and pulse count need verification. Single-channel pulses do not establish direction by themselves.",
+    "datasheet": "https://www.sparkfun.com/wheel-encoder-kit.html",
+    "hypothetical": false,
+    "specs": {
+      "listed_supply_range_v": [
+        3,
+        24
+      ],
+      "listed_magnet_poles": 8,
+      "listed_sensors_per_kit": 2,
+      "listed_cable_length_mm": 150
+    },
+    "units": {
+      "listed_supply_range_v": "V",
+      "listed_magnet_poles": "poles",
+      "listed_sensors_per_kit": "sensors",
+      "listed_cable_length_mm": "mm"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "sensor_type": "wheel_encoder",
+      "sensor_number": 8,
+      "sensor_short_name": "Wheel encoders",
+      "sensor_summary": "Measures individual rear-wheel rotation for speed and distance.",
+      "sensor_mounts": [
+        {
+          "site": "rear_left_hub",
+          "label": "Rear left inboard wheel hub"
+        },
+        {
+          "site": "rear_right_hub",
+          "label": "Rear right inboard wheel hub"
+        }
+      ],
+      "interface_notes": "Wheel pulse inputs; verify output interface and pull-ups for the controller.",
+      "installed_quantity": 2,
+      "quantity_basis": "Estimated prototype layout; user has not specified quantities.",
+      "installation_scope": "on_vehicle",
+      "part_status": "selected product / estimated mounting",
+      "verification_status": "Product-page specifications reviewed; fit, wiring and performance unverified.",
+      "source_references": [
+        {
+          "document": "User-supplied product page",
+          "location": "https://www.sparkfun.com/wheel-encoder-kit.html"
+        }
+      ],
+      "source_checked": "2026-10-28",
+      "placement_status": "estimate",
+      "currency": "USD",
+      "package_units": 2,
+      "procurement_quantity": 1
+    }
+  }
+]
