@@ -1,0 +1,76 @@
+[
+  {
+    "id": "team-battery-uugpower-36v15ah",
+    "name": "Selected battery / UUGPOWER 36 V 15 Ah / listed 540 Wh",
+    "category": "battery",
+    "manufacturer": "",
+    "model": "36V 15AH (seller-listed)",
+    "mass_kg": null,
+    "price": 185.99,
+    "hypothetical": false,
+    "datasheet": "https://www.ebay.com/itm/318129902320",
+    "notes": "One user-selected UUGPOWER-branded lithium-ion pack. Seller claims 36 V, 15 Ah, 540 Wh, a 40 A maximum BMS discharge rating, 4.9 kg battery weight and a five-pin base. These are listing claims. Installed mass including mounting/wiring is unknown. The 40 A maximum is not established as a continuous limit or charge/regen rating. Size claims conflict: 370 x 95 x 122 mm versus separate fields of 370 x 95 x 89 mm. Cell configuration, full-charge voltage, usable energy, charge limits, efficiency and operating limits remain unverified. Price is the observed listing snapshot, excluding unconfirmed shipping/tax. Mounting location and viewer dimensions are schematic.",
+    "specs": {
+      "listed_nominal_voltage_v": 36,
+      "listed_capacity_ah": 15,
+      "listed_energy_wh": 540,
+      "listed_bms_max_discharge_a": 40,
+      "listed_battery_mass_kg": 4.9,
+      "listed_base_pin_count": 5,
+      "listed_chemistry": "Lithium-ion",
+      "listed_brand": "UUGPOWER"
+    },
+    "units": {
+      "listed_nominal_voltage_v": "V",
+      "listed_capacity_ah": "Ah",
+      "listed_energy_wh": "Wh",
+      "listed_bms_max_discharge_a": "A",
+      "listed_battery_mass_kg": "kg",
+      "listed_base_pin_count": "count",
+      "listed_chemistry": "text",
+      "listed_brand": "text"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "user-selected / seller claims unverified",
+      "installed_quantity": 1,
+      "quantity_basis": "One battery added at the user's request.",
+      "currency": "USD",
+      "installation_scope": "battery_pack_assembly",
+      "verification_status": "eBay title/item specifics reviewed October 30, 2026; no manufacturer datasheet or installed validation.",
+      "price_basis": "Observed eBay listing snapshot: USD 185.99; location, shipping, taxes and checkout price unconfirmed.",
+      "mass_basis": "Listing battery weight is 4.9 kg; complete installed assembly mass remains unknown.",
+      "dimension_claims": [
+        {
+          "location": "Battery Size",
+          "length_mm": 370,
+          "width_mm": 95,
+          "height_mm": 122
+        },
+        {
+          "location": "Separate Item Length/Width/Height fields",
+          "length_mm": 370,
+          "width_mm": 95,
+          "height_mm": 89
+        }
+      ],
+      "dimension_status": "Conflicting height claims; no verified package dimensions selected.",
+      "listed_package_contents": [
+        "Battery",
+        "Charger",
+        "Female XT60 connector",
+        "Male XT60 connector",
+        "Two keys",
+        "Four screws"
+      ],
+      "package_contents_note": "Seller-stated contents; charger specifications and installed mounting scope unverified.",
+      "source_references": [
+        {
+          "document": "User-selected eBay listing / October 30, 2026",
+          "location": "Item 318129902320 / title, item specifics and displayed price",
+          "url": "https://www.ebay.com/itm/318129902320"
+        }
+      ]
+    }
+  }
+]

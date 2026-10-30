@@ -1,4 +1,4 @@
-"""Load missing team records, then apply the additive sensor-layout migration."""
+"""Load missing records, then apply the sensor, motor and latest concept updates."""
 import json
 from backend.database.store import Store, ROOT
 from backend.schemas.entities import Component, Vehicle
@@ -19,6 +19,18 @@ def load(store=None):
     from scripts.load_sensor_project import load as load_sensors
     sensor_counts = load_sensors(store)
     counts['components'] += sensor_counts['components']
+    from scripts.load_motor_project import load as load_motors
+    motor_counts = load_motors(store)
+    counts['components'] += motor_counts['components']
+    from scripts.load_architecture_project import load as load_architecture
+    architecture_counts = load_architecture(store)
+    counts['components'] += architecture_counts['components']
+    from scripts.load_battery_project import load as load_battery
+    battery_counts = load_battery(store)
+    counts['components'] += battery_counts['components']
+    from scripts.load_drive_hardware import load as load_hardware
+    hardware_counts = load_hardware(store)
+    counts['components'] += hardware_counts['components']
     return counts
 
 

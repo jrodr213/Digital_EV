@@ -1,0 +1,438 @@
+[
+  {
+    "id": "team-chassis-pipe-frame",
+    "name": "Team-fabricated chassis / steel and PVC pipe frame",
+    "category": "chassis",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": null,
+    "notes": "The team will fabricate its frame from both previously linked stock products: 8 ft steel tubing and 10 ft IPEX PVC pipe. This is the selected chassis plan, not a request to buy a complete rolling chassis. The user described the joining plan as soldering; actual material-specific joints, load paths, cut list, stock quantities, geometry, mounting and load capacity remain unverified. PVC needs plastic-appropriate joining; metal soldering is not a PVC bond. The viewer's tube layout is schematic and does not assign structural roles to either material.",
+    "datasheet": "",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "team fabrication / joints and layout pending",
+      "currency": "USD",
+      "source_references": [
+        {
+          "document": "User pipe-frame, custom-drive and hardware request / October 30, 2026",
+          "location": "Both steel and PVC confirmed for the team-fabricated frame; ESP32 plus team-built motor-drive circuitry; quoted drive parts and THR-90 pedal"
+        },
+        {
+          "document": "Previously supplied steel tubing link",
+          "location": "8 ft steel stock; quantity/section unknown",
+          "url": "https://www.walmart.com/ip/331307431"
+        },
+        {
+          "document": "Previously supplied PVC pipe link",
+          "location": "IPEX 30-05010HD / 10 ft stock; quantity unknown",
+          "url": "https://www.homedepot.com/p/319692959"
+        },
+        {
+          "document": "IPEX PVC joining guidance",
+          "location": "Plastic-specific solvent cement joining; not a vehicle frame approval",
+          "url": "https://ipexna.com/solutions/plumbing-and-mechanical-solutions/solvent-cements-primers/cements-primers/"
+        }
+      ],
+      "verification_status": "User plan/quote recorded; supplier details identified separately; installed fit unverified.",
+      "installed_quantity": 1,
+      "placeholder": true,
+      "user_fabricated": true,
+      "frame_style": "pipe_frame",
+      "material_component_ids": [
+        "team-material-pvc-10ft",
+        "team-material-steel-8ft"
+      ],
+      "joining_method_claim": "Soldering, as described by the user; exact process and joints unverified.",
+      "material_roles": "Both selected; roles of individual steel/PVC members not specified."
+    }
+  },
+  {
+    "id": "team-custom-drive-esp32",
+    "name": "Custom motor-drive electronics / ESP32-controlled, team-built",
+    "category": "inverter",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": null,
+    "notes": "The user will build the motor-drive power circuitry and control it using the already-listed ESP32 boards. No off-the-shelf BLDC controller purchase is selected. The custom circuit will provide the power switching/commutation function for both brushless motors; circuit design, bill of materials, gate drive, electrical protections, current/voltage limits, cooling, braking behavior and testing remain unspecified. This assembly covers the added power circuitry only; ESP32 board mass/cost is tracked separately.",
+    "datasheet": "",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "team-built circuitry / design and validation pending",
+      "currency": "USD",
+      "source_references": [
+        {
+          "document": "User pipe-frame, custom-drive and hardware request / October 30, 2026",
+          "location": "Both steel and PVC confirmed for the team-fabricated frame; ESP32 plus team-built motor-drive circuitry; quoted drive parts and THR-90 pedal"
+        }
+      ],
+      "verification_status": "User plan/quote recorded; supplier details identified separately; installed fit unverified.",
+      "installed_quantity": 1,
+      "placeholder": true,
+      "user_fabricated": true,
+      "user_built_motor_drive": true,
+      "commercial_controller_purchase": false,
+      "mass_scope": "Custom power circuitry only; excludes the separately listed ESP32 boards.",
+      "controlled_motor_quantity": 2
+    }
+  },
+  {
+    "id": "team-drive-chain-420",
+    "name": "Two-motor rear #420 chain drive / 60T rear sprockets / no differential",
+    "category": "drivetrain",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Two rear chain-drive paths are proposed for the two selected 36 V / 500 W motors, with no differential. The requested chain and sprocket hardware is listed as separate installed assemblies. Motor-sprocket tooth count and shaft fit are unselected, so no gear ratio is assumed. Axle layout, chain alignment/loop lengths, clearance, efficiency and load ratings remain unresolved. This record's mass is for the remaining axle/drivetrain structure only; do not include separately listed chains, sprockets, plates or protection hardware again.",
+    "datasheet": "https://www.gokartsupply.com/chain.htm",
+    "hypothetical": false,
+    "specs": {
+      "drive_type": "chain",
+      "driven_wheels": "RWD",
+      "differential": "none",
+      "listed_chain_size": "#420",
+      "listed_rear_sprocket_teeth": 60
+    },
+    "units": {
+      "drive_type": "text",
+      "driven_wheels": "text",
+      "differential": "text",
+      "listed_chain_size": "text",
+      "listed_rear_sprocket_teeth": "count"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "user-selected / fit and installed mass unverified",
+      "currency": "USD",
+      "source_references": [
+        {
+          "document": "User pipe-frame, custom-drive and hardware request / October 30, 2026",
+          "location": "Both steel and PVC confirmed for the team-fabricated frame; ESP32 plus team-built motor-drive circuitry; quoted drive parts and THR-90 pedal"
+        }
+      ],
+      "verification_status": "User plan/quote recorded; supplier details identified separately; installed fit unverified.",
+      "installed_quantity": 1,
+      "hardware_component_ids": [
+        "team-motor-mount-plates",
+        "team-chain-420-pair",
+        "team-rear-sprocket-60-pair",
+        "team-motor-sprocket-420-pair",
+        "team-chain-guard-adjustment"
+      ],
+      "mass_scope": "Drivetrain remainder only; separately installed hardware groups are excluded."
+    }
+  },
+  {
+    "id": "team-motor-mount-plates",
+    "name": "Motor mounts / 2 BMI 12 x 5 in steel plates",
+    "category": "motor_mounts",
+    "manufacturer": "",
+    "model": "BMI 400367 / Azusa 8190",
+    "mass_kg": null,
+    "price": 25.9,
+    "notes": "Two plates requested. Supplier describes slotted steel plates for common small gasoline engines. Slot pattern and motor bolt pattern have not been matched to the selected AliExpress motors; drilling/adapters and frame attachment may be needed. Thickness and complete installed mounting mass remain unknown.",
+    "datasheet": "https://www.bmikarts.com/12-x-5-Motor-Mount-Plate_p_1119.html",
+    "hypothetical": false,
+    "specs": {
+      "listed_plate_length_in": 12,
+      "listed_plate_width_in": 5,
+      "listed_slot_centers_in": [
+        3.25,
+        6.125
+      ],
+      "listed_material": "steel"
+    },
+    "units": {
+      "listed_plate_length_in": "in",
+      "listed_plate_width_in": "in",
+      "listed_slot_centers_in": "in",
+      "listed_material": "text"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "user-selected / fit and installed mass unverified",
+      "currency": "USD",
+      "source_references": [
+        {
+          "document": "User pipe-frame, custom-drive and hardware request / October 30, 2026",
+          "location": "Both steel and PVC confirmed for the team-fabricated frame; ESP32 plus team-built motor-drive circuitry; quoted drive parts and THR-90 pedal"
+        },
+        {
+          "document": "BMI product page",
+          "location": "400367 / Azusa 8190; reviewed October 30, 2026",
+          "url": "https://www.bmikarts.com/12-x-5-Motor-Mount-Plate_p_1119.html"
+        }
+      ],
+      "verification_status": "User plan/quote recorded; supplier details identified separately; installed fit unverified.",
+      "installed_quantity": 2,
+      "procurement_quantity": 2,
+      "unit_price_usd": 12.95,
+      "price_basis": "User quote: $25.90 total for two plates; $12.95 each.",
+      "quantity_basis": "Two explicitly requested."
+    }
+  },
+  {
+    "id": "team-chain-420-pair",
+    "name": "Drive chains / 2 x 4 ft #420 with master links",
+    "category": "drive_chain",
+    "manufacturer": "",
+    "model": "420-4",
+    "mass_kg": null,
+    "price": 35,
+    "notes": "Two 4 ft stock lengths with master links requested. The eight feet of purchased stock is not a verified pair of installed loop lengths. Cut lengths, center distances, tensioning, master-link placement and clearances need the final drivetrain layout.",
+    "datasheet": "https://www.gokartsupply.com/chain.htm",
+    "hypothetical": false,
+    "specs": {
+      "listed_chain_size": "#420",
+      "listed_stock_length_each_ft": 4,
+      "listed_chain_pitch_in": 0.5
+    },
+    "units": {
+      "listed_chain_size": "text",
+      "listed_stock_length_each_ft": "ft",
+      "listed_chain_pitch_in": "in"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "user-selected / fit and installed mass unverified",
+      "currency": "USD",
+      "source_references": [
+        {
+          "document": "User pipe-frame, custom-drive and hardware request / October 30, 2026",
+          "location": "Both steel and PVC confirmed for the team-fabricated frame; ESP32 plus team-built motor-drive circuitry; quoted drive parts and THR-90 pedal"
+        },
+        {
+          "document": "Go Kart Supply chain catalog",
+          "location": "420-4 / 4 ft #420 with master link; reviewed October 30, 2026",
+          "url": "https://www.gokartsupply.com/chain.htm"
+        }
+      ],
+      "verification_status": "User plan/quote recorded; supplier details identified separately; installed fit unverified.",
+      "installed_quantity": 2,
+      "procurement_quantity": 2,
+      "unit_price_usd": 17.5,
+      "price_basis": "User quote: $35 total for two 4 ft chains; $17.50 each.",
+      "quantity_basis": "Two explicitly requested."
+    }
+  },
+  {
+    "id": "team-rear-sprocket-60-pair",
+    "name": "Rear sprockets / 2 x 60T / 1 in bore / 1/4 in keyway",
+    "category": "rear_sprockets",
+    "manufacturer": "",
+    "model": "N83-9095",
+    "mass_kg": null,
+    "price": 65.98,
+    "notes": "Two rear sprockets requested. The supplier's bore and keyway requirements still need matching axle hardware. Ground/frame clearance and alignment are unverified. Reviewed page indicated backorder/unavailability; procurement availability must be rechecked.",
+    "datasheet": "https://monsterscooterparts.com/products/40-41-420-chain-60-tooth-sprocket-with-1-bore-1-4-keyway",
+    "hypothetical": false,
+    "specs": {
+      "listed_tooth_count": 60,
+      "listed_bore_in": 1,
+      "listed_keyway_in": 0.25,
+      "listed_diameter_in": 9.75,
+      "listed_chain_compatibility": "#40 / #41 / #420"
+    },
+    "units": {
+      "listed_tooth_count": "count",
+      "listed_bore_in": "in",
+      "listed_keyway_in": "in",
+      "listed_diameter_in": "in",
+      "listed_chain_compatibility": "text"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "user-selected / fit and installed mass unverified",
+      "currency": "USD",
+      "source_references": [
+        {
+          "document": "User pipe-frame, custom-drive and hardware request / October 30, 2026",
+          "location": "Both steel and PVC confirmed for the team-fabricated frame; ESP32 plus team-built motor-drive circuitry; quoted drive parts and THR-90 pedal"
+        },
+        {
+          "document": "Monster Scooter Parts product page",
+          "location": "N83-9095; reviewed October 30, 2026",
+          "url": "https://monsterscooterparts.com/products/40-41-420-chain-60-tooth-sprocket-with-1-bore-1-4-keyway"
+        }
+      ],
+      "verification_status": "User plan/quote recorded; supplier details identified separately; installed fit unverified.",
+      "installed_quantity": 2,
+      "procurement_quantity": 2,
+      "unit_price_usd": 32.99,
+      "price_basis": "User quote: $65.98 total for two; $32.99 each.",
+      "quantity_basis": "Two explicitly requested."
+    }
+  },
+  {
+    "id": "team-motor-sprocket-420-pair",
+    "name": "Motor sprockets / 2 x #420 / shaft and tooth variant pending",
+    "category": "motor_sprockets",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": 29.9,
+    "notes": "Two motor sprockets requested at $14.95 each. The supplied catalog offers multiple shaft/tooth variants, including different double-D bores; an exact SKU has not been selected. Those catalog motor-fit claims do not establish fit to the selected AliExpress motors. Confirm shaft diameter/profile, retention and tooth count before fixing the gear ratio.",
+    "datasheet": "https://electricscooterparts.com/motor-sprockets-420-chain.html",
+    "hypothetical": false,
+    "specs": {
+      "listed_chain_compatibility": "#41 / #420"
+    },
+    "units": {
+      "listed_chain_compatibility": "text"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "selected category / exact sprocket variant pending",
+      "currency": "USD",
+      "source_references": [
+        {
+          "document": "User pipe-frame, custom-drive and hardware request / October 30, 2026",
+          "location": "Both steel and PVC confirmed for the team-fabricated frame; ESP32 plus team-built motor-drive circuitry; quoted drive parts and THR-90 pedal"
+        },
+        {
+          "document": "ElectricScooterParts motor-sprocket catalog",
+          "location": "Multiple #420 variants; reviewed October 30, 2026",
+          "url": "https://electricscooterparts.com/motor-sprockets-420-chain.html"
+        }
+      ],
+      "verification_status": "User plan/quote recorded; supplier details identified separately; installed fit unverified.",
+      "installed_quantity": 2,
+      "procurement_quantity": 2,
+      "unit_price_usd": 14.95,
+      "price_basis": "User quote: $29.90 total for two; $14.95 each.",
+      "quantity_basis": "Two explicitly requested."
+    }
+  },
+  {
+    "id": "team-chain-guard-adjustment",
+    "name": "Chain protection and adjustment / guards, tensioners and bolt kits",
+    "category": "chain_protection",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": 109,
+    "notes": "One planning bundle: two Aluminum Chain Guard w/ Heat Shield, Black at $35.99 each; two spring-loaded #420 tensioners at $12.99 each; two mounting bolt kits at $5.50 each. Two of each is inferred from the two chain paths and the user's ~$109+ allowance. Itemized arithmetic is $108.96; the recorded bundle allowance is the user's rounded ~$109+ estimate. Exact guard/tensioner SKUs, supplier for the tensioners, bracket fit, fastener sizing and complete chain enclosure remain unresolved.",
+    "datasheet": "",
+    "hypothetical": false,
+    "specs": {
+      "listed_guard_quantity": 2,
+      "listed_tensioner_quantity": 2,
+      "listed_bolt_kit_quantity": 2
+    },
+    "units": {
+      "listed_guard_quantity": "count",
+      "listed_tensioner_quantity": "count",
+      "listed_bolt_kit_quantity": "count"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "estimated bundle / exact guard and tensioner fit pending",
+      "currency": "USD",
+      "source_references": [
+        {
+          "document": "User pipe-frame, custom-drive and hardware request / October 30, 2026",
+          "location": "Both steel and PVC confirmed for the team-fabricated frame; ESP32 plus team-built motor-drive circuitry; quoted drive parts and THR-90 pedal"
+        },
+        {
+          "document": "Go Kart Supply mounting catalog",
+          "location": "117128 / 5/16 in motor mount bolt kit / $5.50",
+          "url": "https://www.gokartsupply.com/enginemount.htm"
+        },
+        {
+          "document": "Matched supplier catalog reference, not a confirmed SKU",
+          "location": "Same guard title and $35.99 price found in Toigo catalog",
+          "url": "https://toigoracing.com/collections/eng-213"
+        }
+      ],
+      "verification_status": "User plan/quote recorded; supplier details identified separately; installed fit unverified.",
+      "installed_quantity": 1,
+      "procurement_quantity": 1,
+      "price_qualifier": "estimated_lower_bound",
+      "price_basis": "User bundle estimate: approximately $109+; not an exact complete installed cost.",
+      "quantity_basis": "Two guards, two tensioners and two bolt kits inferred from dual chain paths and the quoted ~$109+ total.",
+      "sub_items": [
+        {
+          "name": "Aluminum Chain Guard w/ Heat Shield, Black",
+          "quantity": 2,
+          "unit_price_usd": 35.99,
+          "selection_status": "User title/price; exact SKU and fit unresolved"
+        },
+        {
+          "name": "Spring-loaded #420 chain tensioner",
+          "quantity": 2,
+          "unit_price_usd": 12.99,
+          "selection_status": "User title/price; exact supplier/SKU unresolved"
+        },
+        {
+          "name": "5/16 in motor mounting bolt kit",
+          "quantity": 2,
+          "unit_price_usd": 5.5,
+          "url": "https://www.gokartsupply.com/enginemount.htm",
+          "selection_status": "Catalog kit 117128; fastener fit unresolved"
+        }
+      ],
+      "itemized_quote_sum_usd": 108.96
+    }
+  },
+  {
+    "id": "team-throttle-thr90",
+    "name": "Accelerator / THR-90 Hall-effect foot pedal",
+    "category": "throttle_control",
+    "manufacturer": "",
+    "model": "THR-90",
+    "mass_kg": null,
+    "price": 23.95,
+    "notes": "One foot pedal requested. Supplier provides three-wire throttle wiring information and a CNX-52 mating-connector reference. Pedal mounting, supply/output voltage verification, ESP32 input conditioning, calibration, return behavior and stop priority remain unresolved. No direct GPIO connection or completed throttle control is implied.",
+    "datasheet": "https://cart.electricscooterparts.com/standard-foot-pedal-throttle",
+    "hypothetical": false,
+    "specs": {
+      "control_mode": "throttle-by-wire",
+      "listed_sensor_type": "Hall-effect",
+      "listed_cable_length_in": 49,
+      "listed_connector_pin_count": 3,
+      "listed_mounting_hole_diameter_in": 0.25
+    },
+    "units": {
+      "control_mode": "text",
+      "listed_sensor_type": "text",
+      "listed_cable_length_in": "in",
+      "listed_connector_pin_count": "count",
+      "listed_mounting_hole_diameter_in": "in"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "user-selected / fit and installed mass unverified",
+      "currency": "USD",
+      "source_references": [
+        {
+          "document": "User pipe-frame, custom-drive and hardware request / October 30, 2026",
+          "location": "Both steel and PVC confirmed for the team-fabricated frame; ESP32 plus team-built motor-drive circuitry; quoted drive parts and THR-90 pedal"
+        },
+        {
+          "document": "ElectricScooterParts product page",
+          "location": "THR-90 / reviewed October 30, 2026",
+          "url": "https://cart.electricscooterparts.com/standard-foot-pedal-throttle"
+        },
+        {
+          "document": "Supplier Hall-effect throttle wiring bulletin",
+          "location": "THR-90 wiring reference; verify electrical interface before connection",
+          "url": "https://electricscooterparts.com/manuals/THR-90.html"
+        }
+      ],
+      "verification_status": "User plan/quote recorded; supplier details identified separately; installed fit unverified.",
+      "installed_quantity": 1,
+      "procurement_quantity": 1,
+      "unit_price_usd": 23.95,
+      "price_basis": "User quote and reviewed item page: $23.95 for one pedal.",
+      "quantity_basis": "One explicitly requested."
+    }
+  }
+]

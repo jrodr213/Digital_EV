@@ -1,0 +1,120 @@
+[
+  {
+    "id": "team-motor-my1020-pair",
+    "name": "Selected pair / 2 MY1020 brushless motors / listed 1000 W each",
+    "category": "motor",
+    "manufacturer": "",
+    "model": "MY1020 (36/48 V variant unconfirmed)",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Two motors requested by the user, represented as one installed assembly. The supplied AliExpress title lists brushless DC, 36 V / 48 V options and 1000 W per motor. The product page could not be accessed; exact voltage variant and duty rating remain unverified. This is distinct from the brushed Walmart kit and the earlier KUNRAY candidate. Assembly mass, continuous/peak power, torque, RPM, efficiency, dimensions, shaft/sprocket fit, belt routing and controller arrangement are unknown. Viewer locations are schematic. Checkout code supplied by the user: THANKS27; eligibility and discount are unverified.",
+    "datasheet": "https://www.aliexpress.us/item/3256806152602316.html",
+    "hypothetical": false,
+    "specs": {
+      "listed_voltage_options_v": [36, 48],
+      "listed_power_per_motor_w": 1000,
+      "listed_motor_type": "brushless DC"
+    },
+    "units": {
+      "listed_voltage_options_v": "V",
+      "listed_power_per_motor_w": "W",
+      "listed_motor_type": "text"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "user-selected pair / listing unverified",
+      "currency": "USD",
+      "installed_quantity": 2,
+      "quantity_basis": "User explicitly requested two of the first linked MY1020 motor on October 30, 2026.",
+      "installation_scope": "two_motor_assembly",
+      "mass_basis": "Mass must cover both installed motors; unknown.",
+      "price_basis": "Total price for two motors is unknown; no prior motor allowance or coupon discount substituted.",
+      "verification_status": "User-supplied listing title only; AliExpress page inaccessible on October 30, 2026.",
+      "source_references": [
+        {
+          "document": "User-supplied AliExpress listing title",
+          "location": "Item 3256806152602316; first link selected by user",
+          "url": "https://www.aliexpress.us/item/3256806152602316.html"
+        },
+        {
+          "document": "User request / October 30, 2026",
+          "location": "First motor confirmed, then quantity changed to two"
+        }
+      ],
+      "checkout_code": "THANKS27",
+      "checkout_code_status": "User-supplied; applicability, expiry and discount unverified."
+    }
+  },
+  {
+    "id": "team-motor-walmart-1000-brushed",
+    "name": "Alternative / Walmart 48 V 1000 W brushed motor kit",
+    "category": "motor",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Alternative only, not installed. The Walmart item title describes a 48 V 1000 W brushed DC motor kit with controller and throttle. It is a different motor type from the selected brushless MY1020 pair. Exact seller offer, controller limits, duty ratings, mass and compatibility are unverified; no price from a different seller is substituted.",
+    "datasheet": "https://www.walmart.com/ip/17782673083?selectedSellerId=102634091",
+    "hypothetical": false,
+    "specs": {
+      "listed_voltage_v": 48,
+      "listed_power_w": 1000,
+      "listed_motor_type": "brushed DC"
+    },
+    "units": {
+      "listed_voltage_v": "V",
+      "listed_power_w": "W",
+      "listed_motor_type": "text"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "alternative / not installed",
+      "currency": "USD",
+      "listed_package_contents": ["Brushed DC motor", "Controller", "Throttle"],
+      "verification_status": "Walmart item title accessible in search on October 30, 2026; exact selected seller offer and engineering ratings unverified.",
+      "source_references": [
+        {
+          "document": "User-supplied Walmart link; indexed item title",
+          "location": "Item 17782673083; requested seller 102634091",
+          "url": "https://www.walmart.com/ip/17782673083?selectedSellerId=102634091",
+          "reviewed_url": "https://www.walmart.com/ip/17782673083"
+        }
+      ]
+    }
+  },
+  {
+    "id": "team-motor-aliexpress-500-brushless",
+    "name": "Alternative / AliExpress brushless motor / listed 36 V 500 W option",
+    "category": "motor",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Alternative only, not installed. The user-supplied title mentions brushless construction, 12 V / 24 V / 36 V variants and a 36 V 500 W option. The AliExpress page could not be accessed. Exact variant, duty ratings, torque, RPM, efficiency, mass and controller inclusion are unverified.",
+    "datasheet": "https://www.aliexpress.us/item/3256809008940329.html",
+    "hypothetical": false,
+    "specs": {
+      "listed_voltage_options_v": [12, 24, 36],
+      "listed_36v_option_power_w": 500,
+      "listed_motor_type": "brushless"
+    },
+    "units": {
+      "listed_voltage_options_v": "V",
+      "listed_36v_option_power_w": "W",
+      "listed_motor_type": "text"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "alternative / not installed",
+      "currency": "USD",
+      "verification_status": "User-supplied listing title only; AliExpress page inaccessible on October 30, 2026.",
+      "source_references": [
+        {
+          "document": "User-supplied AliExpress listing title",
+          "location": "Item 3256809008940329; voltage/power variant unresolved",
+          "url": "https://www.aliexpress.us/item/3256809008940329.html"
+        }
+      ]
+    }
+  }
+]

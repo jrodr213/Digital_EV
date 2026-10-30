@@ -1,0 +1,327 @@
+[
+  {
+    "id": "team-motor-my1020-single",
+    "name": "Selected motor / 1 MY1020 brushless / listed 1000 W",
+    "category": "motor",
+    "manufacturer": "",
+    "model": "MY1020 (36/48 V variant unconfirmed)",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Latest user request selects one MY1020, superseding the earlier pair. The supplied title lists brushless DC, 36/48 V options and 1000 W. The AliExpress page was inaccessible during review. Exact voltage variant, continuous/peak duty, torque, RPM, efficiency, motor mass, shaft/sprocket fit and controller remain unverified. User-supplied checkout code: THANKS27 (unverified). Ackermann describes the steering geometry separately from motor count.",
+    "datasheet": "https://www.aliexpress.us/item/3256806152602316.html",
+    "hypothetical": false,
+    "specs": {
+      "listed_voltage_options_v": [
+        36,
+        48
+      ],
+      "listed_power_w": 1000,
+      "listed_motor_type": "brushless DC"
+    },
+    "units": {
+      "listed_voltage_options_v": "V",
+      "listed_power_w": "W",
+      "listed_motor_type": "text"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "user-specified concept / hardware incomplete",
+      "currency": "USD",
+      "source_references": [
+        {
+          "document": "User architecture and chassis update / October 30, 2026",
+          "location": "One motor, chain-driven rear wheels, by-wire controls, Ackermann steering, no differential; regenerative braking queried"
+        },
+        {
+          "document": "User-supplied AliExpress title",
+          "location": "Item 3256806152602316",
+          "url": "https://www.aliexpress.us/item/3256806152602316.html"
+        }
+      ],
+      "verification_status": "Design intent supplied by user; hardware and engineering performance not validated.",
+      "installed_quantity": 1,
+      "quantity_basis": "Latest user request explicitly specifies only one motor.",
+      "checkout_code": "THANKS27",
+      "checkout_code_status": "User-supplied; applicability, expiry and discount unverified."
+    }
+  },
+  {
+    "id": "team-drive-chain-rwd",
+    "name": "Rear-wheel chain drive / no differential / specifications pending",
+    "category": "drivetrain",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": null,
+    "notes": "One motor with chain drive to the rear wheels and no differential, as requested. This replaces the belt-drive concept in the main draft. Chain pitch, sprockets, reduction ratio, tensioning, axle arrangement, wheel diameter, efficiency, load ratings and installed mass remain unknown. No particular live-axle or single-wheel drive arrangement has been inferred.",
+    "datasheet": "",
+    "hypothetical": false,
+    "specs": {
+      "drive_type": "chain",
+      "driven_wheels": "RWD",
+      "differential": "none"
+    },
+    "units": {
+      "drive_type": "text",
+      "driven_wheels": "text",
+      "differential": "text"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "user-specified concept / hardware incomplete",
+      "currency": "USD",
+      "source_references": [
+        {
+          "document": "User architecture and chassis update / October 30, 2026",
+          "location": "One motor, chain-driven rear wheels, by-wire controls, Ackermann steering, no differential; regenerative braking queried"
+        }
+      ],
+      "verification_status": "Design intent supplied by user; hardware and engineering performance not validated.",
+      "installed_quantity": 1
+    }
+  },
+  {
+    "id": "team-chassis-materials",
+    "name": "Proposed chassis / PVC and steel stock / structure pending",
+    "category": "chassis",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Proposed material references: Home Depot IPEX 1/2-inch Schedule 40 PVC pipe in 10 ft stock lengths, user quote $5.38 per length; Walmart steel tubing described by the user as 8 ft, user quote $64.79 per length. Required quantities, material roles, steel section/wall/grade, joints, cut lengths, load limits, finished dimensions and installed assembly mass are unknown. Stock lengths are not vehicle dimensions. The PVC listing describes water pipe; it does not establish suitability for a vehicle load-bearing frame.",
+    "datasheet": "",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "materials proposed / structure unverified",
+      "currency": "USD",
+      "source_references": [
+        {
+          "document": "User architecture and chassis update / October 30, 2026",
+          "location": "One motor, chain-driven rear wheels, by-wire controls, Ackermann steering, no differential; regenerative braking queried"
+        },
+        {
+          "document": "Home Depot product page",
+          "location": "IPEX 30-05010HD / item 319692959; reviewed October 30, 2026",
+          "url": "https://www.homedepot.com/p/319692959"
+        },
+        {
+          "document": "User-supplied Walmart reference",
+          "location": "Item 331307431; product page inaccessible",
+          "url": "https://www.walmart.com/ip/331307431"
+        }
+      ],
+      "verification_status": "Design intent supplied by user; hardware and engineering performance not validated.",
+      "placeholder": true,
+      "installed_quantity": 1,
+      "material_component_ids": [
+        "team-material-pvc-10ft",
+        "team-material-steel-8ft"
+      ]
+    }
+  },
+  {
+    "id": "team-material-pvc-10ft",
+    "name": "Chassis material / IPEX PVC pipe / 10 ft stock",
+    "category": "chassis_material",
+    "manufacturer": "IPEX",
+    "model": "30-05010HD",
+    "mass_kg": null,
+    "price": 5.38,
+    "notes": "User quoted $5.38 per 10 ft stock length. Home Depot identifies this as nominal 1/2-inch Schedule 40 water pipe; reviewed page displayed $7.56 in its location context, stored separately rather than replacing the user's quote. Required stock quantity, cut plan and installation role are unknown. No chassis structural rating is established.",
+    "datasheet": "https://www.homedepot.com/p/319692959",
+    "hypothetical": false,
+    "specs": {
+      "listed_stock_length_ft": 10,
+      "listed_nominal_pipe_size_in": 0.5,
+      "listed_material": "PVC Schedule 40"
+    },
+    "units": {
+      "listed_stock_length_ft": "ft",
+      "listed_nominal_pipe_size_in": "in",
+      "listed_material": "text"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "proposed material / quantity unknown",
+      "currency": "USD",
+      "source_references": [
+        {
+          "document": "User chassis list / October 30, 2026",
+          "location": "10 ft PVC pipe / $5.38",
+          "url": "https://www.homedepot.com/p/319692959"
+        },
+        {
+          "document": "Home Depot product page",
+          "location": "IPEX 30-05010HD / nominal 1/2-inch Schedule 40 / reviewed October 30, 2026",
+          "url": "https://www.homedepot.com/p/319692959"
+        }
+      ],
+      "verification_status": "Design intent supplied by user; hardware and engineering performance not validated.",
+      "price_scope": "per_stock_length",
+      "purchase_quantity": null,
+      "price_basis": "User quote: $5.38 per 10 ft length; not a current verified project-local price.",
+      "installation_scope": "procurement_reference_only",
+      "listed_page_price_usd": 7.56,
+      "listed_page_price_note": "Home Depot page observed October 30, 2026; location-dependent and different from the user quote."
+    }
+  },
+  {
+    "id": "team-material-steel-8ft",
+    "name": "Chassis material / steel tubing / 8 ft stock",
+    "category": "chassis_material",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": 64.79,
+    "notes": "User described this product as 8 ft steel tubing and quoted $64.79 per stock length. The Walmart page was inaccessible during review; product identity, section shape, dimensions, wall thickness, grade, mass and structural properties remain unverified. Required quantity and final fabrication plan are unknown.",
+    "datasheet": "https://www.walmart.com/ip/331307431",
+    "hypothetical": false,
+    "specs": {
+      "listed_stock_length_ft": 8,
+      "listed_material": "steel tubing (user description)"
+    },
+    "units": {
+      "listed_stock_length_ft": "ft",
+      "listed_material": "text"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "proposed material / listing and quantity unverified",
+      "currency": "USD",
+      "source_references": [
+        {
+          "document": "User chassis list / October 30, 2026",
+          "location": "8 ft steel tubing / $64.79 / item 331307431",
+          "url": "https://www.walmart.com/ip/331307431"
+        }
+      ],
+      "verification_status": "Design intent supplied by user; hardware and engineering performance not validated.",
+      "price_scope": "per_stock_length",
+      "purchase_quantity": null,
+      "price_basis": "User quote: $64.79 per 8 ft length; not a verified current price.",
+      "installation_scope": "procurement_reference_only"
+    }
+  },
+  {
+    "id": "team-steering-ackermann-by-wire",
+    "name": "Ackermann steering / steer-by-wire / actuator provisional",
+    "category": "steering",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": 47,
+    "notes": "User requests steer-by-wire and Ackermann steering geometry. The earlier AliExpress actuator remains a provisional candidate with its historical ~$47 allowance. Linkage dimensions, steering angles, actuator limits, feedback, control implementation and installed mass remain unknown. Ackermann geometry does not establish traction motor count or differential design.",
+    "datasheet": "https://www.aliexpress.us/item/3256806630223349.html",
+    "hypothetical": false,
+    "specs": {
+      "steering_geometry": "Ackermann",
+      "control_mode": "steer-by-wire"
+    },
+    "units": {
+      "steering_geometry": "text",
+      "control_mode": "text"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "user-specified concept / hardware incomplete",
+      "currency": "USD",
+      "source_references": [
+        {
+          "document": "User architecture and chassis update / October 30, 2026",
+          "location": "One motor, chain-driven rear wheels, by-wire controls, Ackermann steering, no differential; regenerative braking queried"
+        },
+        {
+          "document": "Budgeting options .docx",
+          "location": "Provisional steering actuator allowance, approximately $47",
+          "url": "https://www.aliexpress.us/item/3256806630223349.html"
+        }
+      ],
+      "verification_status": "Design intent supplied by user; hardware and engineering performance not validated.",
+      "installed_quantity": 1,
+      "price_basis": "Historical budget allowance for the provisional steering actuator; not a completed steering-system cost."
+    }
+  },
+  {
+    "id": "team-throttle-by-wire",
+    "name": "Throttle-by-wire / hardware and controls pending",
+    "category": "throttle_control",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Electronic throttle control requested. Pedal or input hardware, controller interface, command limits, feedback, fault response, stop priority, power demand and installed mass are unresolved. This record describes the planned system; no working control software or wiring is implied.",
+    "datasheet": "",
+    "hypothetical": false,
+    "specs": {
+      "control_mode": "throttle-by-wire"
+    },
+    "units": {
+      "control_mode": "text"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "requested function / hardware pending",
+      "currency": "USD",
+      "source_references": [
+        {
+          "document": "User architecture and chassis update / October 30, 2026",
+          "location": "One motor, chain-driven rear wheels, by-wire controls, Ackermann steering, no differential; regenerative braking queried"
+        }
+      ],
+      "verification_status": "Design intent supplied by user; hardware and engineering performance not validated.",
+      "placeholder": true,
+      "installed_quantity": 1
+    }
+  },
+  {
+    "id": "team-motor-aliexpress-36v500-pair",
+    "name": "Selected pair / 2 brushless motors / 36 V 500 W each",
+    "category": "motor",
+    "manufacturer": "",
+    "model": "36 V / 500 W variant (user-selected)",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Latest user decision: two of AliExpress item 3256809008940329, each in the 36 V / 500 W variant. Replaces the previous MY1020 setup. The two units are represented as one assembly and two schematic motor blocks. Their listing wattages sum to 1000 W; continuous/peak mechanical ratings have not been verified. The product page remains inaccessible. Manufacturer, exact model, torque, RPM, efficiency, pair mass, dimensions, shaft/sprocket fit, controller arrangement and regen support remain unknown. No MY1020 checkout code is carried over.",
+    "datasheet": "https://www.aliexpress.us/item/3256809008940329.html",
+    "hypothetical": false,
+    "specs": {
+      "listed_voltage_v": 36,
+      "listed_power_per_motor_w": 500,
+      "listed_motor_type": "brushless"
+    },
+    "units": {
+      "listed_voltage_v": "V",
+      "listed_power_per_motor_w": "W",
+      "listed_motor_type": "text"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "user-selected pair / engineering ratings unverified",
+      "installed_quantity": 2,
+      "quantity_basis": "Latest user request explicitly specifies 2 motors, 500 W each, 36 V.",
+      "selected_variant_voltage_v": 36,
+      "selected_variant_power_per_motor_w": 500,
+      "combined_listing_wattage_w": 1000,
+      "installation_scope": "two_motor_assembly",
+      "mass_basis": "Mass must cover both installed motors; unknown.",
+      "price_basis": "Total price for two units is unknown; URL promotional prices and previous motor coupon are not assumed.",
+      "currency": "USD",
+      "verification_status": "Variant and quantity supplied by user; AliExpress page inaccessible on October 30, 2026.",
+      "source_references": [
+        {
+          "document": "User final motor decision / October 30, 2026",
+          "location": "Two motors, each 500 W and 36 V; item 3256809008940329",
+          "url": "https://www.aliexpress.us/item/3256809008940329.html"
+        },
+        {
+          "document": "User-supplied AliExpress listing title",
+          "location": "Brushless motor listing with 12/24/36 V options and a 36 V 500 W variant",
+          "url": "https://www.aliexpress.us/item/3256809008940329.html"
+        }
+      ]
+    }
+  }
+]
