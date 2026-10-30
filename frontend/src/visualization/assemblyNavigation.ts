@@ -1,7 +1,7 @@
 import type {Part} from '../types';
 
 export const assemblyDefinitions = [
- {id:'powertrain',name:'Powertrain',eyebrow:'MAKE IT MOVE',description:'Explore the motors, drive assembly, sprockets and mounting hardware.',color:'#dba970',categories:['motor','drivetrain','motor_mounts','drive_chain','rear_sprockets','motor_sprockets','chain_protection']},
+ {id:'powertrain',name:'Powertrain',eyebrow:'MAKE IT MOVE',description:'Explore the traction motors, wheel connections and mounting hardware.',color:'#dba970',categories:['motor','drivetrain','motor_mounts','drive_chain','rear_sprockets','motor_sprockets','chain_protection']},
  {id:'battery',name:'Battery & power',eyebrow:'STORED ENERGY',description:'Look inside the battery compartment and review the selected pack.',color:'#56b7a5',categories:['battery']},
  {id:'electronics',name:'Electronics',eyebrow:'THE CONTROL CENTRE',description:'ESP32 boards, your custom motor-drive circuit, interfaces and auxiliary power.',color:'#9a9dd4',categories:['inverter','embedded_controllers','signal_interface','auxiliary','cooling']},
  {id:'frame',name:'Body & frame',eyebrow:'THE FOUNDATION',description:'Go beneath the concept bodywork to inspect the chassis and its material references.',color:'#b4aa92',categories:['chassis','chassis_material']},
@@ -24,6 +24,7 @@ export function partLabel(part:Part){
  if(part.custom_parameters.reference_only||part.category==='chassis_material')return part.name;
  if(part.category==='chassis'&&part.custom_parameters.frame_style!=='pipe_frame')return 'Chassis';
  if(part.custom_parameters.user_built_motor_drive)return 'Custom motor drive';
+ if(part.category==='drivetrain'&&part.specs.drive_type==='direct')return 'Direct wheel connections';
  const names:Record<string,string>={motor:'Traction motors',drivetrain:'Chain-drive assembly',motor_mounts:'Motor mounting plates',drive_chain:'Drive chains',rear_sprockets:'Rear axle sprockets',motor_sprockets:'Motor sprockets',chain_protection:'Guards & adjustment',battery:'Battery pack',chassis:'Fabricated pipe frame',tires:'Wheels & tires',suspension:'Suspension',brakes:'Brakes',inverter:'Motor drive',embedded_controllers:'ESP32 boards',signal_interface:'Signal interfaces',auxiliary:'Auxiliary supply',cooling:'Cooling fan',steering:'Steering assembly',throttle_control:'Accelerator pedal',safety_controls:'Emergency stop',vision:'Camera'};
  return part.custom_parameters.sensor_short_name??names[part.category]??part.name;
 }

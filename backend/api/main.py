@@ -11,6 +11,8 @@ from backend.schemas.entities import Component, Vehicle, DriveCycle, RunRequest,
 from backend.components.catalog import FIELDS, REQUIRED
 from backend.validation.assembly import assemble
 from backend.simulation.fastsim_adapter import FastSimEngine
+from backend.simulation.demo import prepare_demo, DEMO_NOTICE
+from backend.simulation.demo_review import with_demo_review, review_markdown
 
 store=Store()
 
@@ -98,6 +100,15 @@ def vehicles(): return store.list('vehicles')
 def validate(v:Vehicle): return resolve(v.model_dump())
 
 
+@app.post('/api/runs/preview')
+def preview(req:RunRequest):
+    vehicle=store.get('vehicles',req.vehicle_id)
+    if req.demo_mode:
+        _, a=prepare_demo(vehicle,[store.get('components',id) for id in vehicle['component_ids']])
+        return a
+    return resolve(vehicle)
+
+
 @app.post('/api/vehicles')
 def save_vehicle(v:Vehicle):
     for id in v.component_ids: store.get('components',id)
@@ -111,7 +122,7 @@ def delete_vehicle(id:str):
 
 
 @app.get('/api/cycles')
-def cycles(): return [{'id':c,'name':c.upper()+' / official FASTSim'} for c in ['udds','hwfet','us06']]+[{'id':c['id'],'name':c['name']} for c in store.list('cycles')]
+def cycles(): return [{'id':'demo-cart','name':'Low-speed demo / 0–10 mph / 120 s'}]+[{'id':c,'name':c.upper()+' / official FASTSim'} for c in ['udds','hwfet','us06']]+[{'id':c['id'],'name':c['name']} for c in store.list('cycles')]
 
 
 @app.post('/api/cycles')
@@ -131,7 +142,10 @@ async def import_cycle(file:UploadFile):
 
 def execute(req, override=None):
     vehicle=store.get('vehicles',req.vehicle_id)
-    a=resolve(vehicle)
+    if req.demo_mode:
+        vehicle,a=prepare_demo(vehicle,[store.get('components',id) for id in vehicle['component_ids']])
+    else:
+        a=resolve(vehicle)
     if override:
         from copy import deepcopy
         parts=deepcopy(a['components']); key,value=override
@@ -142,14 +156,17 @@ def execute(req, override=None):
                 if c['category']==category: c['specs'][key]=value
         a=assemble(vehicle,parts); a['auxiliary_w']=vehicle['auxiliary_w']
     if a['errors']: raise HTTPException(422,{'errors':a['errors'],'warnings':a['warnings']})
-    custom=None if req.cycle in ['udds','hwfet','us06'] else store.get('cycles',req.cycle)
+    custom=None if req.cycle in ['udds','hwfet','us06','demo-cart'] else store.get('cycles',req.cycle)
     try: result=FastSimEngine().run(a,req,custom)
     except (ValueError,RuntimeError,TypeError,OSError) as exc: raise HTTPException(422,f'FASTSim failed: {exc}')
+    if req.demo_mode:
+        result['demo_assumptions']=a['demo_assumptions']
+        result['assumptions']=[DEMO_NOTICE]+result['assumptions']
     result['vehicle_snapshot']=vehicle
-    result['name']=vehicle['name']+(f' / {override[0]}={override[1]}' if override else '')
+    result['name']=vehicle['name']+(' / DEMO ESTIMATE' if req.demo_mode else '')+(f' / {override[0]}={override[1]}' if override else '')
     from datetime import datetime, timezone
     result['created_at']=datetime.now(timezone.utc).isoformat()
-    return store.put('results',result)
+    return store.put('results',with_demo_review(result))
 
 
 @app.post('/api/runs')
@@ -178,7 +195,7 @@ def results(): return [{k:r[k] for k in ['id','name','summary','analytical','cre
 
 
 @app.get('/api/results/{id}')
-def result(id:str): return store.get('results',id)
+def result(id:str): return with_demo_review(store.get('results',id))
 
 
 @app.get('/api/results/{id}/csv')
@@ -189,10 +206,14 @@ def result_csv(id:str):
 
 @app.get('/api/results/{id}/report')
 def report(id:str):
-    r=store.get('results',id)
+    r=with_demo_review(store.get('results',id))
     text=f"# EV engineering test report\n\n{r['name']}\n\nEngine: {r['engine']} {r['engine_version']}\n\n"
+    if r.get('demo_review'):
+        text+=review_markdown(r['demo_review'])
     for key in ['summary','analytical','warnings','assumptions','request','vehicle_snapshot','assembly','mapped_vehicle']:
         text+=f'## {key}\n\n```json\n{json.dumps(r[key],indent=2)}\n```\n\n'
+    if r.get('demo_assumptions') is not None:
+        text+=f"## demo_assumptions\n\n```json\n{json.dumps(r['demo_assumptions'],indent=2)}\n```\n\n"
     return Response(text,media_type='text/markdown',headers={'Content-Disposition':f'attachment; filename="{id}-report.md"'})
 
 

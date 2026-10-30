@@ -93,7 +93,7 @@ export function VehicleViewer({parts,libraryParts=parts,result,compact=false}:{p
      {hover&&!failure&&<div className="explorer-hover" role="tooltip" style={{left:Math.max(12,Math.min(hover.x+16,(mount.current?.clientWidth??300)-230)),top:Math.max(12,Math.min(hover.y+14,(mount.current?.clientHeight??400)-80))}}><span>{activeAssembly?'INSPECT COMPONENT':'LOOK INSIDE'}</span><strong>{activeAssembly&&hover.hit.part?partLabel(hover.hit.part):assemblyDefinitions.find(a=>a.id===hover.hit.assembly)?.name}<ArrowUpRight size={14}/></strong></div>}
      {!activeAssembly&&<div className="explorer-stage-footer"><b>EV—01</b><span>TEAM BUILD / CONCEPT BODYWORK</span><small>Drag to orbit · Scroll to zoom</small></div>}
     </div>
-    {!activeAssembly&&<div className="explorer-spec-strip"><span><b>{motorQuantity}</b> {motorQuantity===1?'motor':'motors'}</span><span><b>{voltage==null?'—':fmt(voltage,0)}</b> V selected pack</span><span><b>{drive?.specs.drive_type==='chain'?'Chain':drive?.specs.drive_type==='belt'?'Belt':'Rear'}</b> drive concept</span><span className="explorer-strip-note">Your parts. One possible finished form.</span></div>}
+    {!activeAssembly&&<div className="explorer-spec-strip"><span><b>{motorQuantity}</b> {motorQuantity===1?'motor':'motors'}</span><span><b>{voltage==null?'—':fmt(voltage,0)}</b> V selected pack</span><span><b>{drive?.specs.drive_type==='direct'?'Direct · 2WD':drive?.specs.drive_type==='chain'?'Chain':drive?.specs.drive_type==='belt'?'Belt':'Rear'}</b> drive concept</span><span className="explorer-strip-note">Your parts. One possible finished form.</span></div>}
    </div>
    {activeAssembly&&<aside className="explorer-sidebar" ref={sidebar} aria-label="Assembly components">
     {selected?<>

@@ -38,6 +38,7 @@ export function createVehicleScene(host:HTMLDivElement,parts:Part[],allParts:Par
  const length=chassis.length_m??3.2,width=chassis.width_m??1.5,wb=chassis.wheelbase_m??2.1,track=chassis.track_m??1.4,r=(drive.wheel_diameter_m??.56)/2;
  const dims={length,width,wb,track,r};
  const motorCount=parts.find(p=>p.category==='motor')?.custom_parameters.installed_quantity??1;
+ const directDrive=drive.drive_type==='direct',motorX=directDrive?wb/2:.30,motorY=directDrive?r+.04:.67;
  const paint=new THREE.MeshPhysicalMaterial({color:0x2c756f,metalness:.38,roughness:.24,clearcoat:1,clearcoatRoughness:.2});
  const cream=new THREE.MeshPhysicalMaterial({color:0xe8e5d8,metalness:.23,roughness:.26,clearcoat:.8});
  const dark=new THREE.MeshStandardMaterial({color:0x202c2d,metalness:.35,roughness:.5});
@@ -154,7 +155,7 @@ export function createVehicleScene(host:HTMLDivElement,parts:Part[],allParts:Par
  function buildPart(part:Part,index:number){
   const group=new THREE.Group();group.userData.partId=part.id??part.name;group.userData.assembly=assemblyForPart(part);partGroups.set(part.id??part.name,group);internals.add(group);
   const material=part.custom_parameters.placeholder?new THREE.MeshStandardMaterial({color:0xc0a782,metalness:.3,roughness:.55}):silver;
-  const sites=motorCount===2?[-track*.30,track*.30]:[0];
+  const sites=motorCount===2?(directDrive?[-track/2+.22,track/2-.22]:[-track*.30,track*.30]):[0];
   if(part.custom_parameters.reference_only){
    const name=part.name.toLowerCase();
    if(name.includes('bolt'))for(let i=0;i<4;i++){cylinder(group,.045,.04,[-.3+i*.2,.26,0],silver,'y',6);cylinder(group,.018,.28,[-.3+i*.2,.10,0],silver,'y')}
@@ -169,9 +170,9 @@ export function createVehicleScene(host:HTMLDivElement,parts:Part[],allParts:Par
    for(const x of [-wb/2,wb/2])for(const z of [-width*.38,width*.38])rounded(group,[.17,.012,.16],[x,.48,z],material,.008);
   }else if(part.category==='motor'){
    for(const z of sites){
-    cylinder(group,.13,.26,[.30,.67,z],graphite);for(let i=0;i<7;i++)cylinder(group,.135,.009,[.30,.67,z-.10+i*.033],silver);
-    cylinder(group,.09,.018,[.30,.67,z+.14],dark);cylinder(group,.026,.16,[.30,.67,z+Math.sign(z||1)*.17],silver);
-    rounded(group,[.25,.035,.25],[.30,.53,z],dark,.007);
+    cylinder(group,.13,.26,[motorX,motorY,z],graphite);for(let i=0;i<7;i++)cylinder(group,.135,.009,[motorX,motorY,z-.10+i*.033],silver);
+    cylinder(group,.09,.018,[motorX,motorY,z+.14],dark);cylinder(group,.026,.16,[motorX,motorY,z+Math.sign(z||1)*.17],silver);
+    rounded(group,[.25,.035,.25],[motorX,motorY-.14,z],dark,.007);
    }
   }else if(part.category==='battery'){
    rounded(group,[.82,.23,.41],[-.32,.62,0],dark,.065);rounded(group,[.83,.045,.42],[-.32,.49,0],graphite,.014);
@@ -179,10 +180,19 @@ export function createVehicleScene(host:HTMLDivElement,parts:Part[],allParts:Par
    rounded(group,[.20,.006,.17],[-.36,.741,0],paint,.012);cylinder(group,.028,.018,[.06,.64,0],silver,'x');
    rounded(group,[.06,.05,.08],[.13,.57,.10],gold,.009);
   }else if(part.category==='drivetrain'){
-   tube(group,[wb/2,.34,-track*.55],[wb/2,.34,track*.55],.035,silver);
-   for(const z of [-track*.36,track*.36]){rounded(group,[.16,.12,.11],[wb/2,.32,z],graphite,.012);cylinder(group,.055,.12,[wb/2,.34,z],silver)}
+   if(directDrive){
+    // Two short, independent wheel couplings; no shaft spans the vehicle.
+    // Rear-wheel context uses the existing wheel schematic, not extra BOM mass.
+    for(const side of [-1,1]){
+     cylinder(group,.055,.09,[wb/2,r+.04,side*(track/2-.055)],silver);
+     wheel(group,wb/2,side*track/2);
+    }
+   }else{
+    tube(group,[wb/2,.34,-track*.55],[wb/2,.34,track*.55],.035,silver);
+    for(const z of [-track*.36,track*.36]){rounded(group,[.16,.12,.11],[wb/2,.32,z],graphite,.012);cylinder(group,.055,.12,[wb/2,.34,z],silver)}
+   }
   }else if(part.category==='motor_mounts'){
-   for(const z of sites){rounded(group,[.43,.025,.32],[.30,.50,z],silver,.009);for(const x of [.16,.40])for(const dz of [-.09,.09])rounded(group,[.10,.006,.025],[x,.516,z+dz],dark,.008)}
+   for(const z of sites){rounded(group,[.43,.025,.32],[motorX,motorY-.17,z],silver,.009);for(const dx of [-.14,.10])for(const dz of [-.09,.09])rounded(group,[.10,.006,.025],[motorX+dx,motorY-.154,z+dz],dark,.008)}
   }else if(part.category==='drive_chain')sites.forEach(z=>chain(group,z));
   else if(part.category==='motor_sprockets')sites.forEach(z=>gear(group,.075,[.30,.67,z],12));
   else if(part.category==='rear_sprockets')sites.forEach(z=>gear(group,.19,[wb/2,.34,z],60));

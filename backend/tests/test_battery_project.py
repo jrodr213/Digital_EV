@@ -6,7 +6,7 @@ from scripts.load_team_project import load as load_team
 
 def test_selected_battery_claims_do_not_become_missing_engineering_ratings(tmp_path):
     store = Store(tmp_path / 'battery.sqlite')
-    assert load_team(store) == {'components': 62, 'vehicles': 3}
+    assert load_team(store) == {'components': 63, 'vehicles': 3}
     vehicle = store.get('vehicles', 'team-ev-belt')
     parts = [store.get('components', key) for key in vehicle['component_ids']]
     assert [p['id'] for p in parts if p['category'] == 'battery'] == [BATTERY_ID]

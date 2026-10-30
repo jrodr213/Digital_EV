@@ -1,4 +1,4 @@
-"""Load missing records, then apply the sensor, motor and latest concept updates."""
+"""Load missing records, then apply the sensor, motor, fabrication and direct-drive updates."""
 import json
 from backend.database.store import Store, ROOT
 from backend.schemas.entities import Component, Vehicle
@@ -31,6 +31,9 @@ def load(store=None):
     from scripts.load_drive_hardware import load as load_hardware
     hardware_counts = load_hardware(store)
     counts['components'] += hardware_counts['components']
+    from scripts.load_direct_drive import load as load_direct_drive
+    direct_counts = load_direct_drive(store)
+    counts['components'] += direct_counts['components']
     return counts
 
 

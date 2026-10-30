@@ -48,5 +48,5 @@ export function describePart(part:Part){
  facts.push({label:'Installed mass',value:part.mass_kg==null?'Not supplied':fmt(part.mass_kg)+' kg'});
  const pending=!!part.custom_parameters.placeholder;
  const status=pending?'Specifications pending':sensor?'Selected product · estimated mounting':part.hypothetical?'Hypothetical demonstration part':part.custom_parameters.document_project?'Document claims · unverified':'User-supplied specifications';
- return {role:part.custom_parameters.sensor_summary??roles[part.category]??'A component included in the selected vehicle assembly.',facts,status,pending};
+ return {role:part.custom_parameters.sensor_summary??(part.category==='drivetrain'&&part.specs.drive_type==='direct'?'Each motor connects directly to one rear wheel at 1:1, without reduction gears or a shared drive axle.':roles[part.category])??'A component included in the selected vehicle assembly.',facts,status,pending};
 }

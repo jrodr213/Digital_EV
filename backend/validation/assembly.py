@@ -43,7 +43,7 @@ def assemble(vehicle, components):
     mass_complete = all(c.get('mass_kg') is not None for c in components) and vehicle.get('payload_kg') is not None
     base = {'errors': errors, 'warnings': warnings, 'mass_kg': known_mass + vehicle['payload_kg'] if mass_complete else None, 'known_component_mass_kg': known_mass, 'mass_complete': mass_complete, 'components': components}
     if vehicle.get('custom_parameters', {}).get('document_project'):
-        warnings.extend(['Document-sourced provisional assembly: dimensions, battery and missing component ratings have not been supplied. No demo-car values are used.', 'Prices are historical planning allowances from the supplied documents, not verified supplier quotes. Kit, spare and off-vehicle items are tracked separately from installed assembly mass.'])
+        warnings.extend(['Document-sourced provisional assembly: listing claims, dimensions and component ratings require review.', 'Prices are historical planning allowances from the supplied documents, not verified supplier quotes. Kit, spare and off-vehicle items are tracked separately from installed assembly mass.'])
     if errors: return base
     p = {k: v[0]['specs'] for k,v in grouped.items() if k in REQUIRED}
     b,m,i,d,ch,t = (p[k] for k in REQUIRED)

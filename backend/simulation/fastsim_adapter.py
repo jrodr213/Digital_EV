@@ -42,6 +42,10 @@ def vehicle_from_assembly(a):
 
 def make_cycle(request, custom=None):
     if request.test in ['cycle','load']:
+        if request.cycle == 'demo-cart':
+            # Gentle, explicit cart trace; never relabel a scaled road cycle.
+            speed=[min(j / 30, 1., max(0., (90-j) / 30)) * 10 * MPS_PER_MPH for j in range(121)]
+            return fastsim.Cycle.from_dict({'time_seconds':list(range(121)),'speed_meters_per_second':speed,'grade':[0.] * 121})
         if custom:
             return fastsim.Cycle.from_dict({'time_seconds':custom['time_s'],'speed_meters_per_second':custom['speed_mps'],'grade':custom['grade']})
         if request.cycle not in ['udds','hwfet','us06']: raise ValueError('Unknown driving cycle.')
@@ -61,6 +65,8 @@ class FastSimEngine:
         df=sd.to_dataframe()
         def col(key): return df[key].to_numpy(dtype=float)
         time=col('cyc.time_seconds'); speed=col('veh.history.speed_ach_meters_per_second')
+        # Under Allow, FASTSim 3.1.0 can leave cyc_met true after a speed miss.
+        cycle_met=bool(np.all(np.abs(speed-col('cyc.speed_meters_per_second')) <= .1))
         battery=col('veh.pt_type.BEV.res.history.pwr_out_electrical_watts')
         chemical=col('veh.pt_type.BEV.res.history.energy_out_chemical_joules')
         motor_w=col('veh.pt_type.BEV.em.history.pwr_mech_prop_out_watts')
@@ -74,7 +80,7 @@ class FastSimEngine:
         torque=np.divide(motor_w,omega,out=np.zeros_like(omega),where=omega>.01)
         dt=np.diff(time,prepend=time[0]); regen=float(np.sum(np.maximum(-battery,0)*dt)/3.6e6)
         warn=list(a['warnings'])
-        if not df['veh.history.cyc_met'].all(): warn.append('FASTSim could not follow the target speed at every step. Inspect achieved speed.')
+        if not cycle_met: warn.append('FASTSim could not follow the target speed within 0.1 m/s at every step. Inspect achieved speed.')
         if np.max(rpm)>min(m['max_rpm'],d['max_input_rpm']): warn.append('Achieved trace exceeds supplied motor/drivetrain RPM limit; FASTSim does not enforce gearing. Treat range as conditional.')
         if np.max(torque)>min(m['rated_torque_nm'],d['max_torque_nm']): warn.append('Trace torque estimate exceeds continuous motor/drivetrain rating; range is conditional on torque feasibility.')
         current_estimate=battery/a['nominal_voltage_v']
@@ -94,4 +100,7 @@ class FastSimEngine:
         mapped.pop('state',None)
         if not all(np.isfinite(v).all() for v in sample.values()):
             raise ValueError('FASTSim returned non-finite time series. No result has been saved.')
-        return {'engine':'FASTSim','engine_version':importlib.metadata.version('fastsim'),'summary':{'distance_miles':distance,'energy_kwh':energy,'wh_per_mile':wh,'range_miles':a['usable_energy_kwh']*1000/wh if wh else None,'regen_kwh':regen,'cycle_met':bool(df['veh.history.cyc_met'].all()),'final_soc':float(soc[-1])},'analytical':estimates(a,request.grade,request.target_mph),'warnings':warn,'assumptions':assumptions,'samples':rows,'mapped_vehicle':mapped,'assembly':a,'request':request.model_dump()}
+        analytical=estimates(a,request.grade,request.target_mph)
+        if not analytical['can_start']:
+            warn.append('With the supplied or assumed torque, wheel size and mass, wheel force cannot overcome level-road rolling resistance. The analytical model predicts no launch; the scalar FASTSim trace does not enforce this torque limit. Its energy/range results are conditional on resolving the torque shortfall.')
+        return {'engine':'FASTSim','engine_version':importlib.metadata.version('fastsim'),'summary':{'distance_miles':distance,'energy_kwh':energy,'wh_per_mile':wh,'range_miles':a['usable_energy_kwh']*1000/wh if wh else None,'regen_kwh':regen,'cycle_met':cycle_met,'final_soc':float(soc[-1])},'analytical':analytical,'warnings':warn,'assumptions':assumptions,'samples':rows,'mapped_vehicle':mapped,'assembly':a,'request':request.model_dump()}

@@ -1,0 +1,46 @@
+[
+  {
+    "id": "team-drive-wheel-direct",
+    "name": "Two-wheel direct drive / one motor attached to each rear wheel",
+    "category": "drivetrain",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": null,
+    "notes": "User-selected layout: the existing two 36 V / 500 W motors each attach directly to one rear wheel. No reduction gears, shared drive axle, belt, chain, sprockets or differential. The ratio is exactly 1:1 by the chosen direct connection, not a selected gear. Retains the existing steel/PVC frame, motor mounting plates and custom ESP32-controlled power circuitry. The complete installed mass covers wheel couplings/adapters and support hardware only, excluding separately listed motors, wheels and plates. Wheel-to-shaft fit, bearing/support design, shaft radial loads, retention, wheel size, torque, RPM and control coordination remain unresolved; the schematic does not establish that the motor shaft can carry vehicle weight.",
+    "datasheet": "",
+    "hypothetical": false,
+    "specs": {
+      "drive_type": "direct",
+      "driven_wheels": "RWD",
+      "gear_ratio": 1,
+      "differential": "none"
+    },
+    "units": {
+      "drive_type": "text",
+      "driven_wheels": "text",
+      "gear_ratio": "ratio",
+      "differential": "text"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "user-selected direct wheel attachment / engineering pending",
+      "installed_quantity": 1,
+      "motor_count": 2,
+      "driven_wheel_count": 2,
+      "wheel_connection": "One rear wheel directly coupled to each motor",
+      "shared_drive_axle": false,
+      "reduction_gears": false,
+      "belt_drive": false,
+      "chain_drive": false,
+      "mass_scope": "Direct wheel connections and supporting hardware only; excludes separately listed motors, wheels and mounting plates.",
+      "verification_status": "Layout requested by user on October 30, 2026; shaft fit, bearing loads and hardware remain unverified.",
+      "source_references": [
+        {
+          "document": "User direct-drive correction / October 30, 2026",
+          "location": "Two-wheel drive; no gears, axle or belt; attach wheels directly using the same materials"
+        }
+      ]
+    }
+  }
+]

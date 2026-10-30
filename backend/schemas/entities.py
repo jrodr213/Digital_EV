@@ -56,12 +56,19 @@ class DriveCycle(Record):
 
 class RunRequest(Record):
     vehicle_id: str
+    demo_mode: bool = False
     cycle: str = 'udds'
     test: Literal['cycle', 'acceleration', 'hill', 'load'] = 'cycle'
     extra_payload_kg: float = Field(0, ge=0, le=5000)
     grade: float = Field(0, ge=-.5, le=.5)
     target_mph: float = Field(30, gt=0, le=150)
     duration_s: int = Field(120, ge=10, le=3600)
+
+    @model_validator(mode='after')
+    def demo_cycle_default(self):
+        if self.demo_mode and 'cycle' not in self.model_fields_set:
+            self.cycle = 'demo-cart'
+        return self
 
 
 class SweepRequest(Record):

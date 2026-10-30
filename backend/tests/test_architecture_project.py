@@ -40,12 +40,12 @@ def test_latest_concept_replaces_pair_and_preserves_other_records(tmp_path):
 
 def test_fresh_load_has_final_pair_and_explicit_unresolved_regen_and_chassis(tmp_path):
     store = Store(tmp_path / 'fresh.sqlite')
-    assert load_team(store) == {'components': 62, 'vehicles': 3}
+    assert load_team(store) == {'components': 63, 'vehicles': 3}
     vehicle = store.get('vehicles', 'team-ev-belt')
-    assert vehicle['name'] == 'TEAM / Two 36 V 500 W motors + rear chain drive / draft'
+    assert vehicle['name'] == 'TEAM / Two 36 V 500 W motors / direct rear-wheel drive / draft'
     meta = vehicle['custom_parameters']
     assert {
-        'motor_count': 2, 'driven_wheels': 'RWD', 'drive_type': 'chain',
+        'motor_count': 2, 'driven_wheels': 'RWD', 'drive_type': 'direct',
         'steering_actuation': 'by-wire', 'steering_geometry': 'Ackermann',
         'throttle_actuation': 'by-wire', 'differential': 'none',
         'regenerative_braking': None,
@@ -59,7 +59,7 @@ def test_fresh_load_has_final_pair_and_explicit_unresolved_regen_and_chassis(tmp
     assert 'checkout_code' not in motors[0]['custom_parameters']
     assert not {'rated_power_kw', 'peak_power_kw', 'efficiency'} & motors[0]['specs'].keys()
     drive = next(p for p in parts if p['category'] == 'drivetrain')
-    assert {'drive_type': 'chain', 'driven_wheels': 'RWD', 'differential': 'none'}.items() <= drive['specs'].items()
+    assert {'drive_type': 'direct', 'driven_wheels': 'RWD', 'differential': 'none'}.items() <= drive['specs'].items()
     assert len({p['id'] for p in parts}) == len(parts)
     assert sum(bool(p['custom_parameters'].get('sensor_type')) for p in parts) == 8
     assert not set(MATERIAL_IDS).intersection(vehicle['component_ids'])

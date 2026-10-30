@@ -8,13 +8,13 @@ from scripts.load_team_project import load as load_team
 
 def test_requested_hardware_and_fabrication_choices_are_recorded_without_fake_ratings(tmp_path):
     store = Store(tmp_path / 'hardware.sqlite')
-    assert load_team(store) == {'components': 62, 'vehicles': 3}
+    assert load_team(store) == {'components': 63, 'vehicles': 3}
     vehicle = store.get('vehicles', 'team-ev-belt')
     meta = vehicle['custom_parameters']
     parts = [store.get('components', key) for key in vehicle['component_ids']]
-    assert len(parts) == 29 and len(set(vehicle['component_ids'])) == 29
-    assert set(HARDWARE_IDS) <= set(vehicle['component_ids'])
-    assert set(REPLACEMENTS.values()) <= set(vehicle['component_ids'])
+    assert len(parts) == 25 and len(set(vehicle['component_ids'])) == 25
+    assert set(HARDWARE_IDS).intersection(vehicle['component_ids']) == {'team-motor-mount-plates'}
+    assert (set(REPLACEMENTS.values()) - {'team-drive-chain-420'}) <= set(vehicle['component_ids'])
     assert not set(REPLACEMENTS).intersection(vehicle['component_ids'])
     assert meta['commercial_bldc_controller_purchase'] is False
     assert meta['frame_fabrication']['materials'] == ['steel tubing', 'PVC pipe']
@@ -35,7 +35,7 @@ def test_requested_hardware_and_fabrication_choices_are_recorded_without_fake_ra
     motor_sprockets = store.get('components', 'team-motor-sprocket-420-pair')
     assert 'listed_tooth_count' not in motor_sprockets['specs']
     drivetrain = next(p for p in parts if p['category'] == 'drivetrain')
-    assert 'gear_ratio' not in drivetrain['specs']
+    assert drivetrain['specs']['gear_ratio'] == 1 and drivetrain['specs']['drive_type'] == 'direct'
     pedal = next(p for p in parts if p['category'] == 'throttle_control')
     assert pedal['model'] == 'THR-90' and pedal['price'] == 23.95
     bundle = store.get('components', 'team-chain-guard-adjustment')
@@ -48,7 +48,7 @@ def test_requested_hardware_and_fabrication_choices_are_recorded_without_fake_ra
     assert len(procurement) == len({p['id'] for p in procurement})
     subtotal = sum((p['price'] or 0) * ((p['custom_parameters'].get('purchase_quantity') or 0)
                    if p['custom_parameters'].get('price_scope') == 'per_stock_length' else 1) for p in procurement)
-    assert subtotal == pytest.approx(688.72)
+    assert subtotal == pytest.approx(448.84)
     assert assemble(vehicle, parts)['errors']
 
 
