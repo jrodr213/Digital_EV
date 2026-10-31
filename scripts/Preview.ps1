@@ -2,12 +2,15 @@ $ErrorActionPreference = 'Stop'
 Set-Location (Split-Path $PSScriptRoot -Parent)
 Write-Output 'EV / Twin: checking local server'
 
-# Reuse the running app instead of starting another process on its port.
+# Only reuse a source-backed preview from this workspace, never an old build.
 $ready = $false
 try {
     $health = Invoke-RestMethod -Uri 'http://127.0.0.1:8000/api/health' -TimeoutSec 3
     $page = Invoke-WebRequest -Uri 'http://127.0.0.1:8000/' -UseBasicParsing -TimeoutSec 3
-    $ready = $health.status -eq 'ok' -and $health.fastsim -and $page.StatusCode -eq 200
+    $ready = $health.status -eq 'ok' -and $health.fastsim -and
+        $health.preview_mode -eq 'live' -and
+        $health.workspace -eq (Get-Location).Path -and
+        $page.StatusCode -eq 200 -and $page.Content.Contains('/@vite/client')
 } catch {
     # Start.ps1 reports missing dependencies and server startup failures.
 }

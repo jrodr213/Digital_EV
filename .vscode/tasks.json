@@ -27,7 +27,7 @@
         "background": {
           "activeOnStart": true,
           "beginsPattern": "^EV / Twin: checking local server",
-          "endsPattern": "EV / Twin ready:|Application startup complete\\."
+          "endsPattern": "EV / Twin ready:"
         }
       },
       "presentation": {

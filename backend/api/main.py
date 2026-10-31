@@ -1,12 +1,14 @@
 import csv
 import io
 import json
+import os
 from contextlib import asynccontextmanager
 from pathlib import Path
 from fastapi import FastAPI, HTTPException, UploadFile
 from fastapi.responses import Response, FileResponse
 from fastapi.staticfiles import StaticFiles
 from backend.database.store import Store, ROOT
+from backend.database.migrations import apply_project_updates
 from backend.schemas.entities import Component, Vehicle, DriveCycle, RunRequest, SweepRequest
 from backend.components.catalog import FIELDS, REQUIRED
 from backend.validation.assembly import assemble
@@ -21,11 +23,14 @@ def seed():
     if not store.list('components') and not store.list('vehicles'):
         for c in json.loads((ROOT/'data/components/demo.json').read_text()): store.put('components',c)
         store.put('vehicles',json.loads((ROOT/'data/vehicles/demo.json').read_text()))
+        from scripts.load_team_project import load
+        load(store)
 
 
 @asynccontextmanager
 async def lifespan(app):
     seed()
+    apply_project_updates(store)
     yield
 
 
@@ -39,9 +44,11 @@ async def missing(request, exc):
 
 
 @app.get('/api/health')
-def health():
+def health(response:Response):
     import importlib.metadata
-    return {'status':'ok','fastsim':importlib.metadata.version('fastsim')}
+    response.headers['Cache-Control']='no-store'
+    return {'status':'ok','fastsim':importlib.metadata.version('fastsim'),
+            'preview_mode':os.environ.get('EV_PREVIEW_MODE','built'),'workspace':str(ROOT),'process_id':os.getpid()}
 
 
 @app.get('/api/catalog')
@@ -218,9 +225,9 @@ def report(id:str):
 
 
 dist=ROOT/'frontend/dist'
-if dist.exists():
+if dist.exists() and os.environ.get('EV_PREVIEW_MODE')!='live':
     app.mount('/assets',StaticFiles(directory=dist/'assets'),name='assets')
     @app.get('/{path:path}')
     def spa(path:str):
         if path.startswith('api/'): raise HTTPException(404,'Unknown API endpoint')
-        return FileResponse(dist/'index.html')
+        return FileResponse(dist/'index.html',headers={'Cache-Control':'no-store'})

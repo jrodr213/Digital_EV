@@ -1,4 +1,4 @@
-"""Load missing records, then apply the sensor, motor, fabrication and direct-drive updates."""
+"""Load repository team datasets, then apply the ordered car updates."""
 import json
 from backend.database.store import Store, ROOT
 from backend.schemas.entities import Component, Vehicle
@@ -6,10 +6,13 @@ from backend.schemas.entities import Component, Vehicle
 
 def load(store=None):
     store=store or Store()
-    records={
-        'components':[Component.model_validate(p).model_dump() for p in json.loads((ROOT/'data/components/team-parts.json').read_text(encoding='utf-8'))],
-        'vehicles':[Vehicle.model_validate(v).model_dump() for v in json.loads((ROOT/'data/vehicles/team-drafts.json').read_text(encoding='utf-8'))],
-    }
+    records={kind:[model.model_validate(record).model_dump()
+                   for path in sorted((ROOT/'data'/kind).glob('team*.json'))
+                   for record in json.loads(path.read_text(encoding='utf-8'))]
+             for kind,model in [('components',Component),('vehicles',Vehicle)]}
+    for kind,items in records.items():
+        if len({item['id'] for item in items}) != len(items):
+            raise ValueError(f'Duplicate IDs in repository team {kind} datasets.')
     counts={}
     for kind,items in records.items():
         existing={r['id'] for r in store.list(kind)}

@@ -2,6 +2,7 @@
 import json
 import os
 import sqlite3
+from contextlib import contextmanager
 from pathlib import Path
 from uuid import uuid4
 
@@ -15,8 +16,14 @@ class Store:
         with self.connect() as con:
             con.execute('CREATE TABLE IF NOT EXISTS records (kind TEXT, id TEXT, body TEXT NOT NULL, PRIMARY KEY(kind,id))')
 
+    @contextmanager
     def connect(self):
-        return sqlite3.connect(self.path, timeout=30)
+        connection = sqlite3.connect(self.path, timeout=30)
+        try:
+            with connection:
+                yield connection
+        finally:
+            connection.close()
 
     def put(self, kind, body):
         body = dict(body)

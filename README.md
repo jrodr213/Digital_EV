@@ -2,7 +2,7 @@
 
 A local Windows application for assembling a custom student EV from reviewed component specifications and testing it with the official **FASTSim 3.1.0** Python API. React + TypeScript, FastAPI, SQLite, Plotly and Three.js. The original demo dataset uses **hypothetical demonstration parts**, not manufactured products.
 
-The supplied team documents now also have a separate [provisional team build](docs/TEAM_BUILD.md): three saved concepts, document-sourced parts/options, a purchase plan and explicit missing-system placeholders. These records are unverified document claims, not hypothetical manufacturer specifications. The team draft is already loaded in the current workspace; use `python -m scripts.load_team_project` after setup on a fresh checkout. Missing mass, payload and auxiliary demand remain unknown in saved designs and block standard simulation. In Simulation Lab, turn on **Demo mode — fill missing inputs** to test the selected parts with explicit, temporary assumptions.
+The supplied team documents now also have a separate [provisional team build](docs/TEAM_BUILD.md): three saved concepts, document-sourced parts/options, a purchase plan and explicit missing-system placeholders. These records are unverified document claims, not hypothetical manufacturer specifications. New setups load the current team car automatically on first startup. Missing mass, payload and auxiliary demand remain unknown in saved designs and block standard simulation. In Simulation Lab, turn on **Demo mode — fill missing inputs** to test the selected parts with explicit, temporary assumptions.
 
 The car now opens as a [finished concept with an interactive assembly explorer](docs/TEAM_BUILD.md#finished-concept-and-assembly-explorer). Click a body panel or choose a system to reveal its internal parts, inspect a component, then use Back or the Full car breadcrumb to return. All eight requested sensor types and twelve estimated mounts are inside Sensors & vision. Saved parts, source links and unknown engineering values are preserved; the concept bodywork and seating are illustrative.
 
@@ -19,13 +19,19 @@ powershell -ExecutionPolicy Bypass -File .\scripts\Setup.ps1
 powershell -ExecutionPolicy Bypass -File .\scripts\Start.ps1
 ```
 
-Open **http://127.0.0.1:8000**. API documentation: **http://127.0.0.1:8000/docs**. Keep the terminal running; Ctrl+C stops it. The backend serves the built frontend, so only one server is needed. Setup requires internet; after installation and build, the application and bundled standard cycles work locally using system fonts.
+Open **http://127.0.0.1:8000**. API documentation: **http://127.0.0.1:8000/docs**. Keep the terminal running; Ctrl+C stops both servers. The default startup serves the frontend directly from source with Vite and runs the Python API with automatic reload on internal port 8001. Frontend edits appear automatically; backend edits restart the API. Page responses disable browser caching. Setup requires internet; after installation the application and bundled standard cycles work locally using system fonts.
 
-The current workspace already has `.venv`, a project-local Node runtime under `.tools`, installed packages and a built frontend. `Start.ps1` is sufficient here. These ignored dependencies are not committed; fresh clones use Setup. No FASTSim source changes are necessary.
+The current workspace already has `.venv`, a project-local Node runtime under `.tools` and installed packages. `Start.ps1` is sufficient here; it does not use the ignored `frontend/dist` build. These ignored dependencies are not committed; fresh clones use Setup. No FASTSim source changes are necessary. The preview follows the files in this checkout, including changes brought in by `git pull`; it does not automatically pull or overwrite local work. After dependency changes, rerun Setup and restart the preview.
+
+For an explicit production-style run, use `powershell -ExecutionPolicy Bypass -File .\scripts\Start.ps1 -Production`. This rebuilds the frontend before starting the single backend server on port 8000. Stop the live preview first. Production-style runs do not reload source edits; restart that command to rebuild. If either preview port is occupied by an older server, startup reports the conflict instead of silently showing an old build.
+
+After `git pull`, open the live preview as usual. It watches the team JSON datasets and Python loaders, brings the saved team car up to the pulled defaults and refreshes the browser automatically. If the preview is stopped, `Start.ps1` performs the same synchronization at startup. There is no need to run the individual component loaders. A production-style server needs to be restarted with `Start.ps1 -Production` after a pull.
+
+The SQLite database is separate from Git. The first upgrade applies the historical car changes in order. Later updates compare the previous repository defaults, the pulled defaults and your saved records. Unedited fields follow the repository; local measurements and explicit custom selections are retained when they conflict. Newly added team JSON datasets are discovered automatically. Removed default parts leave the current assembly but remain in the library as historical options. Saved simulation snapshots and unrelated designs are never rewritten. Deliberately deleted saved records are not recreated on every start. Dependency changes still require Setup before restarting.
 
 ### Preview inside VS Code over SSH
 
-Open this folder in your Remote - SSH window. The workspace starts the **EV / Twin: Start preview** task when the folder opens, reuses an existing healthy server, and configures port 8000 to open an editor preview. The integrated browser uses the SSH connection to reach the Windows app; no separate Mac SSH forwarding command is needed. Automatic startup requires a trusted workspace.
+Open this folder in your Remote - SSH window. The workspace starts the **EV / Twin: Start preview** task when the folder opens, reuses an existing live preview from this folder, and configures port 8000 to open an editor preview. Old built servers are not considered ready. The integrated browser uses the SSH connection to reach the Windows app; only port 8000 needs forwarding. Automatic startup requires a trusted workspace.
 
 To open the app at any time, press **F5** and choose **EV / Twin: View car in VS Code**, or click **http://127.0.0.1:8000** in VS Code. The browser opens beside your code. Select **3D Vehicle Viewer** to inspect the sensor layout. If the folder was already open when these settings were added, run **Tasks: Run Task → EV / Twin: Start preview**, or reload the window once.
 
@@ -52,7 +58,11 @@ powershell -ExecutionPolicy Bypass -File .\scripts\Test.ps1
 
 The demo runs an actual BEV UDDS simulation, saves it in SQLite, and writes `data/simulation_results/demo-udds.csv` and `demo-report.md`. See [validation evidence](docs/VALIDATION.md), [model contract](docs/MODELS.md) and [component/import guide](docs/DATA.md).
 
-For frontend development, start the backend with `Start.ps1`, then run `npm run dev` inside `frontend/` (port 5173 proxies `/api` to port 8000). For the current direct-drive/demo browser check with Chrome installed and the production server running: `cd frontend; node scripts/demo-smoke.mjs`. Set `EV_BROWSER=msedge` to use Edge. This check saves one labeled demo result and verifies that the build and library are unchanged.
+For development, run `Start.ps1`, or `npm run dev` inside `frontend/` with Node.js available. Either command starts the complete live preview on port 8000 and the reloading API on port 8001; do not start a second backend. For the current direct-drive/demo browser check with Chrome installed and the preview running: `cd frontend; node scripts/demo-smoke.mjs`. Set `EV_BROWSER=msedge` to use Edge. This check saves one labeled demo result and verifies that the build and library are unchanged.
+
+With the live preview running, `cd frontend; node scripts/preview-smoke.mjs` checks uncached refreshes, the demo controls, frontend hot updates and Python worker reload. It creates temporary source probes and removes them afterwards; it does not run a simulation or edit saved builds.
+
+`node scripts/project-sync-smoke.mjs` checks a JSON-only car update and a newly added team dataset against the running preview. It restores the source file, removes its temporary dataset and verifies that saved records and simulation history return to their original state.
 
 ## Source and data layout
 

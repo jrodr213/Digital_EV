@@ -121,7 +121,10 @@ def test_api_workflow(tmp_path,data,monkeypatch):
     monkeypatch.setattr(main,'store',Store(tmp_path/'api.sqlite'))
     with TestClient(main.app) as client:
         assert client.get('/api/health').status_code==200
-        assert len(client.get('/api/vehicles').json())==1
+        vehicles = client.get('/api/vehicles').json()
+        assert {v['id'] for v in vehicles} == {'demo-student-ev', 'team-ev-belt', 'team-ev-differential', 'team-ev-dual-direct'}
+        current = next(v for v in vehicles if v.get('custom_parameters', {}).get('preferred_draft'))
+        assert current['custom_parameters']['architecture']['drive_type'] == 'direct'
         bad=client.post('/api/components/import',files={'file':('bad.json',json.dumps([data[1][0],{'name':'bad'}]),'application/json')})
         assert bad.status_code==422
         r=client.post('/api/runs',json={'vehicle_id':'demo-student-ev'})
