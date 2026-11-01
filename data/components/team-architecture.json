@@ -129,8 +129,8 @@
     "manufacturer": "IPEX",
     "model": "30-05010HD",
     "mass_kg": null,
-    "price": 5.38,
-    "notes": "User quoted $5.38 per 10 ft stock length. Home Depot identifies this as nominal 1/2-inch Schedule 40 water pipe; reviewed page displayed $7.56 in its location context, stored separately rather than replacing the user's quote. Required stock quantity, cut plan and installation role are unknown. No chassis structural rating is established.",
+    "price": 7.56,
+    "notes": "User confirmed one 10 ft stock length at $7.56 on November 1, 2026, replacing the earlier $5.38 quote. Home Depot identifies this as nominal 1/2-inch Schedule 40 water pipe. Cut plan, installation role and adequacy of the selected purchase quantity remain unresolved. No chassis structural rating is established.",
     "datasheet": "https://www.homedepot.com/p/319692959",
     "hypothetical": false,
     "specs": {
@@ -145,7 +145,7 @@
     },
     "custom_parameters": {
       "document_project": "team-parts-2026-10-22",
-      "part_status": "proposed material / quantity unknown",
+      "part_status": "user-quoted material / one stock length planned / structure unverified",
       "currency": "USD",
       "source_references": [
         {
@@ -157,12 +157,21 @@
           "document": "Home Depot product page",
           "location": "IPEX 30-05010HD / nominal 1/2-inch Schedule 40 / reviewed October 30, 2026",
           "url": "https://www.homedepot.com/p/319692959"
+        },
+        {
+          "document": "User price and quantity update / November 1, 2026",
+          "location": "PVC pipe, 10 ft: quantity 1, line subtotal USD 7.56",
+          "url": "https://www.homedepot.com/p/319692959"
         }
       ],
       "verification_status": "Design intent supplied by user; hardware and engineering performance not validated.",
       "price_scope": "per_stock_length",
-      "purchase_quantity": null,
-      "price_basis": "User quote: $5.38 per 10 ft length; not a current verified project-local price.",
+      "purchase_quantity": 1,
+      "unit_price_usd": 7.56,
+      "quoted_line_total_usd": 7.56,
+      "price_quoted_on": "2026-11-01",
+      "previous_user_quote_usd": 5.38,
+      "price_basis": "User-confirmed November 1, 2026: one 10 ft length at $7.56; line subtotal $7.56. Shipping/tax not supplied separately.",
       "installation_scope": "procurement_reference_only",
       "listed_page_price_usd": 7.56,
       "listed_page_price_note": "Home Depot page observed October 30, 2026; location-dependent and different from the user quote."
@@ -176,7 +185,7 @@
     "model": "",
     "mass_kg": null,
     "price": 64.79,
-    "notes": "User described this product as 8 ft steel tubing and quoted $64.79 per stock length. The Walmart page was inaccessible during review; product identity, section shape, dimensions, wall thickness, grade, mass and structural properties remain unverified. Required quantity and final fabrication plan are unknown.",
+    "notes": "User confirmed one 8 ft stock length at $64.79 on November 1, 2026. The Walmart page was inaccessible during the original review; product identity, section shape, dimensions, wall thickness, grade, mass and structural properties remain unverified in this record. Final fabrication plan and adequacy of the selected purchase quantity remain unresolved.",
     "datasheet": "https://www.walmart.com/ip/331307431",
     "hypothetical": false,
     "specs": {
@@ -189,19 +198,27 @@
     },
     "custom_parameters": {
       "document_project": "team-parts-2026-10-22",
-      "part_status": "proposed material / listing and quantity unverified",
+      "part_status": "user-quoted material / one stock length planned / structure unverified",
       "currency": "USD",
       "source_references": [
         {
           "document": "User chassis list / October 30, 2026",
           "location": "8 ft steel tubing / $64.79 / item 331307431",
           "url": "https://www.walmart.com/ip/331307431"
+        },
+        {
+          "document": "User price and quantity update / November 1, 2026",
+          "location": "Steel tubing, 8 ft: quantity 1, line subtotal USD 64.79",
+          "url": "https://www.walmart.com/ip/331307431"
         }
       ],
       "verification_status": "Design intent supplied by user; hardware and engineering performance not validated.",
       "price_scope": "per_stock_length",
-      "purchase_quantity": null,
-      "price_basis": "User quote: $64.79 per 8 ft length; not a verified current price.",
+      "purchase_quantity": 1,
+      "unit_price_usd": 64.79,
+      "quoted_line_total_usd": 64.79,
+      "price_quoted_on": "2026-11-01",
+      "price_basis": "User-confirmed November 1, 2026: one 8 ft length at $64.79; line subtotal $64.79. Shipping/tax not supplied separately.",
       "installation_scope": "procurement_reference_only"
     }
   },
@@ -212,8 +229,8 @@
     "manufacturer": "",
     "model": "",
     "mass_kg": null,
-    "price": 47,
-    "notes": "User requests steer-by-wire and Ackermann steering geometry. The earlier AliExpress actuator remains a provisional candidate with its historical ~$47 allowance. Linkage dimensions, steering angles, actuator limits, feedback, control implementation and installed mass remain unknown. Ackermann geometry does not establish traction motor count or differential design.",
+    "price": 42.99,
+    "notes": "User requests steer-by-wire and Ackermann steering geometry. User confirmed one AliExpress actuator at $42.99 on November 1, 2026, replacing the historical ~$47 allowance. Exact actuator variant, linkage dimensions, steering angles, actuator limits, feedback, control implementation and installed mass remain unknown. Ackermann geometry does not establish traction motor count or differential design.",
     "datasheet": "https://www.aliexpress.us/item/3256806630223349.html",
     "hypothetical": false,
     "specs": {
@@ -237,11 +254,21 @@
           "document": "Budgeting options .docx",
           "location": "Provisional steering actuator allowance, approximately $47",
           "url": "https://www.aliexpress.us/item/3256806630223349.html"
+        },
+        {
+          "document": "User price and quantity update / November 1, 2026",
+          "location": "Steering actuator: quantity 1, line subtotal USD 42.99",
+          "url": "https://www.aliexpress.us/item/3256806630223349.html"
         }
       ],
       "verification_status": "Design intent supplied by user; hardware and engineering performance not validated.",
       "installed_quantity": 1,
-      "price_basis": "Historical budget allowance for the provisional steering actuator; not a completed steering-system cost."
+      "procurement_quantity": 1,
+      "unit_price_usd": 42.99,
+      "quoted_line_total_usd": 42.99,
+      "price_quoted_on": "2026-11-01",
+      "previous_allowance_usd": 47,
+      "price_basis": "User-confirmed November 1, 2026: one actuator, $42.99 line subtotal; replaces the historical $47 allowance. Complete steering fabrication and shipping/tax remain unpriced."
     }
   },
   {
@@ -283,7 +310,7 @@
     "manufacturer": "",
     "model": "36 V / 500 W variant (user-selected)",
     "mass_kg": null,
-    "price": null,
+    "price": 69.86,
     "notes": "Latest user decision: two of AliExpress item 3256809008940329, each in the 36 V / 500 W variant. Replaces the previous MY1020 setup. The two units are represented as one assembly and two schematic motor blocks. Their listing wattages sum to 1000 W; continuous/peak mechanical ratings have not been verified. The product page remains inaccessible. Manufacturer, exact model, torque, RPM, efficiency, pair mass, dimensions, shaft/sprocket fit, controller arrangement and regen support remain unknown. No MY1020 checkout code is carried over.",
     "datasheet": "https://www.aliexpress.us/item/3256809008940329.html",
     "hypothetical": false,
@@ -307,7 +334,12 @@
       "combined_listing_wattage_w": 1000,
       "installation_scope": "two_motor_assembly",
       "mass_basis": "Mass must cover both installed motors; unknown.",
-      "price_basis": "Total price for two units is unknown; URL promotional prices and previous motor coupon are not assumed.",
+      "price_scope": "purchase_line_total",
+      "procurement_quantity": 2,
+      "unit_price_usd": 34.93,
+      "quoted_line_total_usd": 69.86,
+      "price_quoted_on": "2026-11-01",
+      "price_basis": "User-confirmed November 1, 2026: $69.86 total for BOTH 36 V / 500 W motors ($34.93 each). Aggregate component price is counted once; shipping/tax not supplied separately.",
       "currency": "USD",
       "verification_status": "Variant and quantity supplied by user; AliExpress page inaccessible on October 30, 2026.",
       "source_references": [
@@ -319,6 +351,11 @@
         {
           "document": "User-supplied AliExpress listing title",
           "location": "Brushless motor listing with 12/24/36 V options and a 36 V 500 W variant",
+          "url": "https://www.aliexpress.us/item/3256809008940329.html"
+        },
+        {
+          "document": "User price and quantity update / November 1, 2026",
+          "location": "Motors, 36 V / 500 W: quantity 2, line subtotal USD 69.86; four quoted items total USD 185.20",
           "url": "https://www.aliexpress.us/item/3256809008940329.html"
         }
       ]

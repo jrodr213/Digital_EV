@@ -48,7 +48,7 @@ def test_requested_hardware_and_fabrication_choices_are_recorded_without_fake_ra
     assert len(procurement) == len({p['id'] for p in procurement})
     subtotal = sum((p['price'] or 0) * ((p['custom_parameters'].get('purchase_quantity') or 0)
                    if p['custom_parameters'].get('price_scope') == 'per_stock_length' else 1) for p in procurement)
-    assert subtotal == pytest.approx(448.84)
+    assert subtotal == pytest.approx(587.04)
     assert assemble(vehicle, parts)['errors']
 
 

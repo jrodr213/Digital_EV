@@ -54,6 +54,8 @@ def test_fresh_load_has_final_pair_and_explicit_unresolved_regen_and_chassis(tmp
     motors = [p for p in parts if p['category'] == 'motor']
     assert [p['id'] for p in motors] == [PAIR_MOTOR_ID]
     assert motors[0]['custom_parameters']['installed_quantity'] == 2
+    assert motors[0]['price'] == 69.86  # Full pair subtotal, not a per-motor price.
+    assert motors[0]['custom_parameters']['unit_price_usd'] == 34.93
     assert motors[0]['specs']['listed_voltage_v'] == 36
     assert motors[0]['specs']['listed_power_per_motor_w'] == 500
     assert 'checkout_code' not in motors[0]['custom_parameters']
@@ -64,8 +66,8 @@ def test_fresh_load_has_final_pair_and_explicit_unresolved_regen_and_chassis(tmp
     assert sum(bool(p['custom_parameters'].get('sensor_type')) for p in parts) == 8
     assert not set(MATERIAL_IDS).intersection(vehicle['component_ids'])
     assert set(MATERIAL_IDS) <= set(meta['procurement_component_ids'])
-    assert [store.get('components', key)['price'] for key in MATERIAL_IDS] == [5.38, 64.79]
-    assert all(store.get('components', key)['custom_parameters']['purchase_quantity'] is None for key in MATERIAL_IDS)
+    assert [store.get('components', key)['price'] for key in MATERIAL_IDS] == [7.56, 64.79]
+    assert all(store.get('components', key)['custom_parameters']['purchase_quantity'] == 1 for key in MATERIAL_IDS)
     chassis = next(p for p in parts if p['category'] == 'chassis')
     assert chassis['specs'] == {} and chassis['mass_kg'] is None
     assert chassis['custom_parameters']['material_component_ids'] == MATERIAL_IDS

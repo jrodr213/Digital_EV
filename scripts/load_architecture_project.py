@@ -151,8 +151,9 @@ def _select_final_pair(vehicle):
         'Two brushless motors from AliExpress item 3256809008940329, with the '
         '36 V / 500 W variant selected by the user for each motor. '
         'The old MY1020 setup is replaced. Combined listing wattage is 1000 W; '
-        'continuous/peak ratings, installed pair mass, controller arrangement '
-        'and price remain unverified. No checkout code is confirmed for this product.')
+        'continuous/peak ratings, installed pair mass and controller arrangement '
+        'remain unverified. User confirmed $69.86 total for both motors on '
+        'November 1, 2026 ($34.93 each). No checkout code is confirmed for this product.')
     meta['topology'] = 'Two 36 V 500 W brushless motors / rear-wheel chain drive / no differential'
     obsolete = {
         'MY1020 voltage variant, duty ratings, motor mass and compatible controller',

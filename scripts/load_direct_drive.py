@@ -60,8 +60,11 @@ def load(store=None):
         meta['budget_note'] = (
             'Chain, sprockets and the guard/tensioner bundle are removed from the current purchase plan. '
             'Retained mounting plates and THR-90 pedal total $49.85 in recorded quotes. '
-            'Motors, direct wheel attachment/support hardware, pipe quantities, frame fabrication '
-            'and custom circuitry have unresolved costs; this remains a partial planning subtotal.')
+            'User prices confirmed November 1, 2026: both motors $69.86, one steering actuator $42.99, '
+            'one 10 ft PVC length $7.56 and one 8 ft steel length $64.79; these four lines total $185.20. '
+            'The current known planning subtotal is $587.04, replacing the earlier $47 steering allowance. '
+            'Direct wheel attachment/support hardware, additional frame materials/fabrication, '
+            'custom circuitry, sensors, remaining systems and additional shipping/tax remain unpriced.')
         obsolete = {
             'Chain ratio, sprockets and rear axle layout without a differential',
             'Motor-sprocket shaft/tooth selection, chain alignment, gear ratio and rear axle layout',
@@ -74,7 +77,9 @@ def load(store=None):
         ]
         meta['budget_excludes'] = [
             'Direct wheel attachment, support bearings and fabrication'
-            if item in ['Drive adaptation/fabrication beyond the quoted hardware', 'Chain, sprockets and tensioning hardware'] else item
+            if item in ['Drive adaptation/fabrication beyond the quoted hardware', 'Chain, sprockets and tensioning hardware']
+            else 'Additional chassis materials and frame fabrication'
+            if item == 'Required chassis material quantities and fabrication' else item
             for item in meta.get('budget_excludes', [])]
         vehicle['custom_parameters'] = meta
         validated = Vehicle.model_validate(vehicle).model_dump()
