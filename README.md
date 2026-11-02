@@ -39,6 +39,10 @@ These settings use VS Code's [integrated browser and remote proxy](https://code.
 
 ## Use the workspace
 
+Saved test drives now have a **Synchronized drive replay** in **Vehicle Comparison**, **Performance Results** and the **3D Vehicle Viewer** when a result is selected. Choose up to three saved runs, press **Play replay**, and compare moving cars on a shared elapsed-time and distance scale. Pause, restart, scrub or change viewing speed without changing the saved physics. New runs replay recorded FASTSim distance; older runs integrate saved achieved speed and label that approximation. Wheel rotation uses each run's saved wheel diameter. Different test conditions, demo assumptions and known torque shortfalls remain visible. [Replay screenshot](docs/screenshots/drive-replay-comparison.png).
+
+The replay is read-only. With the preview running and at least two saved tests, run `node scripts/drive-playback-smoke.mjs` from `frontend/` to check synchronized motion, pause/scrubbing, playback rate, mobile layout, the 3D wheel fix and unchanged saved records.
+
 1. **Component Library:** review the demonstration parts, duplicate or create parts, enter actual specifications, canonical units and datasheet references. Unknown fields remain blank. Parts can have arbitrary categories, specifications, notes, prices and custom parameters.
 2. **Vehicle Builder:** select assemblies, enter payload and auxiliary load, review calculated mass/energy/power and compatibility messages, then save. Incomplete drafts can be saved; standard simulation requires valid inputs. Demo mode estimates missing values for a run without changing saved inputs.
 3. **Simulation Lab:** choose a build and UDDS, HWFET, US06 or a custom CSV. Run a drive-cycle, acceleration, hill or load scenario. For an incomplete build, enable **Demo mode — fill missing inputs**, review the input assumptions, then choose **Run demo simulation**. Demo starts with a gentle 0–10 mph / 120 s cycle suited to the low-power draft; standard road cycles can exceed the solver limits. Engine errors are shown; failed runs do not get fabricated results.

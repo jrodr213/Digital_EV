@@ -8,6 +8,8 @@ import type {AssemblyId} from './assemblyNavigation';
 import {createVehicleScene} from './vehicleScene';
 import type {SceneHit,SceneView,VehicleScene} from './vehicleScene';
 import {describePart} from './partDescription';
+import {driveFrame,MPS_PER_MPH,prepareDriveTrace} from './playbackMotion';
+import {usePlaybackClock} from './usePlaybackClock';
 import './vehicleExplorer.css';
 
 const assemblyIcons={powertrain:Cog,battery:Battery,electronics:Cpu,frame:SquareStack,steering:Gauge,wheels:CircleDot,sensors:ScanLine};
@@ -15,10 +17,12 @@ const unitsToHide=['text','count','dimensionless','boolean'];
 const readable=(key:string)=>key.replace(/^listed_/,'').replaceAll('_',' ');
 
 export function VehicleViewer({parts,libraryParts=parts,result,compact=false}:{parts:Part[];libraryParts?:Part[];result?:Result;compact?:boolean}){
- const mount=useRef<HTMLDivElement>(null),sidebar=useRef<HTMLElement>(null),scene=useRef<VehicleScene|null>(null),speed=useRef(0);
+ const mount=useRef<HTMLDivElement>(null),sidebar=useRef<HTMLElement>(null),scene=useRef<VehicleScene|null>(null),wheelAngle=useRef(0);
  const [activeAssembly,setActiveAssembly]=useState<AssemblyId|null>(null),[trail,setTrail]=useState<string[]>([]),[exploded,setExploded]=useState(true);
  const [hover,setHover]=useState<{hit:SceneHit;x:number;y:number}|null>(null),[failure,setFailure]=useState('');
- const [playing,setPlaying]=useState(false),[cursor,setCursor]=useState(0);
+ const playback=useMemo(()=>{if(!result)return null;try{return prepareDriveTrace(result)}catch{return null}},[result]);
+ const clock=usePlaybackClock(playback?.duration??0,result?.id??'');
+ const frame=playback?driveFrame(playback,clock.time):null;wheelAngle.current=frame?.wheelAngle??0;
  const all=useMemo(()=>visualParts(parts,libraryParts),[parts,libraryParts]);
  const byId=useMemo(()=>new Map(all.map(p=>[p.id??p.name,p])),[all]);
  const selected=trail.length?byId.get(trail[trail.length-1])??null:null;
@@ -26,7 +30,6 @@ export function VehicleViewer({parts,libraryParts=parts,result,compact=false}:{p
  const available=assemblyDefinitions.filter(a=>assemblyParts(a.id,parts).length>0);
  const focusedParts=activeAssembly?assemblyParts(activeAssembly,parts):[];
  const children=selected?partChildren(selected,libraryParts):[];
- const samples=result?.samples??[];
  const title=selected?partLabel(selected):definition?.name??'Your EV, assembled.';
  const identity=parts.map(p=>p.id??p.name).sort().join('|');
  const view=useRef<SceneView>({assembly:null,part:null,exploded:true});view.current={assembly:activeAssembly,part:selected,exploded};
@@ -38,19 +41,11 @@ export function VehicleViewer({parts,libraryParts=parts,result,compact=false}:{p
  const actions=useRef({pick:(hit:SceneHit)=>{},back:()=>{}});
  actions.current={pick:hit=>{if(!activeAssembly)openAssembly(hit.assembly);else if(hit.part)openPart(hit.part)},back};
 
- useEffect(()=>{fullCar();setPlaying(false);setCursor(0)},[identity]);
- useEffect(()=>{setPlaying(false);setCursor(0)},[result?.id]);
- useEffect(()=>{speed.current=(samples[cursor]?.speed_mph??0)*.44704},[cursor,samples]);
- useEffect(()=>{
-  if(!playing||samples.length<2)return;
-  const start=performance.now(),initial=samples[cursor]?.time_s??0;
-  const timer=setInterval(()=>{const t=initial+(performance.now()-start)/1000,j=samples.findIndex(s=>s.time_s>=t);if(j<0){setPlaying(false);setCursor(samples.length-1)}else setCursor(j)},33);
-  return()=>clearInterval(timer);
- },[playing,samples]);
+ useEffect(()=>{fullCar();clock.seek(0)},[identity]);
  useEffect(()=>{
   const host=mount.current;if(!host)return;setFailure('');setHover(null);
   try{
-   const controller=createVehicleScene(host,parts,all,{pick:hit=>actions.current.pick(hit),hover:(hit,x,y)=>setHover(hit?{hit,x,y}:null),speed:()=>speed.current});
+   const controller=createVehicleScene(host,parts,all,{pick:hit=>actions.current.pick(hit),hover:(hit,x,y)=>setHover(hit?{hit,x,y}:null),wheelAngle:()=>wheelAngle.current});
    scene.current=controller;controller.setView(view.current);
    return()=>{controller.dispose();scene.current=null};
   }catch{setFailure('The 3D preview needs WebGL. You can still explore every assembly using the buttons below.');}
@@ -121,7 +116,7 @@ export function VehicleViewer({parts,libraryParts=parts,result,compact=false}:{p
   </div>
   {!activeAssembly&&<div className="explorer-assemblies"><div className="explorer-assemblies-heading"><span>CHOOSE A SYSTEM TO EXPLORE</span><small>{parts.length} saved component groups</small></div><div className="explorer-assembly-grid">{available.map((assembly,index)=>{const Icon=assemblyIcons[assembly.id];return <button key={assembly.id} onClick={()=>openAssembly(assembly.id)} aria-label={`Explore ${assembly.name}`} style={{'--assembly-color':assembly.color} as CSSProperties}><div className="explorer-assembly-icon"><Icon size={19}/><span>{String(index+1).padStart(2,'0')}</span></div><div><b>{assembly.name}</b><small>{assemblyParts(assembly.id,parts).length} component groups</small></div><ArrowUpRight size={16}/></button>})}</div></div>}
   <div className="explorer-disclaimer"><Info size={14}/><span>Finished concept only. Bodywork, seating, part shapes and packaging illustrate a possible design; they do not establish structural or mechanical readiness.</span></div>
-  {samples.length>0&&!compact&&<div className="playback"><button onClick={()=>setPlaying(!playing)}>{playing?'Pause':'Play cycle'}</button><input aria-label="Simulation playback" type="range" min="0" max={Math.max(0,samples.length-1)} value={cursor} onChange={e=>{setPlaying(false);setCursor(+e.target.value)}}/><span>{fmt(samples[cursor]?.time_s)} s / {fmt(samples[cursor]?.speed_mph)} mph</span></div>}
+  {playback&&frame&&!compact&&<div className="playback"><button onClick={clock.toggle}>{clock.playing?'Pause':'Play cycle'}</button><input aria-label="Simulation playback" type="range" min="0" max={playback.duration} step="0.01" value={clock.time} onChange={e=>clock.seek(Number(e.target.value))}/><span>{fmt(clock.time)} s / {fmt(frame.speedMps/MPS_PER_MPH)} mph</span></div>}
   <span className="explorer-sr-only" role="status" aria-live="polite">{activeAssembly?`Viewing ${title}`:'Viewing full car'}</span>
  </section>;
 }

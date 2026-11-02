@@ -71,7 +71,8 @@ class FastSimEngine:
         chemical=col('veh.pt_type.BEV.res.history.energy_out_chemical_joules')
         motor_w=col('veh.pt_type.BEV.em.history.pwr_mech_prop_out_watts')
         soc=col('veh.pt_type.BEV.res.history.soc')
-        distance=float(df['veh.history.dist_meters'].iloc[-1])/METERS_PER_MILE
+        distance_trace=col('veh.history.dist_meters')
+        distance=float(distance_trace[-1])/METERS_PER_MILE
         energy=float(chemical[-1]-chemical[0])/3.6e6
         wh=energy*1000/distance if distance>0 and energy>0 else None
         d=a['specs']['drivetrain']; m=a['specs']['motor']
@@ -92,7 +93,7 @@ class FastSimEngine:
         warn.append('Trace-miss policy is Allow: FASTSim records achieved speed when requested speed cannot be met. This is flagged, never replaced by target speed.')
         warn.append('Symmetric battery power is conservatively capped by BOTH supplied charge and continuous discharge current. Regeneration recovery uses electrical terminal power.')
         if a['specs']['battery'].get('min_temp_c') is not None: warn.append('Temperature limits are stored only. No battery thermal state is simulated.')
-        sample={'time_s':time,'target_mph':col('cyc.speed_meters_per_second')/MPS_PER_MPH,'speed_mph':speed/MPS_PER_MPH,'acceleration_mps2':np.gradient(speed,time),'soc':soc,'battery_kw':battery/1000,'battery_current_a':battery/a['nominal_voltage_v'],'motor_kw':motor_w/1000,'motor_rpm':rpm,'motor_torque_nm':torque}
+        sample={'time_s':time,'distance_m':distance_trace,'target_mph':col('cyc.speed_meters_per_second')/MPS_PER_MPH,'speed_mph':speed/MPS_PER_MPH,'acceleration_mps2':np.gradient(speed,time),'soc':soc,'battery_kw':battery/1000,'battery_current_a':battery/a['nominal_voltage_v'],'motor_kw':motor_w/1000,'motor_rpm':rpm,'motor_torque_nm':torque}
         rows=[{key:float(values[j]) for key,values in sample.items()} for j in range(len(time))]
         assumptions=['FASTSim 3.1.0 scalar-efficiency longitudinal BEV; continuous ratings only.','Motor efficiency multiplied by inverter efficiency; no torque/RPM map.','Battery begins at supplied usable SOC ceiling. No range extrapolation across different conditions.','Analytical extension assumes air density 1.225 kg/m3; constant torque below constant power; no load transfer.','Motor RPM, torque, current and acceleration are derived estimates, not native component dynamics.','Schematic 3D playback is visualization only; component metadata is not validated physics.']
         mapped=veh.to_dict()

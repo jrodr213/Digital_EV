@@ -15,7 +15,7 @@ export type VehicleScene={setView:(view:SceneView)=>void;fit:()=>void;dispose:()
 
 // Presentation geometry only. This module never writes to the component data
 // and never supplies dimensions, mass, power or geometry to the physics model.
-export function createVehicleScene(host:HTMLDivElement,parts:Part[],allParts:Part[],callbacks:{pick:(hit:SceneHit)=>void;hover:(hit:SceneHit|null,x:number,y:number)=>void;speed:()=>number}):VehicleScene{
+export function createVehicleScene(host:HTMLDivElement,parts:Part[],allParts:Part[],callbacks:{pick:(hit:SceneHit)=>void;hover:(hit:SceneHit|null,x:number,y:number)=>void;wheelAngle:()=>number}):VehicleScene{
  const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});
  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
  renderer.setClearColor(0xe5eae6);renderer.outputColorSpace=THREE.SRGBColorSpace;
@@ -307,7 +307,9 @@ export function createVehicleScene(host:HTMLDivElement,parts:Part[],allParts:Par
  function draw(now:number){
   const dt=Math.min((now-lastTime)/1000,.05);lastTime=now;
   if(transition){const t=1-Math.exp(-dt*8);camera.position.lerp(destination,t);controls.target.lerp(lookAt,t);if(camera.position.distanceToSquared(destination)<.00001)transition=false;}
-  const speed=callbacks.speed();if(speed)wheels.forEach(w=>w.rotateZ(-speed/r*dt));
+  // Absolute angle from saved motion: no frame-rate drift or rotation while paused.
+  const angle=callbacks.wheelAngle();wheels.forEach(w=>{w.rotation.z=-angle});
+  canvas.dataset.wheelRadians=angle.toFixed(6);
   controls.update();renderer.render(scene,camera);animation=requestAnimationFrame(draw);
  }
  animation=requestAnimationFrame(draw);

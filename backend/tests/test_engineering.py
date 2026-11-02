@@ -105,6 +105,9 @@ def test_complete_bev_reproducible(data):
     assert r1['summary']==r2['summary']
     assert r1['summary']['energy_kwh']>0
     assert r1['summary']['distance_miles']>7
+    assert r1['samples'][0]['distance_m'] == pytest.approx(0)
+    assert r1['samples'][-1]['distance_m'] == pytest.approx(r1['summary']['distance_miles']*METERS_PER_MILE)
+    assert all(b['distance_m']>=a['distance_m'] for a,b in zip(r1['samples'],r1['samples'][1:]))
     assert r1['summary']['cycle_met']
     assert r1['summary']['final_soc']<.9
 
