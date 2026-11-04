@@ -19,7 +19,7 @@ delete env.ELECTRON_RUN_AS_NODE;
 
 async function launch() {
   const args = process.env.CI ? ['--enable-logging=stderr'] : [];
-  if (process.env.CI && (process.platform === 'linux' || (process.platform === 'darwin' && process.arch === 'x64'))) {
+  if (process.env.CI && process.platform === 'linux') {
     args.push('--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader');
   }
   application = await electron.launch({executablePath, env, timeout: 90000, args});
@@ -40,13 +40,30 @@ try {
   await page.getByLabel('Choose a car', {exact: true}).selectOption('team-ev-single-motor');
   await page.getByRole('button', {name: 'Open car', exact: true}).click();
   const explorer = page.getByRole('region', {name: 'Interactive vehicle explorer'});
-  await explorer.locator('canvas').waitFor();
-  await page.waitForFunction(() => document.querySelector('.vehicle-explorer canvas') && !document.querySelector('.explorer-failure'));
-  const graphicsRenderer = await page.evaluate(() => {
-    const gl = document.querySelector('.vehicle-explorer canvas').getContext('webgl2');
-    const debug = gl?.getExtension('WEBGL_debug_renderer_info');
-    return debug ? gl.getParameter(debug.UNMASKED_RENDERER_WEBGL) : 'WebGL2';
-  });
+  await page.waitForFunction(() => document.querySelector('.vehicle-explorer canvas') ||
+    document.querySelector('.explorer-failure[role="alert"]')?.textContent?.includes('The 3D preview needs WebGL'));
+  const webgl = await explorer.locator('canvas').count() > 0;
+  let graphicsRenderer;
+  if (webgl) {
+    await page.waitForFunction(() => !document.querySelector('.explorer-failure'));
+    graphicsRenderer = await page.evaluate(() => {
+      const gl = document.querySelector('.vehicle-explorer canvas').getContext('webgl2');
+      if (!gl) return null;
+      const debug = gl?.getExtension('WEBGL_debug_renderer_info');
+      return debug ? gl.getParameter(debug.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER);
+    });
+    assert.ok(graphicsRenderer, 'The vehicle canvas must have an active WebGL2 context.');
+  } else {
+    const gpu = await application.evaluate(({app}) => app.getGPUFeatureStatus());
+    assert.ok(process.env.CI && process.platform === 'darwin' && process.arch === 'x64' &&
+      !gpu.webgl.startsWith('enabled'), 'A supported graphics context must render the vehicle.');
+    assert.match(await explorer.innerText(), /The 3D preview needs WebGL/);
+    await explorer.getByRole('button', {name: 'Explore Powertrain', exact: true}).click();
+    await explorer.getByRole('button', {name: 'Inspect Traction motor', exact: true}).click();
+    assert.match(await explorer.innerText(), /selected 48 V/);
+    assert.match(await explorer.innerText(), /\$82\.89/);
+    graphicsRenderer = `Unavailable on hosted Intel Mac VM (${gpu.webgl}); component fallback verified`;
+  }
   await page.getByText('Build records & purchase planning', {exact: true}).click();
   const records = page.locator('.project-details');
   await records.getByRole('button', {name: 'Conditional parts (2)', exact: true}).click();
@@ -70,9 +87,9 @@ try {
   assert.deepEqual(errors, []);
   await writeFile(path.join(desktop, 'build/desktop-smoke.json'), JSON.stringify({
     platform: process.platform, arch: process.arch, version: runtime.version,
-    packaged: true, webgl: true, graphicsRenderer, fastsim: '3.1.0', restartPersistence: true, browserErrors: errors,
+    packaged: true, webgl, graphicsFallback: !webgl, graphicsRenderer, fastsim: '3.1.0', restartPersistence: true, browserErrors: errors,
   }, null, 2) + '\n');
-  console.log('PASS: packaged native app, sandboxed frontend, WebGL car, current parts/prices, real FASTSim and saved results after restart.');
+  console.log(`PASS: packaged native app, sandboxed frontend, ${webgl ? 'WebGL car' : 'verified no-GPU component fallback'}, current parts/prices, real FASTSim and saved results after restart.`);
 } catch (error) {
   await mkdir(path.join(desktop, 'build'), {recursive: true});
   if (page && !page.isClosed()) {

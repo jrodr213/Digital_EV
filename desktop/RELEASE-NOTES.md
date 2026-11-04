@@ -9,6 +9,8 @@ Choose the download for your computer:
 
 Python, FASTSim and the frontend are included. Normal use does not require Python, Node.js, a terminal or an internet connection. Supplier links open your system browser.
 
+3D rendering is verified on Windows, Linux and Apple Silicon Mac. The hosted Intel Mac VM does not provide a working WebGL context, so its native check verifies component exploration, simulation and persistence using the existing no-GPU fallback. Physical Intel Mac 3D rendering is not independently verified and requires a WebGL2-capable graphics driver.
+
 Windows builds do not have a publisher certificate. Mac bundles have verified ad-hoc signatures for integrity, but are not Developer ID signed or notarized. Windows or macOS may show an unknown-publisher warning. For wider distribution, a maintainer should sign Windows installers and sign/notarize Mac builds with their own certificates. Do not disable system-wide security settings to run an unfamiliar download.
 
 Designs and simulations stay in the application-data folder. Open it from **File → Open data folder**. App updates and Windows uninstallation preserve that folder. Back it up while the app is closed. Existing development-workspace data can be transferred by following `docs/DESKTOP.md` in the source repository. Private databases and past simulation results are not included in distributed installers.

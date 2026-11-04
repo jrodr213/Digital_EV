@@ -55,7 +55,7 @@ python desktop/checksums.py
 
 On headless Linux run the app test under `xvfb-run --auto-servernum`. The frozen-engine check exercises authentication, the built frontend, the latest cars/parts, an actual FASTSim run, CSV export, database persistence after restart and engine exit after its parent's pipe closes. The packaged-app check opens the native executable, checks sandbox isolation, WebGL, conditional part prices and actual simulation persistence. SHA-256 manifests accompany the downloads.
 
-On Linux and Intel Mac CI, the app test explicitly uses Chromium SwiftShader to exercise WebGL without a physical GPU. Apple Silicon CI uses its normal graphics path because Chromium disables SwiftShader WebGL on ARM Macs. These flags apply only to the test launcher; installed apps use their normal graphics settings.
+On Linux CI, the app test explicitly uses Chromium SwiftShader to exercise WebGL without a physical GPU. These flags apply only to the test launcher; installed apps use their normal graphics settings. The hosted Intel Mac VM can report WebGL disabled. That job then verifies the existing no-GPU message, component exploration, prices, native FASTSim and persistence, and records `webgl: false` plus `graphicsFallback: true` in its report. Windows, Linux and Apple Silicon jobs require the 3D canvas. Physical Intel Mac 3D rendering has not been independently tested and requires a working WebGL2-capable graphics driver.
 
 ## Build all platforms and prepare downloads
 
