@@ -1,6 +1,8 @@
 # EV / Twin engineering workbench
 
-A local Windows application for assembling a custom student EV from reviewed component specifications and testing it with the official **FASTSim 3.1.0** Python API. React + TypeScript, FastAPI, SQLite, Plotly and Three.js. The original demo dataset uses **hypothetical demonstration parts**, not manufactured products.
+A local application for assembling a custom student EV from reviewed component specifications and testing it with the official **FASTSim 3.1.0** Python API. React + TypeScript, FastAPI, SQLite, Plotly and Three.js. The original demo dataset uses **hypothetical demonstration parts**, not manufactured products.
+
+The [desktop packaging guide](docs/DESKTOP.md) covers standalone **Windows, macOS (Apple Silicon and Intel), and Linux** downloads. Desktop builds include the frontend, Python and FASTSim, store data in the user's application-data folder, and run without a terminal or developer tools. `python scripts/build_desktop.py` creates installers for the current OS/CPU; the **Desktop downloads** workflow builds all four targets and prepares draft releases after native tests pass. Builds are initially unsigned, and each platform's artifact must finish building before it can be downloaded.
 
 The [redesigned engineering workspace](docs/UI_REDESIGN.md) uses a consistent neutral interface, grouped navigation, an interactive overview, camera presets, organized configuration sections and separate performance/electrical analytics. The same saved designs, component sources and simulation engine power every screen. See the redesign notes for changed files, reusable components, browser evidence and verification results.
 

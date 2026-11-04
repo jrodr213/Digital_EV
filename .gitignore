@@ -10,3 +10,6 @@ __pycache__/
 data/*.sqlite*
 data/simulation_results/*
 !data/simulation_results/.gitkeep
+desktop/build/
+desktop/backend-dist/
+desktop/release/

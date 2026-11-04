@@ -1,0 +1,121 @@
+name: Desktop downloads
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ['desktop-v*']
+  pull_request:
+    paths:
+      - 'desktop/**'
+      - 'backend/**'
+      - 'frontend/**'
+      - 'data/components/**'
+      - 'data/vehicles/**'
+      - 'scripts/**'
+      - '.github/workflows/desktop.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {name: Windows-x64, os: windows-2022, arch: x64}
+          - {name: macOS-Apple-Silicon, os: macos-15, arch: arm64}
+          - {name: macOS-Intel, os: macos-15-intel, arch: x64}
+          - {name: Linux-x64, os: ubuntu-22.04, arch: x64}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    env:
+      CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      ELECTRON_CACHE: ${{ github.workspace }}/desktop/build/electron-cache
+      ELECTRON_BUILDER_CACHE: ${{ github.workspace }}/desktop/build/builder-cache
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: ${{ matrix.arch }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: |
+            frontend/package-lock.json
+            desktop/package-lock.json
+      - name: Install Linux runtime and packaging tools
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y xvfb libgtk-3-0 libnss3 libasound2 libgbm1 libfuse2 rpm
+      - name: Install Python dependencies
+        run: python -m pip install -r backend/requirements-lock.txt -r desktop/requirements-build.txt
+      - name: Install frontend dependencies
+        run: npm ci --prefix frontend
+      - name: Install desktop dependencies
+        run: npm ci --prefix desktop
+      - name: Test backend and desktop process rules
+        run: |
+          python -m pytest backend/tests -q
+          npm test --prefix desktop
+          npm test --prefix frontend
+      - name: Build native app and exercise frozen engine
+        run: python scripts/build_desktop.py --dir --skip-install
+      - name: Test packaged desktop application
+        if: runner.os != 'Linux'
+        run: node desktop/smoke_app.mjs
+      - name: Test packaged desktop application under Xvfb
+        if: runner.os == 'Linux'
+        run: xvfb-run --auto-servernum node desktop/smoke_app.mjs
+      - name: Create installers
+        run: npm run dist --prefix desktop
+      - name: Generate download checksums
+        run: python desktop/checksums.py
+      - name: Upload downloads
+        uses: actions/upload-artifact@v4
+        with:
+          name: EV-Twin-${{ matrix.name }}
+          retention-days: 30
+          if-no-files-found: error
+          compression-level: 0
+          path: |
+            desktop/release/EV-Twin-*.exe
+            desktop/release/EV-Twin-*.dmg
+            desktop/release/EV-Twin-*.zip
+            desktop/release/EV-Twin-*.AppImage
+            desktop/release/EV-Twin-*.deb
+            desktop/release/SHA256SUMS-*.txt
+      - name: Upload native test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Native-test-${{ matrix.name }}
+          path: |
+            desktop/build/desktop-smoke.png
+            desktop/build/desktop-smoke.json
+            desktop/build/pyinstaller/backend/warn-backend.txt
+
+  draft-release:
+    name: Draft downloadable release
+    if: startsWith(github.ref, 'refs/tags/desktop-v')
+    needs: build
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: EV-Twin-*
+          merge-multiple: true
+          path: downloads
+      - name: Attach installers to a draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          version=$(node -p "require('./desktop/package.json').version")
+          test "$GITHUB_REF_NAME" = "desktop-v$version"
+          gh release create "$GITHUB_REF_NAME" downloads/* --verify-tag --draft --title "EV Twin $version" --notes-file desktop/RELEASE-NOTES.md

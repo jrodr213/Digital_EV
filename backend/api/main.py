@@ -2,6 +2,7 @@ import csv
 import io
 import json
 import os
+import secrets
 from contextlib import asynccontextmanager
 from pathlib import Path
 from fastapi import FastAPI, HTTPException, UploadFile
@@ -35,6 +36,21 @@ async def lifespan(app):
 
 
 app=FastAPI(title='EV / Twin Engineering API',lifespan=lifespan)
+
+
+@app.middleware('http')
+async def desktop_session(request, call_next):
+    token = os.environ.get('EV_DESKTOP_TOKEN')
+    if token and not secrets.compare_digest(request.headers.get('X-EV-Twin-Token', ''), token):
+        return Response('Desktop session required', status_code=403)
+    response = await call_next(request)
+    if token:
+        response.headers['Content-Security-Policy'] = (
+            "default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; "
+            "img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; worker-src 'self' blob:; "
+            "object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
+        )
+    return response
 
 
 @app.exception_handler(KeyError)

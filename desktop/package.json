@@ -1,0 +1,62 @@
+{
+  "name": "ev-twin-desktop",
+  "productName": "EV Twin",
+  "version": "1.0.0",
+  "description": "Local EV engineering workbench with FASTSim, saved builds and interactive 3D exploration",
+  "homepage": "https://github.com/jrodr213/Digital_EV",
+  "repository": {"type": "git", "url": "https://github.com/jrodr213/Digital_EV.git"},
+  "author": "Jacob Rodriguez",
+  "license": "Apache-2.0",
+  "private": true,
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test tests/*.test.cjs",
+    "pack": "electron-builder --dir --publish never",
+    "dist": "electron-builder --publish never"
+  },
+  "devDependencies": {
+    "electron": "45.2.2",
+    "electron-builder": "26.18.0"
+  },
+  "build": {
+    "appId": "com.digitalev.evtwin",
+    "productName": "EV Twin",
+    "artifactName": "EV-Twin-${version}-${os}-${arch}.${ext}",
+    "directories": {"output": "release", "buildResources": "build-resources"},
+    "files": ["main.cjs", "backend.cjs", "package.json"],
+    "extraResources": [
+      {"from": "backend-dist/ev-twin-backend", "to": "backend", "filter": ["**/*"]},
+      {"from": "../LICENSE", "to": "LICENSE"},
+      {"from": "build/THIRD-PARTY-NOTICES.txt", "to": "THIRD-PARTY-NOTICES.txt"}
+    ],
+    "icon": "build-resources/icon.png",
+    "asar": true,
+    "mac": {
+      "category": "public.app-category.education",
+      "target": ["dmg", "zip"],
+      "hardenedRuntime": true,
+      "notarize": false,
+      "entitlements": "build-resources/entitlements.mac.plist",
+      "entitlementsInherit": "build-resources/entitlements.mac.plist"
+    },
+    "dmg": {"title": "EV Twin ${version}"},
+    "win": {"target": ["nsis"], "signAndEditExecutable": true},
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "deleteAppDataOnUninstall": false,
+      "artifactName": "EV-Twin-${version}-windows-${arch}-Setup.${ext}"
+    },
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "category": "Education",
+      "maintainer": "Jacob Rodriguez",
+      "synopsis": "EV engineering workbench",
+      "executableName": "ev-twin"
+    },
+    "publish": null
+  }
+}
