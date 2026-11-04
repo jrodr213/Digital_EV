@@ -108,12 +108,18 @@ def prepare_demo(vehicle, components):
     power = positive(m.get('rated_power_kw'), listed_w * quantity / 1000)
     rpm = positive(m.get('max_rpm'), positive(m.get('listed_speed_rpm'), 3000.))
     torque = positive(m.get('rated_torque_nm'), power * 1000 * 60 / (2 * math.pi * rpm) * 1.1)
+    power_basis = 'Listed wattage times installed quantity treated as continuous power for this demo; duty rating is unverified (500 W per motor fallback).'
+    motor_voltage = positive(m.get('listed_voltage_v'), voltage)
+    if not math.isclose(motor_voltage, voltage, rel_tol=.01):
+        power_basis += (f' The motor is listed at {motor_voltage:g} V and the pack is {voltage:g} V nominal; '
+                        'full listed output at this pack voltage is an unverified model assumption. '
+                        'The effect of this voltage difference is not modeled.')
     complete('motor', {
         'rated_power_kw': power, 'peak_power_kw': power,
         'rated_torque_nm': torque, 'peak_torque_nm': torque,
         'max_rpm': rpm, 'efficiency': .8,
     }, {
-        'rated_power_kw': 'Listed wattage times installed quantity treated as continuous power for this demo; duty rating is unverified (500 W per motor fallback).',
+        'rated_power_kw': power_basis,
         'peak_power_kw': 'No peak boost assumed; equals continuous power.',
         'rated_torque_nm': 'Estimated aggregate torque from demo continuous power and RPM, with a 10% allowance.',
     })

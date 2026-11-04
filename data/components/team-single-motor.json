@@ -1,13 +1,13 @@
 [
   {
     "id": "team-motor-my1020-single-36v",
-    "name": "Single MY1020 brushless motor / listed 1000 W / proposed 36 V variant",
+    "name": "Historical / single MY1020 motor / proposed 36 V variant",
     "category": "motor",
     "manufacturer": "",
     "model": "MY1020 / proposed 36 V option",
     "mass_kg": null,
     "price": null,
-    "notes": "One motor from the user-linked AliExpress item, replacing the pair only in this new car. The previously supplied listing title describes MY1020 brushless DC, 1000 W and 36/48 V variants. Use the 36 V option to match this car's selected pack; the exact variant is provisional. The live product page was inaccessible on November 3, 2026. Continuous/peak mechanical power, torque, RPM, efficiency, shaft fit, dimensions and installed mass remain unknown. No two-motor price, mass or checkout discount is carried over.",
+    "notes": "Historical proposal, replaced in the single-motor car by the user-selected 48 V version on November 4, 2026. One motor from the user-linked AliExpress item, replacing the pair only in this new car. The previously supplied listing title describes MY1020 brushless DC, 1000 W and 36/48 V variants. Use the 36 V option to match this car's selected pack; the exact variant is provisional. The live product page was inaccessible on November 3, 2026. Continuous/peak mechanical power, torque, RPM, efficiency, shaft fit, dimensions and installed mass remain unknown. No two-motor price, mass or checkout discount is carried over.",
     "datasheet": "https://www.aliexpress.us/item/3256806152602316.html",
     "hypothetical": false,
     "specs": {
@@ -27,7 +27,7 @@
       "document_project": "team-parts-2026-10-22",
       "installed_quantity": 1,
       "currency": "USD",
-      "part_status": "selected concept / engineering specifications pending",
+      "part_status": "historical option / superseded by selected 48 V motor",
       "source_references": [
         {
           "document": "User single-motor car request / November 3, 2026",
@@ -44,7 +44,63 @@
       "variant_status": "36 V option proposed to match the battery; exact product variant unverified",
       "combined_listing_wattage_w": 1000,
       "verification_status": "Prior user-supplied listing title; live AliExpress page inaccessible November 3, 2026",
-      "price_basis": "Single-motor checkout price unknown"
+      "price_basis": "Single-motor checkout price unknown",
+      "superseded_by_component_id": "team-motor-my1020-single-48v"
+    }
+  },
+  {
+    "id": "team-motor-my1020-single-48v",
+    "name": "Single MY1020 brushless motor / selected 48 V / listed 1000 W",
+    "category": "motor",
+    "manufacturer": "",
+    "model": "MY1020 / user-selected 48 V option",
+    "mass_kg": null,
+    "price": 82.89,
+    "notes": "User selected the 48 V, 1000 W motor from AliExpress item 3256806152602316 on November 4, 2026 as the main traction motor for the wheels, replacing the previously proposed 36 V variant in the single-motor car. User-supplied price is $82.89 for one motor; shipping is unknown and tax was not supplied. The linked product page could not be accessed during review. The MY1020 brushless designation comes from the previously supplied listing title. The selected battery is still 36 V / 20 Ah; compatibility, controller requirements and available output with that pack remain unverified. Continuous/peak mechanical power, torque, RPM, efficiency, shaft fit, dimensions and installed mass remain unknown. No checkout discount is assumed.",
+    "datasheet": "https://www.aliexpress.us/item/3256806152602316.html",
+    "hypothetical": false,
+    "specs": {
+      "listed_power_per_motor_w": 1000,
+      "listed_motor_type": "brushless DC",
+      "listed_voltage_v": 48
+    },
+    "units": {
+      "listed_power_per_motor_w": "W",
+      "listed_motor_type": "text",
+      "listed_voltage_v": "V"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "installed_quantity": 1,
+      "currency": "USD",
+      "part_status": "selected concept / engineering specifications pending",
+      "source_references": [
+        {
+          "document": "User single-motor car request / November 3, 2026",
+          "location": "New car using one linked MY1020 motor, linked 36 V / 20 Ah battery and the other systems from the current car"
+        },
+        {
+          "document": "Previously supplied AliExpress listing title",
+          "location": "MY1020 / 36 V or 48 V / 1000 W; original linked item",
+          "url": "https://www.aliexpress.us/item/3256806152602316.html"
+        },
+        {
+          "document": "User motor replacement request / November 4, 2026",
+          "location": "48V 1,000 Watt Motor; main power source for the wheels; $82.89 (shipping unknown)",
+          "url": "https://www.aliexpress.us/item/3256806152602316.html"
+        }
+      ],
+      "installation_scope": "single_motor_assembly",
+      "variant_status": "48 V option explicitly selected by the user November 4, 2026; supplier details unverified",
+      "combined_listing_wattage_w": 1000,
+      "verification_status": "User-supplied 48 V / 1000 W selection and $82.89 price; live AliExpress page inaccessible November 4, 2026",
+      "price_basis": "User-supplied November 4, 2026: USD 82.89 for one motor; shipping unknown and tax not supplied",
+      "selected_variant_voltage_v": 48,
+      "procurement_quantity": 1,
+      "unit_price_usd": 82.89,
+      "shipping_usd": null,
+      "application": "Main traction motor for the wheels",
+      "replaces_component_id": "team-motor-my1020-single-36v"
     }
   },
   {
@@ -159,13 +215,13 @@
   },
   {
     "id": "team-custom-drive-esp32-single",
-    "name": "Custom motor-drive electronics / one MY1020 motor / ESP32-controlled",
+    "name": "Custom motor-drive electronics / one 48 V MY1020 motor / ESP32-controlled",
     "category": "inverter",
     "manufacturer": "",
     "model": "",
     "mass_kg": null,
     "price": null,
-    "notes": "Retains the ESP32-controlled team-built power-circuit approach, with one traction motor output instead of the prior two-motor arrangement. Size and verify the power stage, gate drive, commutation, wiring, fuses, connectors and cooling for the proposed 36 V MY1020 motor and selected 20 Ah pack. Continuous/peak current, full-charge voltage limits and regen remain unverified. ESP32 boards are counted separately. No commercial controller purchase is assumed.",
+    "notes": "Retains the ESP32-controlled team-built power-circuit approach with one traction motor output. Size and verify the power stage, gate drive, commutation, wiring, fuses, connectors and cooling for the user-selected 48 V / 1000 W MY1020 motor. The selected 36 V / 20 Ah battery differs from the motor listing voltage; compatible operating voltage and available output require review. Continuous/peak current, full-charge voltage limits and regen remain unverified. ESP32 boards are counted separately. No commercial controller purchase is assumed.",
     "datasheet": "",
     "hypothetical": false,
     "specs": {},
@@ -178,6 +234,11 @@
         {
           "document": "User single-motor car request / November 3, 2026",
           "location": "New car using one linked MY1020 motor, linked 36 V / 20 Ah battery and the other systems from the current car"
+        },
+        {
+          "document": "User motor replacement request / November 4, 2026",
+          "location": "48V 1,000 Watt Motor; main power source for the wheels; $82.89 (shipping unknown)",
+          "url": "https://www.aliexpress.us/item/3256806152602316.html"
         }
       ],
       "verification_status": "User plan/quote recorded; supplier details identified separately; installed fit unverified.",
@@ -199,7 +260,7 @@
     "model": "BMI 400367 / Azusa 8190",
     "mass_kg": null,
     "price": 12.95,
-    "notes": "One of the same proposed BMI mounting plates for the single MY1020 motor. Historical unit allowance is $12.95 from the previous two-plate quote; not a new quote. Motor bolt pattern, adapter drilling, chain tension adjustment and frame attachment need verification. Complete installed mounting mass is unknown.",
+    "notes": "One of the same proposed BMI mounting plates for the selected 48 V MY1020 motor. Historical unit allowance is $12.95 from the previous two-plate quote; not a new quote. Motor bolt pattern, adapter drilling, chain tension adjustment and frame attachment need verification. Complete installed mounting mass is unknown.",
     "datasheet": "https://www.bmikarts.com/12-x-5-Motor-Mount-Plate_p_1119.html",
     "hypothetical": false,
     "specs": {

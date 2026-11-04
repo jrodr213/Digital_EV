@@ -177,14 +177,29 @@ The new car retains the current car's steel/PVC frame and material references, s
 
 | Assembly | Single-motor car |
 | --- | --- |
-| Motor | One [AliExpress MY1020](https://www.aliexpress.us/item/3256806152602316.html), listed 1,000 W. The prior user-supplied title lists 36/48 V options; 36 V is proposed to match the pack. Exact variant and duty ratings are unverified. |
+| Motor | One [AliExpress MY1020](https://www.aliexpress.us/item/3256806152602316.html), user-selected **48 V / 1,000 W** option as of November 4, 2026, replacing the previous proposed 36 V variant. **$82.89 for one motor; shipping unknown**, tax not supplied. Main traction motor for the wheels. Duty ratings and supplier specifications are unverified. |
 | Battery | Linked [Walmart 36 V / 20 Ah / 720 Wh pack](https://business.walmart.com/ip/UL2271-Certified-36V-20Ah-720Wh-5-Pin-Ebike-Battery-for-Adults-18-40A-BMS-5A-Fast-Charger-XT60-for-0-1200W-Electric-Bicycles/21201472155), with title claims of a 40 A BMS, 5 A charger, five-pin base, XT60 and UL2271 certification. These remain unverified seller claims. |
 | Motor mount | One plate of the existing proposed type; historical $12.95 unit allowance. Motor fit and complete installed mass are unknown. |
-| Power circuitry | ESP32-controlled custom power stage for one motor; electrical ratings and protection sizing remain open. |
+| Power circuitry | ESP32-controlled custom power stage for one 48 V motor; compatibility with the selected 36 V pack, available output, electrical ratings and protection sizing remain open. |
 | Drivetrain | User-selected chain drive to both rear wheels via rear axle/differential. One aggregate record covers chain, sprockets, guard/tensioner, differential, axle/half-shafts, bearings and retention. Ratio, hardware selection, loads, price and mass are unknown. |
 
-The product pages could not be opened on November 3, 2026. Motor information comes from the same product's prior supplied listing title; battery title claims are also present in the indexed Walmart brand catalog. No continuous motor rating, battery continuous discharge rating, charge/regen capability, installed mass or current checkout price is inferred. The 5 A charger claim is not a regen limit, and the 40 A BMS label is not a verified continuous limit.
+The motor page was still inaccessible on November 4, 2026. The selected 48 V / 1,000 W option and $82.89 price come from the user's replacement request; the MY1020 brushless designation comes from the same product's prior supplied listing title. Battery title claims are also present in the indexed Walmart brand catalog reviewed November 3, 2026. No continuous motor rating, battery continuous discharge rating, charge/regen capability or installed mass is inferred. The 5 A charger claim is not a regen limit, and the 40 A BMS label is not a verified continuous limit.
 
-The 3D powertrain shows one motor with a proposed chain and axle/differential assembly. Its tooth counts and dimensions are illustrative only. Standard simulation remains blocked until required engineering data are supplied. Demo mode uses one times the listed 1,000 W, the listed 20 Ah pack and an explicitly recorded temporary gearing assumption; these values never overwrite saved specifications.
+The selected motor is listed at **48 V**, while the saved battery remains **36 V** nominal. Motor/controller operation and available output at this pack voltage require review. Assembly validation shows this difference even while other engineering inputs are missing. The purchase plan includes the $82.89 motor price and keeps shipping and other unknown costs outside the partial subtotal. The previous proposed 36 V motor remains a historical library option.
+
+The 3D powertrain shows one motor with a proposed chain and axle/differential assembly. Its tooth counts and dimensions are illustrative only. Standard simulation remains blocked until required engineering data are supplied. Demo mode uses one times the listed 1,000 W, the listed 20 Ah pack and an explicitly recorded temporary gearing assumption; the ledger identifies full motor output with the 36 V pack as an unverified assumption. It does not model the effect of the motor/pack voltage difference. These values never overwrite saved specifications.
 
 The new JSON datasets participate in normal startup/source synchronization. Existing databases with a sync baseline receive the new records automatically; pre-sync team databases receive them once during adoption. Later local edits and deliberate deletions are preserved, and saved run snapshots are unchanged.
+
+### Conditional belt and chain options for both cars
+
+Added November 4, 2026 to **Build records & purchase planning → Conditional parts** for the single-motor and original two-motor cars:
+
+| Candidate | User-supplied offer | When to consider it |
+| --- | --- | --- |
+| [Walmart Comet 30-series / TAV2 replacement belt](https://www.walmart.com/ip/1431881048?selectedSellerId=101103783) | **$14.14 for a two-belt package**. Pickup, shipping and tax unverified. | Only with a compatible belt-drive layout, matched driver/driven pulleys or torque-converter hardware and reviewed motor/axle attachment. Fabrication may be needed. The package count does not establish installed quantity. |
+| [AliExpress chain and sprocket offer](https://www.aliexpress.us/item/3256807440717141.html) | **$29.21 per linked offer**. Variant, contents, shipping and tax unverified; live page inaccessible. | Candidate for the single-motor car's chain-to-axle/differential assembly after pitch, shaft fit, ratio, length and load checks. Consider for the two-motor car only if changing its direct-drive layout. |
+
+The single-motor car retains its chain/axle/differential layout. The two-motor car retains independent direct wheel attachment, so neither option is needed there currently. Belt and chain are alternative connections unless a later reviewed design explicitly needs both. Candidate records are separate from installed parts and the current purchase subtotal; masses and required quantities remain unknown. If a chain kit is selected later, account for it within the existing drive assembly once, while separately sizing the remaining axle/differential, bearings, guarding and tensioner.
+
+The [Comet manufacturer's 30-series reference](https://www.cometclutches.com/products/torque-converters/30-series/) describes an asymmetrical belt system with matched driver/driven units and alignment requirements. This provides system context; fit of the linked replacement belt to either EV remains unverified. Both candidates and their per-car notes follow normal repository synchronization; existing assemblies, budgets and saved simulation snapshots are preserved.

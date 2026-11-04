@@ -65,7 +65,16 @@
         "Auxiliary load and passenger/cargo payload"
       ],
       "topology": "Proposed belt drive to rear wheels; no differential specified",
-      "vehicle_mode": "schematic draft; simulation blocked until required data supplied"
+      "vehicle_mode": "schematic draft; simulation blocked until required data supplied",
+      "conditional_component_ids": [
+        "team-drive-option-belt-comet30",
+        "team-drive-option-chain-sprocket"
+      ],
+      "conditional_component_notes": {
+        "team-drive-option-belt-comet30": "Not needed for the current two-motor direct-wheel layout. Consider only after choosing a belt-drive redesign with compatible pulleys/torque-converter hardware, shaft attachment and routing. Required quantities must be reviewed; the two-pack does not establish two installed belts.",
+        "team-drive-option-chain-sprocket": "Not needed for the current two-motor direct-wheel layout. Consider only if the layout changes to chain drive; determine routing, compatible shafts, ratio and the required kit quantity for both motors before adding to the purchase plan."
+      },
+      "conditional_parts_note": "Review these drive alternatives if the layout needs them. They are not installed or included in the current planning subtotal. Confirm compatibility and quantities before selection; a belt and chain are alternative connections unless a reviewed design needs both."
     }
   },
   {

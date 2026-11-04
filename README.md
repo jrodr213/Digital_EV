@@ -12,7 +12,9 @@ The [current main draft](docs/TEAM_BUILD.md#current-drivetrain-and-chassis) uses
 
 The main draft also includes the [user-selected UUGPOWER battery](docs/TEAM_BUILD.md#selected-battery): seller-listed 36 V, 15 Ah (540 Wh), with a 40 A maximum BMS discharge claim. Continuous/charge limits, regen support, installed mass and conflicting package dimensions remain unresolved.
 
-The garage also includes a separate **Single-motor car** based on the current build: one linked MY1020 brushless motor (listed 1,000 W; 36 V variant proposed), the Walmart 36 V / 20 Ah / 720 Wh pack, one mounting plate and a single-motor custom power stage. It uses the user-selected chain drive to both rear wheels through a rear axle/differential; gearing and hardware sizing remain unknown. The existing two-motor car and saved results remain available. See [single-motor setup](docs/TEAM_BUILD.md#single-motor-alternative-and-car-selection).
+The garage also includes a separate **Single-motor car** based on the current build: one linked MY1020 brushless motor with the user-selected **48 V / 1,000 W** option (**$82.89; shipping unknown**, updated November 4, 2026), the Walmart 36 V / 20 Ah / 720 Wh pack, one mounting plate and a single-motor custom power stage. Motor/controller compatibility and available output with the 36 V pack require review. It uses the user-selected chain drive to both rear wheels through a rear axle/differential; gearing and hardware sizing remain unknown. The existing two-motor car and saved results remain available. See [single-motor setup](docs/TEAM_BUILD.md#single-motor-alternative-and-car-selection).
+
+Both cars also list the user-linked **$14.14 belt two-pack** and **$29.21 chain/sprocket offer** under **Build records & purchase planning → Conditional parts**. These are candidates to review if needed, with unknown fit and quantities. The single-motor chain layout and two-motor direct-wheel layout remain as selected; conditional offers are outside the current budget and installed physics. See [conditional drive options](docs/TEAM_BUILD.md#conditional-belt-and-chain-options-for-both-cars).
 
 ## Run on Windows
 

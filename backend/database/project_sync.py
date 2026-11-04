@@ -11,7 +11,7 @@ from backend.schemas.entities import Component, Vehicle
 PROJECT_ID = 'team-parts-2026-10-22'
 STATE_KIND = 'project_sync'
 MISSING = object()
-REFERENCE_LISTS = {'component_ids', 'procurement_component_ids', 'hardware_component_ids', 'material_component_ids'}
+REFERENCE_LISTS = {'component_ids', 'procurement_component_ids', 'conditional_component_ids', 'hardware_component_ids', 'material_component_ids'}
 SINGLE_ASSEMBLIES = {'motor', 'battery', 'drivetrain', 'chassis', 'inverter', 'tires',
                      'brakes', 'suspension', 'steering', 'throttle_control'}
 

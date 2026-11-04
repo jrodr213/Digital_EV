@@ -1,0 +1,104 @@
+[
+  {
+    "id": "team-drive-option-belt-comet30",
+    "name": "Conditional / Comet 30-series replacement drive belt / 2-pack",
+    "category": "drive_belt",
+    "manufacturer": "",
+    "model": "203590 / 203590A / 203590B / 203590C / TAV2 (listing claims)",
+    "mass_kg": null,
+    "price": 14.14,
+    "notes": "User-supplied alternative for connecting a motor to an axle, only if the drive layout calls for it. The Walmart title describes a two-pack of replacement belts for Comet 30-series / TAV2 systems. The $14.14 allowance is for one two-belt package, not two installed belts. This is a replacement belt offer; compatible driver/driven pulleys or torque-converter hardware, motor and axle attachment, shaft fit, alignment, center distance, loading and guarding still need selection and verification. Belt dimensions and installed mass remain unknown. It is an alternative to the chain option unless a reviewed multi-stage design explicitly needs both. User suggested possible store pickup; local availability, shipping and tax are unverified.",
+    "datasheet": "https://www.walmart.com/ip/1431881048?selectedSellerId=101103783",
+    "hypothetical": false,
+    "specs": {
+      "listed_drive_system": "Comet 30-series / TAV2 replacement belt",
+      "listed_pack_quantity": 2,
+      "listed_replacement_numbers": [
+        "203590",
+        "203590A",
+        "203590B",
+        "203590C",
+        "Manco 9655",
+        "Manco 9659"
+      ]
+    },
+    "units": {
+      "listed_drive_system": "text",
+      "listed_pack_quantity": "count",
+      "listed_replacement_numbers": "text"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "currency": "USD",
+      "part_status": "conditional option / fit and need unverified",
+      "conditional_only": true,
+      "installed_quantity": null,
+      "procurement_quantity": null,
+      "shipping_usd": null,
+      "alternative_group": "motor_to_axle_drive",
+      "applicable_vehicle_ids": [
+        "team-ev-single-motor",
+        "team-ev-belt"
+      ],
+      "package_units": 2,
+      "price_scope": "per_package",
+      "price_basis": "User-supplied November 4, 2026: USD 14.14 per two-belt package; shipping, tax and pickup availability unverified",
+      "pickup_status": "User suggested store pickup; availability unverified",
+      "verification_status": "User-supplied title and price; indexed Walmart listing identifies a two-pack. Detailed offer and installed fit unverified.",
+      "source_references": [
+        {
+          "document": "User conditional drivetrain parts request / November 4, 2026",
+          "location": "Belt; $14.14; possible motor-to-axle alternative; possible store pickup",
+          "url": "https://www.walmart.com/ip/1431881048?selectedSellerId=101103783"
+        },
+        {
+          "document": "Comet manufacturer 30-series reference / reviewed November 4, 2026",
+          "location": "Asymmetrical belt system with matched driver/driven units and alignment requirements; not validation of this replacement offer",
+          "url": "https://www.cometclutches.com/products/torque-converters/30-series/"
+        }
+      ]
+    }
+  },
+  {
+    "id": "team-drive-option-chain-sprocket",
+    "name": "Conditional / AliExpress chain and sprocket kit / variant pending",
+    "category": "drive_chain",
+    "manufacturer": "",
+    "model": "AliExpress item 3256807440717141",
+    "mass_kg": null,
+    "price": 29.21,
+    "notes": "User-supplied chain-and-sprocket candidate for connecting a motor to an axle if required by the chosen layout. Recorded offer is $29.21; exact variant, package contents and quantities, chain pitch/length, sprocket tooth counts, shaft bore/key fit, reduction ratio, alignment, torque/load ratings, mounting and installed mass remain unverified. The AliExpress page was inaccessible during review. This offer is not a complete rear axle/differential, bearings, tensioner or guard assembly. For the single-motor car it is a possible purchase within the existing chain/axle/differential assembly, not a second installed drive assembly. For the direct-drive two-motor car it is only an alternative if the layout changes. Shipping and tax are unknown.",
+    "datasheet": "https://www.aliexpress.us/item/3256807440717141.html",
+    "hypothetical": false,
+    "specs": {
+      "listed_item_description": "Chain and sprocket (user-supplied)"
+    },
+    "units": {
+      "listed_item_description": "text"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "currency": "USD",
+      "part_status": "conditional option / fit and need unverified",
+      "conditional_only": true,
+      "installed_quantity": null,
+      "procurement_quantity": null,
+      "shipping_usd": null,
+      "alternative_group": "motor_to_axle_drive",
+      "applicable_vehicle_ids": [
+        "team-ev-single-motor",
+        "team-ev-belt"
+      ],
+      "price_scope": "per_listing_offer",
+      "price_basis": "User-supplied November 4, 2026: USD 29.21 for the linked offer; selected variant, contents, shipping and tax unverified",
+      "verification_status": "User-supplied description and price; live AliExpress page inaccessible November 4, 2026",
+      "source_references": [
+        {
+          "document": "User conditional drivetrain parts request / November 4, 2026",
+          "location": "Chain and sprocket; $29.21; alternative motor-to-axle connection",
+          "url": "https://www.aliexpress.us/item/3256807440717141.html"
+        }
+      ]
+    }
+  }
+]

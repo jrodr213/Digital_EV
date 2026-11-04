@@ -1,9 +1,9 @@
 [
   {
     "id": "team-ev-single-motor",
-    "name": "TEAM / Single MY1020 1000 W + 36 V 20 Ah / chain-drive draft",
+    "name": "TEAM / Single 48 V 1000 W MY1020 + 36 V 20 Ah / chain-drive draft",
     "component_ids": [
-      "team-motor-my1020-single-36v",
+      "team-motor-my1020-single-48v",
       "team-steering-ackermann-by-wire",
       "team-fan-budget",
       "team-esp32",
@@ -31,7 +31,7 @@
     ],
     "payload_kg": null,
     "auxiliary_w": null,
-    "notes": "Separate single-motor alternative based on the current two-motor car. Keeps the steel/PVC frame, sensors, Ackermann steer-by-wire, THR-90 pedal, ESP32 boards and remaining systems. Uses one MY1020 motor (36 V variant proposed), one mounting plate, a dedicated single-motor power-stage record and the linked 36 V / 20 Ah / 720 Wh battery. User selected chain drive to both rear wheels through an axle/differential; gearing and hardware selection remain open. Unknown engineering values remain blank.",
+    "notes": "Separate single-motor alternative based on the current two-motor car. Keeps the steel/PVC frame, sensors, Ackermann steer-by-wire, THR-90 pedal, ESP32 boards and remaining systems. Uses the user-selected 48 V / 1000 W MY1020 motor ($82.89, shipping unknown), one mounting plate, a dedicated single-motor power stage and the linked 36 V / 20 Ah / 720 Wh battery. The motor and pack have different listed nominal voltages; electrical compatibility and available output require review. User selected chain drive to both rear wheels through an axle/differential; gearing and hardware selection remain open. Unknown engineering values remain blank.",
     "custom_parameters": {
       "document_project": "team-parts-2026-10-22",
       "preferred_draft": false,
@@ -41,7 +41,7 @@
         "Group4_Parts_List.xlsx"
       ],
       "procurement_component_ids": [
-        "team-motor-my1020-single-36v",
+        "team-motor-my1020-single-48v",
         "team-steering-ackermann-by-wire",
         "team-fan-budget",
         "team-esp32",
@@ -73,12 +73,12 @@
         "Unspecified fabrication/materials",
         "Additional chassis materials and frame fabrication",
         "Remaining steering fabrication and throttle interface circuitry",
-        "Single motor and new battery offer pricing",
+        "Battery offer pricing",
         "Chain, sprockets, guard/tensioner, rear axle/differential and bearings"
       ],
-      "budget_note": "Planning subtotal uses only the new car's purchase lines. One mount uses the historical $12.95 unit allowance. The new motor, battery, chain/axle/differential assembly and custom power-stage costs remain unknown; old motor-pair and battery prices are excluded.",
+      "budget_note": "Planning subtotal includes the user-supplied $82.89 for one 48 V / 1000 W motor, with shipping unknown and tax not supplied. One mount uses the historical $12.95 unit allowance. Battery, chain/axle/differential and custom power-stage costs remain unknown; old motor-pair and battery prices are excluded.",
       "unresolved_systems": [
-        "Confirm the MY1020 36 V variant, duty ratings, torque, RPM, shaft dimensions and installed mass",
+        "Review the selected 48 V motor with the existing 36 V battery and custom controller; verify operating voltage, available output, duty ratings, torque, RPM, shaft dimensions and installed mass",
         "Select chain, sprockets and gear ratio from reviewed motor torque/RPM, wheel size and load",
         "Select rear axle/differential, bearings, retention, guard and tensioner; verify alignment and load ratings",
         "Verify single-motor plate fit and frame attachment",
@@ -89,11 +89,11 @@
         "Ackermann linkage/actuator and THR-90 signal conditioning and stop behavior",
         "Auxiliary load and passenger/cargo payload"
       ],
-      "topology": "One MY1020 motor / chain drive / rear axle and differential",
+      "topology": "One 48 V 1000 W MY1020 motor / chain drive / rear axle and differential",
       "vehicle_mode": "schematic draft; simulation blocked until required data supplied",
       "sensor_layout_version": 1,
       "sensor_layout_note": "Eight linked product types; mounting locations and quantities are estimated.",
-      "motor_selection_note": "One motor from the user-linked AliExpress item, replacing the pair only in this new car. The previously supplied listing title describes MY1020 brushless DC, 1000 W and 36/48 V variants. Use the 36 V option to match this car's selected pack; the exact variant is provisional. The live product page was inaccessible on November 3, 2026. Continuous/peak mechanical power, torque, RPM, efficiency, shaft fit, dimensions and installed mass remain unknown. No two-motor price, mass or checkout discount is carried over.",
+      "motor_selection_note": "User selected the 48 V, 1000 W motor from AliExpress item 3256806152602316 on November 4, 2026 as the main traction motor for the wheels, replacing the previously proposed 36 V variant in the single-motor car. User-supplied price is $82.89 for one motor; shipping is unknown and tax was not supplied. The linked product page could not be accessed during review. The MY1020 brushless designation comes from the previously supplied listing title. The selected battery is still 36 V / 20 Ah; compatibility, controller requirements and available output with that pack remain unverified. Continuous/peak mechanical power, torque, RPM, efficiency, shaft fit, dimensions and installed mass remain unknown. No checkout discount is assumed.",
       "chassis_material_component_ids": [
         "team-material-pvc-10ft",
         "team-material-steel-8ft"
@@ -118,7 +118,7 @@
         "chain_drive": true,
         "wheel_connection": "One motor through chain reduction to both rear wheels via axle/differential"
       },
-      "architecture_note": "One motor drives both rear wheels via a chain and rear axle/differential. The proposed motor variant is 36 V to match the selected 36 V / 20 Ah pack. Retains the steel/PVC frame, Ackermann steer-by-wire, THR-90 pedal, ESP32 boards, sensors and remaining systems from the prior car. One motor mounting plate and a one-motor custom power stage replace their two-motor counterparts.",
+      "architecture_note": "One user-selected 48 V / 1000 W motor drives both rear wheels via a chain and rear axle/differential. The selected pack is still 36 V / 20 Ah, so motor/controller compatibility and available output at that voltage are unverified. Retains the steel/PVC frame, Ackermann steer-by-wire, THR-90 pedal, ESP32 boards, sensors and remaining systems from the prior car. One motor mounting plate and a one-motor custom power stage replace their two-motor counterparts.",
       "regenerative_braking_note": "Undecided. Confirm motor/controller support, battery/BMS charge acceptance and a back-drivable drivetrain before selecting regen. Mechanical brakes remain a separate required system.",
       "regenerative_braking_reference": "https://media.kellycontroller.com/new/Kelly-AKBS-XUserManualV4.3.pdf",
       "battery_selection_note": "User-selected pack. The supplied Walmart title and indexed Walmart catalog list 36 V, 20 Ah, 720 Wh, a five-pin base, XT60, a 40 A BMS and a 5 A charger. The title also claims UL2271 certification and use with 0-1200 W bicycles; these are seller claims, not independently verified certification or system compatibility. The 40 A BMS label does not establish a continuous discharge rating; the 5 A charger does not establish a regenerative charge limit. Cell arrangement, usable capacity, continuous/charge limits, full-charge voltage, installed mass, dimensions and mounting remain unknown.",
@@ -137,7 +137,17 @@
       "selection_featured": true,
       "selection_title": "Single-motor car",
       "based_on_vehicle_id": "team-ev-belt",
-      "created_from_request_on": "2026-11-03"
+      "created_from_request_on": "2026-11-03",
+      "motor_selection_updated_on": "2026-11-04",
+      "conditional_component_ids": [
+        "team-drive-option-belt-comet30",
+        "team-drive-option-chain-sprocket"
+      ],
+      "conditional_component_notes": {
+        "team-drive-option-belt-comet30": "Alternative only if the current chain-to-axle/differential layout is changed to a compatible belt drive. Requires matching pulleys/torque-converter hardware and verified motor/axle attachment; fabrication may be needed. One offer contains two belts; installed quantity is undecided.",
+        "team-drive-option-chain-sprocket": "Candidate for the current one-motor chain drive to the rear axle/differential, pending chain pitch, tooth counts/ratio, shaft fit, length and load checks. If selected, price it within the existing drive assembly once; axle/differential, bearings, tensioner and guarding remain separate unknown costs."
+      },
+      "conditional_parts_note": "Review these drive alternatives if the layout needs them. They are not installed or included in the current planning subtotal. Confirm compatibility and quantities before selection; a belt and chain are alternative connections unless a reviewed design needs both."
     }
   }
 ]

@@ -8,7 +8,7 @@ from scripts.load_team_project import load as load_team
 
 def test_requested_hardware_and_fabrication_choices_are_recorded_without_fake_ratings(tmp_path):
     store = Store(tmp_path / 'hardware.sqlite')
-    assert load_team(store) == {'components': 68, 'vehicles': 4}
+    assert load_team(store) == {'components': 71, 'vehicles': 4}
     vehicle = store.get('vehicles', 'team-ev-belt')
     meta = vehicle['custom_parameters']
     parts = [store.get('components', key) for key in vehicle['component_ids']]

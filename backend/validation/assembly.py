@@ -2,6 +2,10 @@ import math
 from backend.components.catalog import REQUIRED, FIELDS
 
 
+def _positive_number(value):
+    return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value) and value > 0
+
+
 def assemble(vehicle, components):
     errors, warnings = [], []
     grouped = {}
@@ -9,6 +13,17 @@ def assemble(vehicle, components):
         grouped.setdefault(c['category'], []).append(c)
         if c.get('mass_kg') is None:
             errors.append(f'{c["name"]}: missing installed assembly mass [kg].')
+    if len(grouped.get('motor', [])) == len(grouped.get('battery', [])) == 1:
+        motor_voltage = grouped['motor'][0]['specs'].get('listed_voltage_v')
+        battery = grouped['battery'][0]['specs']
+        battery_voltage = (battery['cell_voltage_v'] * battery['series']
+                           if _positive_number(battery.get('cell_voltage_v')) and _positive_number(battery.get('series'))
+                           else battery.get('listed_nominal_voltage_v'))
+        if (_positive_number(motor_voltage) and _positive_number(battery_voltage)
+                and not math.isclose(motor_voltage, battery_voltage, rel_tol=.01)):
+            warnings.append(f'Selected motor is listed at {motor_voltage:g} V; the battery is {battery_voltage:g} V nominal. '
+                            'Motor/controller compatibility and full listed power at this pack voltage are unverified. '
+                            'Demo mode does not model the effect of this voltage difference.')
     if vehicle.get('payload_kg') is None:
         errors.append('Passenger/cargo payload is unknown [kg]. Enter an explicit value, including zero for an unmanned test.')
     if vehicle.get('auxiliary_w') is None:
