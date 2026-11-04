@@ -55,9 +55,11 @@ python desktop/checksums.py
 
 On headless Linux run the app test under `xvfb-run --auto-servernum`. The frozen-engine check exercises authentication, the built frontend, the latest cars/parts, an actual FASTSim run, CSV export, database persistence after restart and engine exit after its parent's pipe closes. The packaged-app check opens the native executable, checks sandbox isolation, WebGL, conditional part prices and actual simulation persistence. SHA-256 manifests accompany the downloads.
 
+On Linux CI, the app test explicitly uses Chromium SwiftShader to exercise WebGL without a physical GPU. These flags apply only to the test launcher; installed apps use their normal graphics settings.
+
 ## Build all platforms and prepare downloads
 
-The **Desktop downloads** GitHub Actions workflow has four native jobs: Windows x64, Apple Silicon Mac, Intel Mac and Linux x64. Run it manually from Actions to obtain installer artifacts. Pull requests touching app inputs run the same checks. Artifacts are retained for 30 days.
+The **Desktop downloads** GitHub Actions workflow has four native jobs: Windows x64, Apple Silicon Mac, Intel Mac and Linux x64. Run it manually from Actions to obtain installer artifacts; choose `all` or a single target when retrying a platform. Pull requests touching app inputs run the full set of checks. Artifacts are retained for 30 days.
 
 For a release, update `desktop/package.json` and its lockfile version, then push a matching `desktop-v<version>` tag. Only after **all** native builds and smoke tests pass does the workflow create a **draft** GitHub Release with the installers and checksums. Review its files and publisher/signing status before making the draft public. Artifact upload is not an auto-update mechanism; no background updater is included.
 

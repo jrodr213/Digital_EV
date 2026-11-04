@@ -2,6 +2,12 @@ name: Desktop downloads
 
 on:
   workflow_dispatch:
+    inputs:
+      target:
+        description: Native build target
+        type: choice
+        default: all
+        options: [all, Windows-x64, macOS-Apple-Silicon, macOS-Intel, Linux-x64]
   push:
     tags: ['desktop-v*']
   pull_request:
@@ -18,16 +24,35 @@ permissions:
   contents: read
 
 jobs:
+  plan:
+    name: Select native targets
+    runs-on: ubuntu-22.04
+    outputs:
+      matrix: ${{ steps.targets.outputs.matrix }}
+    steps:
+      - id: targets
+        env:
+          EV_BUILD_TARGET: ${{ inputs.target || 'all' }}
+        shell: python
+        run: |
+          import json, os
+          targets = [
+              {'name': 'Windows-x64', 'os': 'windows-2022', 'arch': 'x64'},
+              {'name': 'macOS-Apple-Silicon', 'os': 'macos-15', 'arch': 'arm64'},
+              {'name': 'macOS-Intel', 'os': 'macos-15-intel', 'arch': 'x64'},
+              {'name': 'Linux-x64', 'os': 'ubuntu-22.04', 'arch': 'x64'},
+          ]
+          chosen = [target for target in targets if os.environ['EV_BUILD_TARGET'] in ('all', target['name'])]
+          assert chosen, 'Unknown native target'
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('matrix=' + json.dumps({'include': chosen}) + '\n')
+
   build:
     name: ${{ matrix.name }}
+    needs: plan
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - {name: Windows-x64, os: windows-2022, arch: x64}
-          - {name: macOS-Apple-Silicon, os: macos-15, arch: arm64}
-          - {name: macOS-Intel, os: macos-15-intel, arch: x64}
-          - {name: Linux-x64, os: ubuntu-22.04, arch: x64}
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
     env:
@@ -95,6 +120,7 @@ jobs:
           path: |
             desktop/build/desktop-smoke.png
             desktop/build/desktop-smoke.json
+            desktop/build/desktop-smoke-errors.txt
             desktop/build/pyinstaller/backend/warn-backend.txt
 
   draft-release:

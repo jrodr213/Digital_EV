@@ -12,12 +12,14 @@ const defaultExecutable = process.platform === 'darwin'
 const executablePath = process.env.EV_DESKTOP_EXECUTABLE ?? defaultExecutable;
 const dataDirectory = await mkdtemp(path.join(os.tmpdir(), 'ev-twin-native-smoke-'));
 const errors = [];
-let application;
+let application, page;
 const env = {...process.env, EV_DESKTOP_DATA_DIR: dataDirectory};
 delete env.ELECTRON_RUN_AS_NODE;
 
 async function launch() {
-  application = await electron.launch({executablePath, env, timeout: 90000});
+  application = await electron.launch({executablePath, env, timeout: 90000,
+    args: process.env.CI && process.platform === 'linux'
+      ? ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] : []});
   const page = await application.firstWindow({timeout: 90000});
   page.setDefaultTimeout(20000);
   page.on('pageerror', error => errors.push(error.message));
@@ -26,7 +28,7 @@ async function launch() {
 }
 
 try {
-  let page = await launch();
+  page = await launch();
   const runtime = await application.evaluate(({app}) => ({packaged: app.isPackaged, version: app.getVersion()}));
   assert.equal(runtime.packaged, true, 'Test the packaged executable, not development Electron.');
   assert.equal(await page.evaluate(() => typeof window.require), 'undefined');
@@ -63,6 +65,13 @@ try {
   }, null, 2) + '\n');
   console.log('PASS: packaged native app, sandboxed frontend, WebGL car, current parts/prices, real FASTSim and saved results after restart.');
 } catch (error) {
+  await mkdir(path.join(desktop, 'build'), {recursive: true});
+  if (page && !page.isClosed()) {
+    await page.screenshot({path: path.join(desktop, 'build/desktop-smoke.png'), fullPage: true}).catch(() => {});
+    await writeFile(path.join(desktop, 'build/desktop-smoke-errors.txt'), JSON.stringify({
+      browserErrors: errors, body: await page.locator('body').innerText().catch(() => ''),
+    }, null, 2));
+  }
   try {console.error(await readFile(path.join(dataDirectory, 'desktop.log'), 'utf8'));} catch {}
   throw error;
 } finally {
