@@ -9,7 +9,7 @@ EV Twin packages the React interface in an Electron window and includes a native
 | Windows x64 | `EV-Twin-1.0.0-windows-x64-Setup.exe` | Run the installer. Choose the installation directory and launch EV Twin. |
 | macOS Apple Silicon | `EV-Twin-1.0.0-mac-arm64.dmg` | Open the disk image and drag EV Twin to Applications. A ZIP is also produced. |
 | macOS Intel | `EV-Twin-1.0.0-mac-x64.dmg` | Open the disk image and drag EV Twin to Applications. A ZIP is also produced. |
-| Linux x64 | `EV-Twin-1.0.0-linux-x64.AppImage` | Mark the AppImage executable and open it. A `.deb` is also produced for Debian/Ubuntu systems. |
+| Linux x64 | `EV-Twin-1.0.0-linux-x86_64.AppImage` | Mark the AppImage executable and open it. `EV-Twin-1.0.0-linux-amd64.deb` is also produced for Debian/Ubuntu systems. |
 
 These are the configured artifact names. A platform download is available only after its native build and smoke tests complete. CI runs on Windows Server 2022, macOS 15 (both architectures) and Ubuntu 22.04. Linux systems need the usual graphical desktop libraries and FUSE 2 for AppImage mounting. Linux ARM and Windows ARM native packages are not configured.
 
@@ -55,7 +55,7 @@ python desktop/checksums.py
 
 On headless Linux run the app test under `xvfb-run --auto-servernum`. The frozen-engine check exercises authentication, the built frontend, the latest cars/parts, an actual FASTSim run, CSV export, database persistence after restart and engine exit after its parent's pipe closes. The packaged-app check opens the native executable, checks sandbox isolation, WebGL, conditional part prices and actual simulation persistence. SHA-256 manifests accompany the downloads.
 
-On Linux CI, the app test explicitly uses Chromium SwiftShader to exercise WebGL without a physical GPU. These flags apply only to the test launcher; installed apps use their normal graphics settings.
+On Linux and Intel Mac CI, the app test explicitly uses Chromium SwiftShader to exercise WebGL without a physical GPU. Apple Silicon CI uses its normal graphics path because Chromium disables SwiftShader WebGL on ARM Macs. These flags apply only to the test launcher; installed apps use their normal graphics settings.
 
 ## Build all platforms and prepare downloads
 

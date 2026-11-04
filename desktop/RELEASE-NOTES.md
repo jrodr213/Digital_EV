@@ -5,7 +5,7 @@ Choose the download for your computer:
 - Windows x64: `EV-Twin-*-windows-x64-Setup.exe`.
 - macOS Apple Silicon: `EV-Twin-*-mac-arm64.dmg` or the corresponding ZIP.
 - macOS Intel: `EV-Twin-*-mac-x64.dmg` or the corresponding ZIP.
-- Linux x64: `EV-Twin-*-linux-x64.AppImage` or `.deb`.
+- Linux x64: `EV-Twin-*-linux-x86_64.AppImage` or `EV-Twin-*-linux-amd64.deb`.
 
 Python, FASTSim and the frontend are included. Normal use does not require Python, Node.js, a terminal or an internet connection. Supplier links open your system browser.
 

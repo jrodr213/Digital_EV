@@ -18,7 +18,7 @@ delete env.ELECTRON_RUN_AS_NODE;
 
 async function launch() {
   application = await electron.launch({executablePath, env, timeout: 90000,
-    args: process.env.CI && process.platform === 'linux'
+    args: process.env.CI && (process.platform === 'linux' || (process.platform === 'darwin' && process.arch === 'x64'))
       ? ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] : []});
   const page = await application.firstWindow({timeout: 90000});
   page.setDefaultTimeout(20000);
@@ -38,6 +38,11 @@ try {
   const explorer = page.getByRole('region', {name: 'Interactive vehicle explorer'});
   await explorer.locator('canvas').waitFor();
   await page.waitForFunction(() => document.querySelector('.vehicle-explorer canvas') && !document.querySelector('.explorer-failure'));
+  const graphicsRenderer = await page.evaluate(() => {
+    const gl = document.querySelector('.vehicle-explorer canvas').getContext('webgl2');
+    const debug = gl?.getExtension('WEBGL_debug_renderer_info');
+    return debug ? gl.getParameter(debug.UNMASKED_RENDERER_WEBGL) : 'WebGL2';
+  });
   await page.getByText('Build records & purchase planning', {exact: true}).click();
   const records = page.locator('.project-details');
   await records.getByRole('button', {name: 'Conditional parts (2)', exact: true}).click();
@@ -61,7 +66,7 @@ try {
   assert.deepEqual(errors, []);
   await writeFile(path.join(desktop, 'build/desktop-smoke.json'), JSON.stringify({
     platform: process.platform, arch: process.arch, version: runtime.version,
-    packaged: true, webgl: true, fastsim: '3.1.0', restartPersistence: true, browserErrors: errors,
+    packaged: true, webgl: true, graphicsRenderer, fastsim: '3.1.0', restartPersistence: true, browserErrors: errors,
   }, null, 2) + '\n');
   console.log('PASS: packaged native app, sandboxed frontend, WebGL car, current parts/prices, real FASTSim and saved results after restart.');
 } catch (error) {
