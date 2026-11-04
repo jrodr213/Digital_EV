@@ -13,13 +13,17 @@ const executablePath = process.env.EV_DESKTOP_EXECUTABLE ?? defaultExecutable;
 const dataDirectory = await mkdtemp(path.join(os.tmpdir(), 'ev-twin-native-smoke-'));
 const errors = [];
 let application, page;
+let chromiumLog = '';
 const env = {...process.env, EV_DESKTOP_DATA_DIR: dataDirectory};
 delete env.ELECTRON_RUN_AS_NODE;
 
 async function launch() {
-  application = await electron.launch({executablePath, env, timeout: 90000,
-    args: process.env.CI && (process.platform === 'linux' || (process.platform === 'darwin' && process.arch === 'x64'))
-      ? ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] : []});
+  const args = process.env.CI ? ['--enable-logging=stderr'] : [];
+  if (process.env.CI && (process.platform === 'linux' || (process.platform === 'darwin' && process.arch === 'x64'))) {
+    args.push('--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader');
+  }
+  application = await electron.launch({executablePath, env, timeout: 90000, args});
+  application.process().stderr?.on('data', data => {chromiumLog = (chromiumLog + data.toString()).slice(-100000);});
   const page = await application.firstWindow({timeout: 90000});
   page.setDefaultTimeout(20000);
   page.on('pageerror', error => errors.push(error.message));
@@ -74,12 +78,15 @@ try {
   if (page && !page.isClosed()) {
     await page.screenshot({path: path.join(desktop, 'build/desktop-smoke.png'), fullPage: true}).catch(() => {});
     await writeFile(path.join(desktop, 'build/desktop-smoke-errors.txt'), JSON.stringify({
-      browserErrors: errors, body: await page.locator('body').innerText().catch(() => ''),
+      browserErrors: errors, gpu: await application.evaluate(({app}) => app.getGPUFeatureStatus()).catch(() => ({})),
+      body: await page.locator('body').innerText().catch(() => ''),
     }, null, 2));
   }
   try {console.error(await readFile(path.join(dataDirectory, 'desktop.log'), 'utf8'));} catch {}
   throw error;
 } finally {
+  await mkdir(path.join(desktop, 'build'), {recursive: true});
+  await writeFile(path.join(desktop, 'build/desktop-smoke-chromium.log'), chromiumLog);
   if (application) await application.close();
   await rm(dataDirectory, {recursive: true, force: true});
 }

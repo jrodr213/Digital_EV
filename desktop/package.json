@@ -33,6 +33,7 @@
     "icon": "build-resources/icon.png",
     "asar": true,
     "mac": {
+      "identity": "-",
       "category": "public.app-category.education",
       "target": ["dmg", "zip"],
       "hardenedRuntime": true,

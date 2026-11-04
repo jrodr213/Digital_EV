@@ -13,7 +13,7 @@ EV Twin packages the React interface in an Electron window and includes a native
 
 These are the configured artifact names. A platform download is available only after its native build and smoke tests complete. CI runs on Windows Server 2022, macOS 15 (both architectures) and Ubuntu 22.04. Linux systems need the usual graphical desktop libraries and FUSE 2 for AppImage mounting. Linux ARM and Windows ARM native packages are not configured.
 
-The initial builds are unsigned; macOS notarization is disabled until a maintainer configures signing credentials. macOS and Windows can show publisher warnings. For an app obtained from a trusted source, use the OS's per-app approval flow; do not disable global protections. Public distribution should use a Developer ID certificate and Apple notarization for Mac, and a trusted Windows code-signing certificate. No signing keys are stored in the repository.
+The initial builds do not have publisher certificates; macOS notarization is disabled until a maintainer configures signing credentials. Mac app bundles receive ad-hoc signatures and pass `codesign --verify --deep --strict`, so the distributed bundle's resources and native code have a consistent integrity seal. Ad-hoc signing does not establish a trusted publisher. macOS and Windows can show publisher warnings. For an app obtained from a trusted source, use the OS's per-app approval flow; do not disable global protections. Wider distribution should use a Developer ID certificate and Apple notarization for Mac, and a trusted Windows code-signing certificate. No signing keys are stored in the repository. The Mac entitlements permit the bundled Python/native libraries under Hardened Runtime; renderer sandboxing remains enabled.
 
 ## Saved data
 

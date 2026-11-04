@@ -9,7 +9,7 @@ Choose the download for your computer:
 
 Python, FASTSim and the frontend are included. Normal use does not require Python, Node.js, a terminal or an internet connection. Supplier links open your system browser.
 
-The current builds are unsigned and macOS builds are not notarized. Windows or macOS may show an unknown-publisher warning. For wider distribution, a maintainer should sign Windows installers and sign/notarize Mac builds with their own certificates. Do not disable system-wide security settings to run an unfamiliar download.
+Windows builds do not have a publisher certificate. Mac bundles have verified ad-hoc signatures for integrity, but are not Developer ID signed or notarized. Windows or macOS may show an unknown-publisher warning. For wider distribution, a maintainer should sign Windows installers and sign/notarize Mac builds with their own certificates. Do not disable system-wide security settings to run an unfamiliar download.
 
 Designs and simulations stay in the application-data folder. Open it from **File → Open data folder**. App updates and Windows uninstallation preserve that folder. Back it up while the app is closed. Existing development-workspace data can be transferred by following `docs/DESKTOP.md` in the source repository. Private databases and past simulation results are not included in distributed installers.
 

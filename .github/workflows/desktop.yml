@@ -88,6 +88,12 @@ jobs:
           npm test --prefix frontend
       - name: Build native app and exercise frozen engine
         run: python scripts/build_desktop.py --dir --skip-install
+      - name: Verify Mac bundle signatures
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          app=$(find desktop/release -maxdepth 2 -name 'EV Twin.app' -print -quit)
+          codesign --verify --deep --strict "$app"
       - name: Test packaged desktop application
         if: runner.os != 'Linux'
         run: node desktop/smoke_app.mjs
@@ -96,6 +102,12 @@ jobs:
         run: xvfb-run --auto-servernum node desktop/smoke_app.mjs
       - name: Create installers
         run: npm run dist --prefix desktop
+      - name: Verify final Mac bundle signatures
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          app=$(find desktop/release -maxdepth 2 -name 'EV Twin.app' -print -quit)
+          codesign --verify --deep --strict "$app"
       - name: Generate download checksums
         run: python desktop/checksums.py
       - name: Upload downloads
@@ -121,6 +133,7 @@ jobs:
             desktop/build/desktop-smoke.png
             desktop/build/desktop-smoke.json
             desktop/build/desktop-smoke-errors.txt
+            desktop/build/desktop-smoke-chromium.log
             desktop/build/pyinstaller/backend/warn-backend.txt
 
   draft-release:
@@ -144,4 +157,8 @@ jobs:
         run: |
           version=$(node -p "require('./desktop/package.json').version")
           test "$GITHUB_REF_NAME" = "desktop-v$version"
+          if gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1; then
+            echo 'Release already exists; verified native build artifacts are available from this workflow run.'
+            exit 0
+          fi
           gh release create "$GITHUB_REF_NAME" downloads/* --verify-tag --draft --title "EV Twin $version" --notes-file desktop/RELEASE-NOTES.md
