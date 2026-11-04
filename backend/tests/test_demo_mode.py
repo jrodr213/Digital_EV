@@ -69,7 +69,7 @@ def test_demo_still_rejects_conflicting_or_unsupported_inputs(team, change):
     assert assembly['errors']
 
 
-@pytest.mark.parametrize('vehicle_id', ['team-ev-belt', 'team-ev-differential', 'team-ev-dual-direct'])
+@pytest.mark.parametrize('vehicle_id', ['team-ev-belt', 'team-ev-differential', 'team-ev-dual-direct', 'team-ev-single-motor'])
 @pytest.mark.parametrize('test', ['cycle', 'acceleration', 'hill', 'load'])
 def test_current_team_concepts_run_in_demo_mode(team, vehicle_id, test):
     store, _, _ = team

@@ -6,7 +6,7 @@ import {driveFrame,MPS_PER_MPH,prepareDriveTrace,sameDriveConditions} from './pl
 import {usePlaybackClock} from './usePlaybackClock';
 import './drivePlayback.css';
 
-const colors=['#78e4c4','#b9adff','#f2c17c'];
+const colors=['#739f91','#8297aa','#aeaca3'];
 
 export function DrivePlayback({result,runs}:{result?:Result;runs:Result[]}){
  const [ids,setIds]=useState<[string,string,string]>([result?.id??'','','']);
@@ -62,7 +62,7 @@ export function DrivePlayback({result,runs}:{result?:Result;runs:Result[]}){
      </g>;
     })}
    </svg></div>
-   <div className="drive-readouts">{valid.map((entry,index)=>{const frame=frames[index];return <article key={entry.run.id} style={{borderTopColor:colors[index]}}><span className="drive-run-label" style={{color:colors[index]}}>{String.fromCharCode(65+index)} · {entry.run.request.demo_mode?'DEMO ESTIMATE':'SAVED SIMULATION'}</span><h3>{entry.run.name}</h3><dl><div><dt>Achieved speed</dt><dd>{fmt(frame.speedMps/MPS_PER_MPH,2)} mph</dd></div><div><dt>Distance</dt><dd>{fmt(frame.distance,2)} m</dd></div><div><dt>Battery SOC</dt><dd>{frame.soc==null?'—':`${fmt(frame.soc*100,1)}%`}</dd></div></dl><small>{entry.trace.nativeDistance?'Recorded FASTSim distance':'Distance integrated from saved achieved speed (older result)'}{entry.trace.wheelRadius==null?' · Wheel diameter unavailable; wheel rotation is not inferred.':''}{frame.ended?' · End of recording; final position held.':''}</small></article>})}</div>
+   <div className="drive-readouts">{valid.map((entry,index)=>{const frame=frames[index];return <article key={entry.run.id} style={{borderTopColor:colors[index]}}><span className="drive-run-label" style={{color:index===0?'var(--accent)':'var(--muted)'}}>{String.fromCharCode(65+index)} · {entry.run.request.demo_mode?'DEMO ESTIMATE':'SAVED SIMULATION'}</span><h3>{entry.run.name}</h3><dl><div><dt>Achieved speed</dt><dd>{fmt(frame.speedMps/MPS_PER_MPH,2)} mph</dd></div><div><dt>Distance</dt><dd>{fmt(frame.distance,2)} m</dd></div><div><dt>Battery SOC</dt><dd>{frame.soc==null?'—':`${fmt(frame.soc*100,1)}%`}</dd></div></dl><small>{entry.trace.nativeDistance?'Recorded FASTSim distance':'Distance integrated from saved achieved speed (older result)'}{entry.trace.wheelRadius==null?' · Wheel diameter unavailable; wheel rotation is not inferred.':''}{frame.ended?' · End of recording; final position held.':''}</small></article>})}</div>
    <p className="drive-caption">Every car uses the same elapsed seconds and metres. Playback speed changes viewing time only. Wheels follow distance ÷ saved wheel radius; pause and scrubbing preserve position. Car icons are schematic. This replays longitudinal results, without steering, tire slip, suspension or new physics calculations.</p>
   </>}
  </section>;

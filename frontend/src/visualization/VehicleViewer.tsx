@@ -1,12 +1,12 @@
 import {useEffect,useMemo,useRef,useState} from 'react';
 import type {CSSProperties} from 'react';
-import {ArrowLeft,ArrowUpRight,Battery,CircleDot,Cog,Cpu,ExternalLink,Gauge,Info,Layers,Maximize2,ScanLine,SquareStack} from 'lucide-react';
+import {ArrowLeft,ArrowUpRight,Battery,CircleDot,Cog,Cpu,ExternalLink,Gauge,Info,Layers,Maximize2,RotateCcw,ScanLine,SquareStack} from 'lucide-react';
 import type {Part,Result} from '../types';
 import {fmt} from '../api';
 import {assemblyDefinitions,assemblyForPart,assemblyParts,partChildren,partLabel,visualParts} from './assemblyNavigation';
 import type {AssemblyId} from './assemblyNavigation';
 import {createVehicleScene} from './vehicleScene';
-import type {SceneHit,SceneView,VehicleScene} from './vehicleScene';
+import type {CameraPreset,SceneHit,SceneView,VehicleScene} from './vehicleScene';
 import {describePart} from './partDescription';
 import {driveFrame,MPS_PER_MPH,prepareDriveTrace} from './playbackMotion';
 import {usePlaybackClock} from './usePlaybackClock';
@@ -19,6 +19,7 @@ const readable=(key:string)=>key.replace(/^listed_/,'').replaceAll('_',' ');
 export function VehicleViewer({parts,libraryParts=parts,result,compact=false}:{parts:Part[];libraryParts?:Part[];result?:Result;compact?:boolean}){
  const mount=useRef<HTMLDivElement>(null),sidebar=useRef<HTMLElement>(null),scene=useRef<VehicleScene|null>(null),wheelAngle=useRef(0);
  const [activeAssembly,setActiveAssembly]=useState<AssemblyId|null>(null),[trail,setTrail]=useState<string[]>([]),[exploded,setExploded]=useState(true);
+ const [cameraPreset,setCameraPreset]=useState<CameraPreset|'custom'>('isometric'),[retry,setRetry]=useState(0),[ready,setReady]=useState(false);
  const [hover,setHover]=useState<{hit:SceneHit;x:number;y:number}|null>(null),[failure,setFailure]=useState('');
  const playback=useMemo(()=>{if(!result)return null;try{return prepareDriveTrace(result)}catch{return null}},[result]);
  const clock=usePlaybackClock(playback?.duration??0,result?.id??'');
@@ -30,7 +31,7 @@ export function VehicleViewer({parts,libraryParts=parts,result,compact=false}:{p
  const available=assemblyDefinitions.filter(a=>assemblyParts(a.id,parts).length>0);
  const focusedParts=activeAssembly?assemblyParts(activeAssembly,parts):[];
  const children=selected?partChildren(selected,libraryParts):[];
- const title=selected?partLabel(selected):definition?.name??'Your EV, assembled.';
+ const title=selected?partLabel(selected):definition?.name??(compact?'Selected vehicle':'Vehicle workspace');
  const identity=parts.map(p=>p.id??p.name).sort().join('|');
  const view=useRef<SceneView>({assembly:null,part:null,exploded:true});view.current={assembly:activeAssembly,part:selected,exploded};
 
@@ -43,13 +44,13 @@ export function VehicleViewer({parts,libraryParts=parts,result,compact=false}:{p
 
  useEffect(()=>{fullCar();clock.seek(0)},[identity]);
  useEffect(()=>{
-  const host=mount.current;if(!host)return;setFailure('');setHover(null);
+  const host=mount.current;if(!host)return;setFailure('');setHover(null);setReady(false);
   try{
-   const controller=createVehicleScene(host,parts,all,{pick:hit=>actions.current.pick(hit),hover:(hit,x,y)=>setHover(hit?{hit,x,y}:null),wheelAngle:()=>wheelAngle.current});
-   scene.current=controller;controller.setView(view.current);
+   const controller=createVehicleScene(host,parts,all,{pick:hit=>actions.current.pick(hit),hover:(hit,x,y)=>setHover(hit?{hit,x,y}:null),wheelAngle:()=>wheelAngle.current,orientation:setCameraPreset});
+   scene.current=controller;controller.setView(view.current);setCameraPreset('isometric');setReady(true);
    return()=>{controller.dispose();scene.current=null};
   }catch{setFailure('The 3D preview needs WebGL. You can still explore every assembly using the buttons below.');}
- },[parts,all]);
+ },[parts,all,retry]);
  useEffect(()=>{scene.current?.setView(view.current)},[activeAssembly,selected,exploded]);
  useEffect(()=>{if(sidebar.current)sidebar.current.scrollTop=0},[activeAssembly,selected]);
  useEffect(()=>{
@@ -65,7 +66,7 @@ export function VehicleViewer({parts,libraryParts=parts,result,compact=false}:{p
 
  return <section className={`panel vehicle-explorer${compact?' is-compact':''}`} aria-label="Interactive vehicle explorer" data-view={selected?'component':activeAssembly?'assembly':'full'}>
   <div className="explorer-heading">
-   <div><span className="explorer-eyebrow">EV / TWIN <i/> DESIGN EXPLORER</span><h2>{title}</h2><p>{selected?'A closer look at your selected component.':definition?.description??'Start with the whole car. Discover what makes it yours.'}</p></div>
+   <div><span className="explorer-eyebrow">EV / TWIN <i/> DESIGN EXPLORER</span><h2>{title}</h2><p>{selected?'A closer look at your selected component.':definition?.description??'Select a system or click the model to inspect its components.'}</p></div>
    <span className="explorer-concept"><span/> {activeAssembly?'INSIDE THE BUILD':'FINISHED CONCEPT'}</span>
   </div>
   <div className="explorer-navigation">
@@ -76,6 +77,8 @@ export function VehicleViewer({parts,libraryParts=parts,result,compact=false}:{p
     {trail.map((id,index)=>{const part=byId.get(id);return part&&<span className="explorer-crumb-part" key={id}><span className="breadcrumb-separator">/</span><button onClick={()=>{setTrail(previous=>previous.slice(0,index+1));setHover(null)}} aria-current={index===trail.length-1?'page':undefined}>{partLabel(part)}</button></span>})}
    </div>
    <div className="explorer-tools">
+    <select aria-label="Camera orientation" value={cameraPreset} disabled={!ready} onChange={e=>scene.current?.orient(e.target.value as CameraPreset)}><option value="isometric">Isometric</option><option value="front">Front</option><option value="side">Side</option><option value="top">Top</option>{cameraPreset==='custom'&&<option value="custom">Orbit</option>}</select>
+    <button disabled={!ready} onClick={()=>scene.current?.reset()} aria-label="Reset camera" title="Reset camera to isometric view"><RotateCcw size={14}/></button>
     {activeAssembly&&!selected&&<button aria-pressed={exploded} onClick={()=>setExploded(!exploded)} title="Separate the assembly parts"><Layers size={14}/><span>Exploded</span></button>}
     <button onClick={()=>scene.current?.fit()} aria-label="Fit model to view" title="Fit model to view"><Maximize2 size={15}/><span>Fit view</span></button>
    </div>
@@ -84,11 +87,11 @@ export function VehicleViewer({parts,libraryParts=parts,result,compact=false}:{p
    <div className="explorer-stage">
     <div className="viewport explorer-viewport" ref={mount}>
      <div className="explorer-stage-label"><span>{selected?'COMPONENT STUDY':activeAssembly?'ASSEMBLY STUDY':'ELECTRIC / TEAM CONCEPT'}</span><small>{activeAssembly?'Drag to orbit. Click a component to inspect it.':'Click a panel, wheel or system to look inside.'}</small></div>
-     {failure&&<div className="explorer-failure"><Info size={22}/><p>{failure}</p></div>}
+     {!ready&&!failure&&<div className="explorer-failure" role="status">Preparing 3D workspace...</div>}{failure&&<div className="explorer-failure" role="alert"><Info size={22}/><div><p>{failure}</p><button onClick={()=>setRetry(value=>value+1)}>Retry 3D preview</button></div></div>}
      {hover&&!failure&&<div className="explorer-hover" role="tooltip" style={{left:Math.max(12,Math.min(hover.x+16,(mount.current?.clientWidth??300)-230)),top:Math.max(12,Math.min(hover.y+14,(mount.current?.clientHeight??400)-80))}}><span>{activeAssembly?'INSPECT COMPONENT':'LOOK INSIDE'}</span><strong>{activeAssembly&&hover.hit.part?partLabel(hover.hit.part):assemblyDefinitions.find(a=>a.id===hover.hit.assembly)?.name}<ArrowUpRight size={14}/></strong></div>}
-     {!activeAssembly&&<div className="explorer-stage-footer"><b>EV—01</b><span>TEAM BUILD / CONCEPT BODYWORK</span><small>Drag to orbit · Scroll to zoom</small></div>}
+     {!activeAssembly&&<div className="explorer-stage-footer"><b>Concept geometry</b><span>NOT TO SCALE</span><small>Drag to orbit · Scroll to zoom</small></div>}
     </div>
-    {!activeAssembly&&<div className="explorer-spec-strip"><span><b>{motorQuantity}</b> {motorQuantity===1?'motor':'motors'}</span><span><b>{voltage==null?'—':fmt(voltage,0)}</b> V selected pack</span><span><b>{drive?.specs.drive_type==='direct'?'Direct · 2WD':drive?.specs.drive_type==='chain'?'Chain':drive?.specs.drive_type==='belt'?'Belt':'Rear'}</b> drive concept</span><span className="explorer-strip-note">Your parts. One possible finished form.</span></div>}
+    {!activeAssembly&&<div className="explorer-spec-strip"><span><b>{motorQuantity}</b> {motorQuantity===1?'motor':'motors'}</span><span><b>{voltage==null?'—':fmt(voltage,0)}</b> V selected pack</span><span><b>{drive?.specs.drive_type==='direct'?'Direct · 2WD':drive?.specs.drive_type==='chain'?(drive.custom_parameters.integrated_chain_hardware?'Chain · 2WD':'Chain'):drive?.specs.drive_type==='belt'?'Belt':'Rear'}</b> drive concept</span><span className="explorer-strip-note">Recorded component selection</span></div>}
    </div>
    {activeAssembly&&<aside className="explorer-sidebar" ref={sidebar} aria-label="Assembly components">
     {selected?<>

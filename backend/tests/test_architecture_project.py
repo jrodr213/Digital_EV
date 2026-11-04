@@ -40,7 +40,7 @@ def test_latest_concept_replaces_pair_and_preserves_other_records(tmp_path):
 
 def test_fresh_load_has_final_pair_and_explicit_unresolved_regen_and_chassis(tmp_path):
     store = Store(tmp_path / 'fresh.sqlite')
-    assert load_team(store) == {'components': 63, 'vehicles': 3}
+    assert load_team(store) == {'components': 68, 'vehicles': 4}
     vehicle = store.get('vehicles', 'team-ev-belt')
     assert vehicle['name'] == 'TEAM / Two 36 V 500 W motors / direct rear-wheel drive / draft'
     meta = vehicle['custom_parameters']

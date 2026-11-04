@@ -28,6 +28,8 @@ try{
  assert.ok(runs.length>=2,'Save at least two test drives before this read-only check.');
  const selected=[...runs].reverse().slice(0,3),full=await Promise.all(selected.map(async run=>(await page.request.get(`${base}/api/results/${run.id}`)).json()));
  await page.goto(base,{waitUntil:'domcontentloaded'});
+ await page.getByLabel('Choose a car',{exact:true}).selectOption('team-ev-belt');
+ await page.getByRole('button',{name:'Open car',exact:true}).click();
  await page.locator('nav').getByRole('button',{name:'Vehicle Comparison',exact:true}).click();
  const region=page.getByRole('region',{name:'Synchronized test-drive replay'});
  for(let i=0;i<selected.length;i++)await region.getByLabel(i?`Compare test drive ${i+1}`:'Reference test drive',{exact:true}).selectOption(selected[i].id);
@@ -58,6 +60,7 @@ try{
  await page.setViewportSize({width:1440,height:1100});
  await page.locator('nav').getByRole('button',{name:'Performance Results',exact:true}).click();
  await page.getByLabel('Saved result',{exact:true}).selectOption(selected[0].id);
+ await page.getByText('Replay this test drive',{exact:true}).click();
  await page.getByRole('heading',{name:'Synchronized drive replay',exact:true}).waitFor();
  await page.locator('nav').getByRole('button',{name:'3D Vehicle Viewer',exact:true}).click();
  await page.getByLabel('Playback result',{exact:true}).selectOption(selected[0].id);

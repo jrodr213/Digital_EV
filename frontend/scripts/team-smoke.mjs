@@ -7,6 +7,8 @@ page.setDefaultTimeout(20000);
 const errors=[];page.on('pageerror',e=>errors.push(e.message));
 try{
  await page.goto('http://127.0.0.1:8000',{waitUntil:'domcontentloaded'});
+ await page.getByLabel('Choose a car',{exact:true}).selectOption('team-ev-belt');
+ await page.getByRole('button',{name:'Open car',exact:true}).click();
  await page.getByRole('heading',{name:'Home Dashboard',exact:true}).waitFor();
  await page.getByText('Document-sourced vehicle draft',{exact:false}).waitFor();
  assert.equal(await page.getByLabel('Active design').inputValue(),'team-ev-belt');

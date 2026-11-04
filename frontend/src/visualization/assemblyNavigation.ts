@@ -24,6 +24,8 @@ export function partLabel(part:Part){
  if(part.custom_parameters.reference_only||part.category==='chassis_material')return part.name;
  if(part.category==='chassis'&&part.custom_parameters.frame_style!=='pipe_frame')return 'Chassis';
  if(part.custom_parameters.user_built_motor_drive)return 'Custom motor drive';
+ if(part.category==='motor'&&part.custom_parameters.installed_quantity===1)return 'Traction motor';
+ if(part.custom_parameters.integrated_chain_hardware)return 'Chain, rear axle & differential';
  if(part.category==='drivetrain'&&part.specs.drive_type==='direct')return 'Direct wheel connections';
  const names:Record<string,string>={motor:'Traction motors',drivetrain:'Chain-drive assembly',motor_mounts:'Motor mounting plates',drive_chain:'Drive chains',rear_sprockets:'Rear axle sprockets',motor_sprockets:'Motor sprockets',chain_protection:'Guards & adjustment',battery:'Battery pack',chassis:'Fabricated pipe frame',tires:'Wheels & tires',suspension:'Suspension',brakes:'Brakes',inverter:'Motor drive',embedded_controllers:'ESP32 boards',signal_interface:'Signal interfaces',auxiliary:'Auxiliary supply',cooling:'Cooling fan',steering:'Steering assembly',throttle_control:'Accelerator pedal',safety_controls:'Emergency stop',vision:'Camera'};
  return part.custom_parameters.sensor_short_name??names[part.category]??part.name;

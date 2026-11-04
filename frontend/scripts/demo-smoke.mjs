@@ -13,6 +13,8 @@ await mkdir('../docs/screenshots',{recursive:true});
 try{
  const before=await snapshot();
  await page.goto(base,{waitUntil:'domcontentloaded'});
+ await page.getByLabel('Choose a car',{exact:true}).selectOption('team-ev-belt');
+ await page.getByRole('button',{name:'Open car',exact:true}).click();
  await page.getByRole('heading',{name:'Home Dashboard',exact:true}).waitFor();
  assert.equal(await page.getByLabel('Active design').inputValue(),'team-ev-belt');
  await page.getByText('Direct · 2WD',{exact:true}).waitFor();

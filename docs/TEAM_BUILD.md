@@ -167,3 +167,24 @@ The loader is idempotent: existing IDs are skipped, preserving edits to loaded c
 The hypothetical demo's performance results remain available under its own name; they do not describe the team draft. Standard runs still require complete engineering inputs. Opt-in demo runs now produce labeled estimates for the team draft, preserve the full assumption ledger and leave the original unknowns unchanged. Each demo also has a detailed shortfall/improvement review, including quantified launch and power limits, trace tracking, conditional range, missing measurements and next steps that retain the direct-drive layout. Existing saved demos show this review when reopened; the Markdown report includes it.
 
 The read-only review check is `node scripts/demo-review-smoke.mjs` from `frontend/` after saving a demo. It verifies the quantified findings on an existing result, its report, mobile layout and unchanged history. Evidence: [expanded demo summary](screenshots/demo-improvement-summary.png).
+
+
+## Single-motor alternative and car selection
+
+Added November 3, 2026 as `team-ev-single-motor`. Opening the app now presents a garage of saved cars, including the original two-motor car and this separate single-motor setup. The selection carries into Builder, Viewer and Simulation Lab; **Change car** reopens the garage.
+
+The new car retains the current car's steel/PVC frame and material references, sensors and estimated mounts, Ackermann steer-by-wire, THR-90 pedal, ESP32 boards, auxiliary systems, wheels, suspension and brakes. Five assemblies have separate records so their changed quantities and descriptions do not overwrite the original car:
+
+| Assembly | Single-motor car |
+| --- | --- |
+| Motor | One [AliExpress MY1020](https://www.aliexpress.us/item/3256806152602316.html), listed 1,000 W. The prior user-supplied title lists 36/48 V options; 36 V is proposed to match the pack. Exact variant and duty ratings are unverified. |
+| Battery | Linked [Walmart 36 V / 20 Ah / 720 Wh pack](https://business.walmart.com/ip/UL2271-Certified-36V-20Ah-720Wh-5-Pin-Ebike-Battery-for-Adults-18-40A-BMS-5A-Fast-Charger-XT60-for-0-1200W-Electric-Bicycles/21201472155), with title claims of a 40 A BMS, 5 A charger, five-pin base, XT60 and UL2271 certification. These remain unverified seller claims. |
+| Motor mount | One plate of the existing proposed type; historical $12.95 unit allowance. Motor fit and complete installed mass are unknown. |
+| Power circuitry | ESP32-controlled custom power stage for one motor; electrical ratings and protection sizing remain open. |
+| Drivetrain | User-selected chain drive to both rear wheels via rear axle/differential. One aggregate record covers chain, sprockets, guard/tensioner, differential, axle/half-shafts, bearings and retention. Ratio, hardware selection, loads, price and mass are unknown. |
+
+The product pages could not be opened on November 3, 2026. Motor information comes from the same product's prior supplied listing title; battery title claims are also present in the indexed Walmart brand catalog. No continuous motor rating, battery continuous discharge rating, charge/regen capability, installed mass or current checkout price is inferred. The 5 A charger claim is not a regen limit, and the 40 A BMS label is not a verified continuous limit.
+
+The 3D powertrain shows one motor with a proposed chain and axle/differential assembly. Its tooth counts and dimensions are illustrative only. Standard simulation remains blocked until required engineering data are supplied. Demo mode uses one times the listed 1,000 W, the listed 20 Ah pack and an explicitly recorded temporary gearing assumption; these values never overwrite saved specifications.
+
+The new JSON datasets participate in normal startup/source synchronization. Existing databases with a sync baseline receive the new records automatically; pre-sync team databases receive them once during adoption. Later local edits and deliberate deletions are preserved, and saved run snapshots are unchanged.

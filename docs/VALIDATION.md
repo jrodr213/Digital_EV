@@ -1,5 +1,7 @@
 # Validation evidence
 
+The November 2026 [interface redesign validation](UI_REDESIGN.md#validation) adds 92 passing backend tests, 18 passing frontend tests, strict TypeScript/build checks and browser coverage of all eight pages at desktop, tablet and phone widths. The browser checks exercised real saves, imports, simulations, charts, exports, comparisons and replay against a disposable database. Earlier evidence below describes the original model validation.
+
 Executed on Windows, Python 3.12, official FASTSim Windows wheel 3.1.0, project-local Node 22.16.0, React production build. This validates implementation behavior, not the accuracy of a real student vehicle.
 
 | Check | Result |

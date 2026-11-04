@@ -33,6 +33,8 @@ try{
  const health=await (await page.request.get(`${base}/api/health`)).json();
  assert.equal(health.preview_mode,'live');
  const response=await page.goto(base,{waitUntil:'domcontentloaded'});
+ await page.getByLabel('Choose a car',{exact:true}).selectOption('team-ev-belt');
+ await page.getByRole('button',{name:'Open car',exact:true}).click();
  assert.match(response.headers()['cache-control'],/no-store/);
  assert.ok((await response.text()).includes('/@vite/client'));
  await page.locator('nav').getByRole('button',{name:'Simulation Lab',exact:true}).click();
@@ -55,6 +57,8 @@ try{
  await waitForNewWorker(before);
  await page.waitForFunction(previous=>performance.timeOrigin>previous,timeOrigin);
  const refreshed=await page.reload({waitUntil:'domcontentloaded'});
+ await page.getByLabel('Choose a car',{exact:true}).selectOption('team-ev-belt');
+ await page.getByRole('button',{name:'Open car',exact:true}).click();
  assert.match(refreshed.headers()['cache-control'],/no-store/);
  await page.locator('nav').getByRole('button',{name:'Simulation Lab',exact:true}).click();
  await page.getByRole('checkbox',{name:/Demo mode/}).waitFor();

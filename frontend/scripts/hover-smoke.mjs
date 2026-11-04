@@ -9,6 +9,8 @@ page.setDefaultTimeout(15000);
 const errors=[];page.on('pageerror',error=>errors.push(error.message));
 try{
  await page.goto('http://127.0.0.1:8000',{waitUntil:'domcontentloaded'});
+ await page.getByLabel('Choose a car',{exact:true}).selectOption('team-ev-belt');
+ await page.getByRole('button',{name:'Open car',exact:true}).click();
  await page.getByLabel('Active design').selectOption('team-ev-belt');
  await page.locator('nav').getByRole('button',{name:'3D Vehicle Viewer',exact:true}).click();
  const viewport=page.locator('.viewport');

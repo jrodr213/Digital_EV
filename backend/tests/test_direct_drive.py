@@ -7,7 +7,7 @@ from scripts.load_team_project import load as load_team
 
 def test_direct_drive_keeps_selected_motors_and_materials_without_chain_or_axle(tmp_path):
     store = Store(tmp_path / 'direct.sqlite')
-    assert load_team(store) == {'components': 63, 'vehicles': 3}
+    assert load_team(store) == {'components': 68, 'vehicles': 4}
     vehicle = store.get('vehicles', 'team-ev-belt')
     meta = vehicle['custom_parameters']
     assert not REMOVED_IDS.intersection(vehicle['component_ids'])

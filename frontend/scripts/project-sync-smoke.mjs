@@ -35,6 +35,8 @@ try{
  before=await snapshot();
  assert.ok(!before.components[id]);
  await page.goto(base,{waitUntil:'domcontentloaded'});
+ await page.getByLabel('Choose a car',{exact:true}).selectOption('team-ev-belt');
+ await page.getByRole('button',{name:'Open car',exact:true}).click();
  await page.getByRole('heading',{name:'Home Dashboard',exact:true}).waitFor();
  const timeOrigin=await page.evaluate(()=>performance.timeOrigin);
  const updated=JSON.parse(original.toString('utf8'));

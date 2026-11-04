@@ -37,4 +37,8 @@ def apply_project_updates(store: Store):
             current = store.get('vehicles', vehicle['id'])
             if current['custom_parameters'].get(field, 0) < version:
                 import_module(module).load(store)
+        # A workspace predating repository sync has no baseline for this new car.
+        # Add it once; later syncs preserve deliberate local edits and deletions.
+        from scripts.load_single_motor import load as load_single_motor
+        load_single_motor(store)
     sync_repository_defaults(store, revision, latest)

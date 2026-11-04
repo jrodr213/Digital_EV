@@ -1,0 +1,247 @@
+[
+  {
+    "id": "team-motor-my1020-single-36v",
+    "name": "Single MY1020 brushless motor / listed 1000 W / proposed 36 V variant",
+    "category": "motor",
+    "manufacturer": "",
+    "model": "MY1020 / proposed 36 V option",
+    "mass_kg": null,
+    "price": null,
+    "notes": "One motor from the user-linked AliExpress item, replacing the pair only in this new car. The previously supplied listing title describes MY1020 brushless DC, 1000 W and 36/48 V variants. Use the 36 V option to match this car's selected pack; the exact variant is provisional. The live product page was inaccessible on November 3, 2026. Continuous/peak mechanical power, torque, RPM, efficiency, shaft fit, dimensions and installed mass remain unknown. No two-motor price, mass or checkout discount is carried over.",
+    "datasheet": "https://www.aliexpress.us/item/3256806152602316.html",
+    "hypothetical": false,
+    "specs": {
+      "listed_voltage_options_v": [
+        36,
+        48
+      ],
+      "listed_power_per_motor_w": 1000,
+      "listed_motor_type": "brushless DC"
+    },
+    "units": {
+      "listed_voltage_options_v": "V",
+      "listed_power_per_motor_w": "W",
+      "listed_motor_type": "text"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "installed_quantity": 1,
+      "currency": "USD",
+      "part_status": "selected concept / engineering specifications pending",
+      "source_references": [
+        {
+          "document": "User single-motor car request / November 3, 2026",
+          "location": "New car using one linked MY1020 motor, linked 36 V / 20 Ah battery and the other systems from the current car"
+        },
+        {
+          "document": "Previously supplied AliExpress listing title",
+          "location": "MY1020 / 36 V or 48 V / 1000 W; original linked item",
+          "url": "https://www.aliexpress.us/item/3256806152602316.html"
+        }
+      ],
+      "installation_scope": "single_motor_assembly",
+      "proposed_variant_voltage_v": 36,
+      "variant_status": "36 V option proposed to match the battery; exact product variant unverified",
+      "combined_listing_wattage_w": 1000,
+      "verification_status": "Prior user-supplied listing title; live AliExpress page inaccessible November 3, 2026",
+      "price_basis": "Single-motor checkout price unknown"
+    }
+  },
+  {
+    "id": "team-battery-walmart-36v20ah",
+    "name": "Walmart battery / 36 V 20 Ah / listed 720 Wh",
+    "category": "battery",
+    "manufacturer": "",
+    "model": "36 V 20 Ah / 5-pin / XT60 (listed)",
+    "mass_kg": null,
+    "price": null,
+    "notes": "User-selected pack. The supplied Walmart title and indexed Walmart catalog list 36 V, 20 Ah, 720 Wh, a five-pin base, XT60, a 40 A BMS and a 5 A charger. The title also claims UL2271 certification and use with 0-1200 W bicycles; these are seller claims, not independently verified certification or system compatibility. The 40 A BMS label does not establish a continuous discharge rating; the 5 A charger does not establish a regenerative charge limit. Cell arrangement, usable capacity, continuous/charge limits, full-charge voltage, installed mass, dimensions and mounting remain unknown.",
+    "datasheet": "https://business.walmart.com/ip/UL2271-Certified-36V-20Ah-720Wh-5-Pin-Ebike-Battery-for-Adults-18-40A-BMS-5A-Fast-Charger-XT60-for-0-1200W-Electric-Bicycles/21201472155",
+    "hypothetical": false,
+    "specs": {
+      "listed_nominal_voltage_v": 36,
+      "listed_capacity_ah": 20,
+      "listed_energy_wh": 720,
+      "listed_bms_max_discharge_a": 40,
+      "listed_charger_current_a": 5,
+      "listed_base_pin_count": 5,
+      "listed_connector": "XT60",
+      "listed_certification_claim": "UL2271 (seller claim; unverified)"
+    },
+    "units": {
+      "listed_nominal_voltage_v": "V",
+      "listed_capacity_ah": "Ah",
+      "listed_energy_wh": "Wh",
+      "listed_bms_max_discharge_a": "A",
+      "listed_charger_current_a": "A",
+      "listed_base_pin_count": "count",
+      "listed_connector": "text",
+      "listed_certification_claim": "text"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "installed_quantity": 1,
+      "currency": "USD",
+      "part_status": "selected concept / engineering specifications pending",
+      "source_references": [
+        {
+          "document": "User single-motor car request / November 3, 2026",
+          "location": "New car using one linked MY1020 motor, linked 36 V / 20 Ah battery and the other systems from the current car"
+        },
+        {
+          "document": "User-selected Walmart listing",
+          "location": "Item 21201472155 / supplied title",
+          "url": "https://business.walmart.com/ip/UL2271-Certified-36V-20Ah-720Wh-5-Pin-Ebike-Battery-for-Adults-18-40A-BMS-5A-Fast-Charger-XT60-for-0-1200W-Electric-Bicycles/21201472155"
+        },
+        {
+          "document": "Walmart indexed brand catalog",
+          "location": "36 V 20 Ah 720 Wh / 40 A BMS / 5 A charger title",
+          "url": "https://business.walmart.com/browse/0?facet=brand%3AUUG+POWER"
+        }
+      ],
+      "installation_scope": "battery_pack_assembly",
+      "verification_status": "User-supplied title and indexed Walmart catalog reviewed November 3, 2026; detailed product page inaccessible",
+      "price_basis": "Exact selected offer and checkout price unverified; no price copied from the old pack",
+      "listed_package_contents": [
+        "Battery with five-pin base",
+        "5 A charger (seller title)",
+        "XT60 connection (seller title)"
+      ]
+    }
+  },
+  {
+    "id": "team-drive-single-chain-differential",
+    "name": "Single-motor chain drive / rear axle and differential / gearing pending",
+    "category": "drivetrain",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": null,
+    "notes": "User-selected layout: one motor drives both rear wheels through a chain and rear axle/differential. This replaces the two independent direct wheel connections in the new car only. This aggregate includes the chain, motor and axle sprockets, tensioner, guard, differential, axle/half-shafts, bearings and retention hardware. It excludes separately listed motor, motor mount, wheels and frame. Chain pitch/length, sprocket tooth counts and ratio, differential and axle selection, alignment, load ratings, installed mass and price remain unknown. The 3D drawing is a proposed layout, not a fit-checked assembly.",
+    "datasheet": "",
+    "hypothetical": false,
+    "specs": {
+      "drive_type": "chain",
+      "driven_wheels": "RWD",
+      "differential": "proposed / selection pending"
+    },
+    "units": {
+      "drive_type": "text",
+      "driven_wheels": "text",
+      "differential": "text"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "installed_quantity": 1,
+      "currency": "USD",
+      "part_status": "selected concept / engineering specifications pending",
+      "source_references": [
+        {
+          "document": "User single-motor car request / November 3, 2026",
+          "location": "New car using one linked MY1020 motor, linked 36 V / 20 Ah battery and the other systems from the current car"
+        },
+        {
+          "document": "User drivetrain selection / November 3, 2026",
+          "location": "One motor driving both rear wheels through a chain and axle/differential; gearing to be determined"
+        }
+      ],
+      "placeholder": true,
+      "motor_count": 1,
+      "driven_wheel_count": 2,
+      "shared_drive_axle": true,
+      "chain_drive": true,
+      "reduction_gears": null,
+      "belt_drive": false,
+      "integrated_chain_hardware": true,
+      "wheel_connection": "One motor through chain reduction to a rear axle/differential and both rear wheels",
+      "installation_scope": "complete_chain_axle_differential_assembly"
+    }
+  },
+  {
+    "id": "team-custom-drive-esp32-single",
+    "name": "Custom motor-drive electronics / one MY1020 motor / ESP32-controlled",
+    "category": "inverter",
+    "manufacturer": "",
+    "model": "",
+    "mass_kg": null,
+    "price": null,
+    "notes": "Retains the ESP32-controlled team-built power-circuit approach, with one traction motor output instead of the prior two-motor arrangement. Size and verify the power stage, gate drive, commutation, wiring, fuses, connectors and cooling for the proposed 36 V MY1020 motor and selected 20 Ah pack. Continuous/peak current, full-charge voltage limits and regen remain unverified. ESP32 boards are counted separately. No commercial controller purchase is assumed.",
+    "datasheet": "",
+    "hypothetical": false,
+    "specs": {},
+    "units": {},
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "team-built circuitry / design and validation pending",
+      "currency": "USD",
+      "source_references": [
+        {
+          "document": "User single-motor car request / November 3, 2026",
+          "location": "New car using one linked MY1020 motor, linked 36 V / 20 Ah battery and the other systems from the current car"
+        }
+      ],
+      "verification_status": "User plan/quote recorded; supplier details identified separately; installed fit unverified.",
+      "installed_quantity": 1,
+      "placeholder": true,
+      "user_fabricated": true,
+      "user_built_motor_drive": true,
+      "commercial_controller_purchase": false,
+      "mass_scope": "Custom power circuitry only; excludes the separately listed ESP32 boards.",
+      "controlled_motor_quantity": 1,
+      "installation_scope": "single_motor_power_stage"
+    }
+  },
+  {
+    "id": "team-motor-mount-single",
+    "name": "Single motor mount / BMI 12 x 5 in steel plate / fit pending",
+    "category": "motor_mounts",
+    "manufacturer": "",
+    "model": "BMI 400367 / Azusa 8190",
+    "mass_kg": null,
+    "price": 12.95,
+    "notes": "One of the same proposed BMI mounting plates for the single MY1020 motor. Historical unit allowance is $12.95 from the previous two-plate quote; not a new quote. Motor bolt pattern, adapter drilling, chain tension adjustment and frame attachment need verification. Complete installed mounting mass is unknown.",
+    "datasheet": "https://www.bmikarts.com/12-x-5-Motor-Mount-Plate_p_1119.html",
+    "hypothetical": false,
+    "specs": {
+      "listed_plate_length_in": 12,
+      "listed_plate_width_in": 5,
+      "listed_slot_centers_in": [
+        3.25,
+        6.125
+      ],
+      "listed_material": "steel"
+    },
+    "units": {
+      "listed_plate_length_in": "in",
+      "listed_plate_width_in": "in",
+      "listed_slot_centers_in": "in",
+      "listed_material": "text"
+    },
+    "custom_parameters": {
+      "document_project": "team-parts-2026-10-22",
+      "part_status": "user-selected / fit and installed mass unverified",
+      "currency": "USD",
+      "source_references": [
+        {
+          "document": "User pipe-frame, custom-drive and hardware request / October 30, 2026",
+          "location": "Both steel and PVC confirmed for the team-fabricated frame; ESP32 plus team-built motor-drive circuitry; quoted drive parts and THR-90 pedal"
+        },
+        {
+          "document": "BMI product page",
+          "location": "400367 / Azusa 8190; reviewed October 30, 2026",
+          "url": "https://www.bmikarts.com/12-x-5-Motor-Mount-Plate_p_1119.html"
+        },
+        {
+          "document": "User single-motor car request / November 3, 2026",
+          "location": "New car using one linked MY1020 motor, linked 36 V / 20 Ah battery and the other systems from the current car"
+        }
+      ],
+      "verification_status": "User plan/quote recorded; supplier details identified separately; installed fit unverified.",
+      "installed_quantity": 1,
+      "procurement_quantity": 1,
+      "unit_price_usd": 12.95,
+      "price_basis": "Historical allowance: $25.90 / two plates = $12.95 per plate; current price and fit unverified",
+      "quantity_basis": "One proposed motor mount for the one-motor car"
+    }
+  }
+]

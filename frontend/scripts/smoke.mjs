@@ -8,6 +8,8 @@ page.setDefaultTimeout(20000);
 const failures=[];page.on('pageerror',e=>failures.push(e.message));
 try{
  await page.goto('http://127.0.0.1:8000',{waitUntil:'domcontentloaded'});
+ await page.getByLabel('Choose a car',{exact:true}).selectOption('team-ev-belt');
+ await page.getByRole('button',{name:'Open car',exact:true}).click();
  console.log('Application loaded.');
  await page.getByRole('heading',{name:'Home Dashboard',exact:true}).waitFor();
  await page.getByLabel('Active design').selectOption('demo-student-ev');

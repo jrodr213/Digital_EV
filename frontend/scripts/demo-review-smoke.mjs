@@ -18,8 +18,11 @@ try{
  const saved=await (await page.request.get(`${base}/api/results/${demo.id}`)).json();
  assert.ok(saved.demo_review);
  await page.goto(base,{waitUntil:'domcontentloaded'});
+ await page.getByLabel('Choose a car',{exact:true}).selectOption('team-ev-belt');
+ await page.getByRole('button',{name:'Open car',exact:true}).click();
  await page.locator('nav').getByRole('button',{name:'Performance Results',exact:true}).click();
  await page.getByLabel('Saved result').selectOption(demo.id);
+ await page.getByRole('button',{name:'Engineering review',exact:true}).click();
  const review=page.getByRole('region',{name:'Demo shortfalls and improvement summary'});
  await review.getByRole('heading',{name:'Demo shortfalls & room for improvement',exact:true}).waitFor();
  assert.equal(await review.locator('.demo-finding').count(),saved.demo_review.findings.length);

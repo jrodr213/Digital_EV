@@ -1,0 +1,168 @@
+// Run only against a disposable EV_DB copy. This check saves test fixtures and runs.
+import {chromium} from 'playwright-core';
+import assert from 'node:assert/strict';
+import {mkdir} from 'node:fs/promises';
+if(process.env.EV_QA_ALLOW_WRITES!=='1')throw Error('Start the preview with a disposable EV_DB, then set EV_QA_ALLOW_WRITES=1. This test saves fixtures and simulations.');
+const base=process.env.EV_BASE_URL??'http://127.0.0.1:8000';
+const browser=await chromium.launch({channel:process.env.EV_BROWSER??'chrome',headless:true});
+const page=await browser.newPage({viewport:{width:1440,height:1050},reducedMotion:'reduce'});
+page.setDefaultTimeout(30000);
+const errors=[],requests=[];page.on('pageerror',error=>errors.push(error.message));page.on('request',request=>requests.push(request.url()));
+const get=async path=>(await page.request.get(`${base}/api/${path}`)).json();
+const nav=async name=>{if(await page.getByRole('button',{name:'Open navigation',exact:true}).isVisible())await page.getByRole('button',{name:'Open navigation',exact:true}).click();await page.locator('nav').getByRole('button',{name,exact:true}).click()};
+const explorer=page.getByRole('region',{name:'Interactive vehicle explorer'});
+const assertNoOverflow=async label=>assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,label);
+const stamp=Date.now(),componentName=`QA component ${stamp}`,vehicleName=`QA configuration ${stamp}`;
+await mkdir('../docs/screenshots',{recursive:true});
+try{
+ const before={components:await get('components'),vehicles:await get('vehicles'),results:await get('results')};
+ await page.goto(base,{waitUntil:'domcontentloaded'});
+ await page.getByLabel('Choose a car',{exact:true}).selectOption('team-ev-single-motor');
+ await page.getByRole('button',{name:'Open car',exact:true}).click();
+ await explorer.locator('canvas').waitFor();
+ assert.equal(requests.some(url=>url.includes('plotly')),false,'Plotly must not load for the garage or overview');
+ assert.equal(await page.getByLabel('Active design').inputValue(),'team-ev-single-motor');
+ await page.getByText(/\d+ inputs to review/).waitFor();
+ await page.screenshot({path:'../docs/screenshots/redesign-overview.png',fullPage:true});
+
+ await nav('Vehicle Builder');
+ await page.getByLabel('Passenger + cargo / kg',{exact:true}).fill('64');
+ await nav('Home Dashboard');await nav('Vehicle Builder');
+ assert.equal(await page.getByLabel('Passenger + cargo / kg',{exact:true}).inputValue(),'64','Draft edits survive navigation');
+ await page.getByLabel('Load design',{exact:true}).selectOption('');
+ assert.equal(await page.getByLabel('Design name',{exact:true}).inputValue(),'Untitled vehicle','New vehicle starts its own draft');
+ await page.getByLabel('Load design',{exact:true}).selectOption('team-ev-single-motor');
+ assert.equal(await page.getByLabel('Passenger + cargo / kg',{exact:true}).inputValue(),'64','Creating a new design preserves the other draft');
+ await page.getByRole('button',{name:'Powertrain',exact:true}).click();
+ await page.getByRole('button',{name:'Edit component specifications',exact:true}).first().click();
+ const dialog=page.getByRole('dialog',{name:'Edit component'});
+ await dialog.waitFor();assert.equal(await dialog.getByRole('button',{name:'Specifications',exact:true}).getAttribute('aria-pressed'),'true');
+ assert.equal(await dialog.locator('input').first().evaluate(input=>input.labels.length),1,'Fields have associated labels');
+ await page.keyboard.press('Escape');assert.equal(await page.getByRole('dialog').count(),0);
+ await page.getByLabel('Search parts').fill('no-matching-part-qa');
+ await page.getByRole('heading',{name:'No matching components'}).waitFor();
+ await page.getByRole('button',{name:'Clear filters'}).click();
+ await page.getByRole('button',{name:'New component',exact:true}).click();
+ await page.getByLabel('Part name',{exact:true}).fill(componentName);
+ await page.getByLabel('Category',{exact:true}).selectOption('__custom');
+ await page.getByLabel('Custom category name',{exact:true}).fill('qa_sensor');
+ await page.getByLabel('Assembly mass / kg',{exact:true}).fill('0.25');
+ const componentSave=page.waitForResponse(response=>response.url().endsWith('/api/components')&&response.request().method()==='POST');
+ await page.getByRole('button',{name:'Save reviewed specifications',exact:true}).click();
+ const savedComponent=await (await componentSave).json();assert.equal(savedComponent.mass_kg,.25);
+ await page.getByRole('dialog').waitFor({state:'detached'});
+ await page.getByLabel('Import CSV or JSON components').setInputFiles({name:'qa-components.csv',mimeType:'text/csv',buffer:Buffer.from(`name,category,mass_kg\nQA imported ${stamp},qa_sensor,0.1\n`)});
+ await page.getByText('Components imported. Review their units and specifications.',{exact:true}).waitFor();
+
+ await nav('Vehicle Builder');
+ await page.getByRole('button',{name:'Duplicate design',exact:true}).click();
+ await page.getByLabel('Design name',{exact:true}).fill(vehicleName);
+ await page.getByLabel('Auxiliary load / W',{exact:true}).fill('40');
+ const vehicleSave=page.waitForResponse(response=>response.url().endsWith('/api/vehicles')&&response.request().method()==='POST');
+ await page.getByRole('button',{name:'Save design',exact:true}).click();
+ const savedVehicle=await (await vehicleSave).json();assert.equal(savedVehicle.payload_kg,64);assert.equal(savedVehicle.auxiliary_w,40);
+ await page.waitForFunction(id=>document.querySelector('[aria-label="Load design"]')?.value===id,savedVehicle.id);
+ await page.getByRole('button',{name:'Powertrain',exact:true}).click();
+ await page.screenshot({path:'../docs/screenshots/redesign-configuration.png',fullPage:true});
+
+ await nav('Simulation Lab');await page.getByLabel('Vehicle design',{exact:true}).selectOption('team-ev-single-motor');
+ await page.getByText(/Simulation unavailable:/).waitFor();assert.equal(await page.getByRole('button',{name:'Run simulation',exact:true}).isDisabled(),true);
+ await page.getByRole('checkbox',{name:/Demo mode/}).check();
+ await page.getByText('Model inputs accepted',{exact:true}).waitFor();
+ await page.getByRole('button',{name:'Hill climbing',exact:true}).click();
+ await page.getByLabel('Road grade / %',{exact:true}).fill('7');
+ await page.getByRole('button',{name:'Reset',exact:true}).click();
+ assert.equal(await page.getByRole('checkbox',{name:/Demo mode/}).isChecked(),false);
+ assert.equal(await page.getByLabel('Driving cycle',{exact:true}).inputValue(),'udds');
+ await page.getByText('Import a custom drive cycle',{exact:true}).click();
+ await page.getByLabel('Upload cycle CSV',{exact:true}).setInputFiles({name:`qa-cycle-${stamp}.csv`,mimeType:'text/csv',buffer:Buffer.from('time_s,speed_mps,grade\n0,0,0\n10,1,0\n20,0,0\n')});
+ await page.getByText('Cycle imported and selected.',{exact:true}).waitFor();
+ await page.getByRole('checkbox',{name:/Demo mode/}).check();
+ await page.getByText('Model inputs accepted',{exact:true}).waitFor();
+ await page.getByLabel('Additional passenger / cargo mass / kg',{exact:true}).fill('-1');
+ assert.equal(await page.getByLabel('Additional passenger / cargo mass / kg',{exact:true}).evaluate(input=>input.checkValidity()),false);
+ await page.getByLabel('Additional passenger / cargo mass / kg',{exact:true}).fill('7');
+ await page.screenshot({path:'../docs/screenshots/redesign-simulation.png',fullPage:true});
+ await page.route('**/api/runs',route=>route.fulfill({status:503,contentType:'application/json',body:JSON.stringify({detail:'QA unavailable engine'})}));
+ await page.getByRole('button',{name:'Run demo simulation',exact:true}).click();
+ await page.getByText('Simulation failed',{exact:true}).waitFor();
+ assert.equal(await page.getByRole('button',{name:'Run demo simulation',exact:true}).isEnabled(),true,'Failure restores run controls');
+ await page.unroute('**/api/runs');
+ const runResponse=page.waitForResponse(response=>response.url().endsWith('/api/runs')&&response.request().method()==='POST',{timeout:60000});
+ await page.getByRole('button',{name:'Run demo simulation',exact:true}).click();
+ const response=await runResponse;assert.equal(response.status(),200);const run=await response.json(),request=response.request().postDataJSON();
+ assert.equal(request.vehicle_id,'team-ev-single-motor');assert.equal(request.extra_payload_kg,7);assert.equal(request.demo_mode,true);assert.equal(request.cycle,'demo-cart');
+ await page.getByRole('heading',{name:'Performance Results',exact:true}).waitFor();
+ await page.waitForFunction(()=>document.querySelectorAll('.js-plotly-plot .main-svg').length>=4,null,{timeout:60000});
+ const plotted=await page.getByRole('region',{name:'Speed trace',exact:true}).locator('.js-plotly-plot').evaluate(element=>element.data[0].y);
+ assert.deepEqual(plotted,run.samples.map(sample=>sample.speed_mph),'Chart speed equals the real FASTSim response');
+ await page.screenshot({path:'../docs/screenshots/redesign-analytics.png',fullPage:true});
+ await page.getByRole('button',{name:'Electrical',exact:true}).click();
+ await page.waitForFunction(()=>document.querySelector('[aria-label="Battery state of charge"] .js-plotly-plot')?.data?.length>0);
+ const soc=await page.getByRole('region',{name:'Battery state of charge',exact:true}).locator('.js-plotly-plot').evaluate(element=>element.data[0].y);
+ assert.deepEqual(soc,run.samples.map(sample=>sample.soc*100));
+ const csv=await page.request.get(base+await page.getByRole('link',{name:'Download CSV',exact:true}).getAttribute('href'));assert.equal(csv.status(),200);assert.match(await csv.text(),/speed_mph/);
+ const report=await page.request.get(base+await page.getByRole('link',{name:'Export test report',exact:true}).getAttribute('href'));assert.equal(report.status(),200);assert.match(await report.text(),/Demo shortfalls/);
+ await page.getByRole('button',{name:'Engineering review',exact:true}).click();
+ await page.getByRole('heading',{name:run.demo_review.title,exact:true}).waitFor();
+ await page.getByText('Replay this test drive',{exact:true}).click();
+ const replay=page.getByRole('region',{name:'Synchronized test-drive replay'});
+ await replay.getByRole('button',{name:'Play replay',exact:true}).click();
+ await page.waitForFunction(()=>Number(document.querySelector('.drive-road svg').dataset.time)>0);
+ await replay.getByRole('button',{name:'Pause replay',exact:true}).click();
+ await replay.getByRole('button',{name:'Restart replay',exact:true}).click();
+ assert.equal(await replay.getByLabel('Drive replay time',{exact:true}).inputValue(),'0');
+ await replay.getByLabel('Replay speed',{exact:true}).selectOption('2');
+
+ await nav('3D Vehicle Viewer');await explorer.locator('canvas').waitFor();
+ const iso=await explorer.locator('canvas').getAttribute('data-camera-position');
+ await explorer.getByLabel('Camera orientation').selectOption('front');
+ await page.waitForFunction(()=>document.querySelector('.explorer-viewport canvas').dataset.orientation==='front');
+ await page.evaluate(()=>new Promise(requestAnimationFrame));
+ assert.notEqual(await explorer.locator('canvas').getAttribute('data-camera-position'),iso);
+ await explorer.getByLabel('Camera orientation').selectOption('top');
+ await explorer.getByRole('button',{name:'Reset camera',exact:true}).click();
+ assert.equal(await explorer.getByLabel('Camera orientation').inputValue(),'isometric');
+ await explorer.getByRole('button',{name:'Fit model to view',exact:true}).click();
+ await explorer.getByRole('button',{name:'Explore Powertrain',exact:true}).click();
+ await explorer.getByRole('button',{name:'Exploded',exact:true}).click();
+ await explorer.getByRole('button',{name:'Inspect Traction motor',exact:true}).click();
+ assert.match(await explorer.getByRole('link',{name:'Open supplied product reference'}).getAttribute('href'),/3256806152602316/);
+ await page.keyboard.press('Escape');assert.equal(await explorer.getAttribute('data-view'),'assembly');
+ await explorer.screenshot({path:'../docs/screenshots/redesign-3d-workspace.png'});
+
+ await nav('Vehicle Comparison');
+ const matrix=page.locator('section').filter({has:page.getByRole('heading',{name:'Experiment matrix',exact:true})});
+ await matrix.getByRole('checkbox').filter({visible:true}).first().waitFor();
+ for(const checkbox of await matrix.getByRole('checkbox').all())if(await checkbox.isChecked())await checkbox.uncheck();
+ await matrix.getByRole('checkbox',{name:'DEMO / Student EV',exact:true}).check();
+ const comparisonResponse=page.waitForResponse(response=>response.url().endsWith('/api/experiments')&&response.request().method()==='POST',{timeout:60000});
+ await page.getByRole('button',{name:'Run comparison',exact:true}).click();
+ const comparison=await comparisonResponse;assert.equal(comparison.status(),200);assert.ok((await comparison.json()).length>0);
+ await page.locator('.panel-title').filter({hasText:'Ranked results'}).waitFor();
+ await nav('Saved Projects');
+ await page.getByRole('button',{name:`Delete ${vehicleName}`,exact:true}).click();
+ await page.getByRole('dialog',{name:'Delete this configuration?'}).getByRole('button',{name:'Cancel',exact:true}).click();
+ assert.ok((await get('vehicles')).some(vehicle=>vehicle.id===savedVehicle.id));
+
+ for(const width of [1024,390]){
+  await page.setViewportSize({width,height:900});
+  for(const name of ['Home Dashboard','Vehicle Builder','Simulation Lab','Component Library','Performance Results','3D Vehicle Viewer','Vehicle Comparison','Saved Projects']){
+   await nav(name);await page.getByRole('heading',{name,exact:true}).waitFor();
+   await assertNoOverflow(`${name} overflows at ${width}px`);
+   if(name==='3D Vehicle Viewer')await explorer.locator('canvas').waitFor();
+  }
+  await nav('Home Dashboard');await explorer.locator('canvas').waitFor();
+  await page.screenshot({path:`../docs/screenshots/redesign-${width===390?'mobile':'tablet'}.png`,fullPage:true});
+ }
+ await page.getByRole('button',{name:'Change car',exact:true}).click();await page.getByLabel('Choose a car',{exact:true}).selectOption('team-ev-belt');
+ await page.getByRole('button',{name:'Open car',exact:true}).click();
+ assert.equal(await page.getByLabel('Active design').inputValue(),'team-ev-belt');
+ await page.reload();await page.getByRole('heading',{name:'Choose your car.',exact:true}).waitFor();await assertNoOverflow('Garage mobile overflow');
+ for(const kind of ['components','vehicles','results']){
+  const after=new Map((await get(kind)).map(record=>[record.id,record]));
+  for(const record of before[kind])assert.deepEqual(after.get(record.id),record,`Existing ${kind} record changed: ${record.id}`);
+ }
+ assert.deepEqual(errors,[],'Browser runtime errors');
+ console.log('PASS: all navigation, retained drafts, accessible editor, saves/imports, validation/reset, real simulation request and exact chart data, exports, replay/camera controls, comparison, safe deletion, responsive widths 1440/1024/390 and original records unchanged.');
+}catch(error){await page.screenshot({path:'../docs/screenshots/redesign-qa-failure.png',fullPage:true}).catch(()=>{});throw error}finally{await browser.close()}

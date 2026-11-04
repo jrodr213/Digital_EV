@@ -125,7 +125,7 @@ def test_api_workflow(tmp_path,data,monkeypatch):
     with TestClient(main.app) as client:
         assert client.get('/api/health').status_code==200
         vehicles = client.get('/api/vehicles').json()
-        assert {v['id'] for v in vehicles} == {'demo-student-ev', 'team-ev-belt', 'team-ev-differential', 'team-ev-dual-direct'}
+        assert {v['id'] for v in vehicles} == {'demo-student-ev', 'team-ev-belt', 'team-ev-differential', 'team-ev-dual-direct', 'team-ev-single-motor'}
         current = next(v for v in vehicles if v.get('custom_parameters', {}).get('preferred_draft'))
         assert current['custom_parameters']['architecture']['drive_type'] == 'direct'
         bad=client.post('/api/components/import',files={'file':('bad.json',json.dumps([data[1][0],{'name':'bad'}]),'application/json')})

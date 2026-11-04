@@ -12,6 +12,8 @@ await mkdir('../docs/screenshots',{recursive:true});
 try{
  const before=await snapshot();
  await page.goto(base,{waitUntil:'domcontentloaded'});
+ await page.getByLabel('Choose a car',{exact:true}).selectOption('team-ev-belt');
+ await page.getByRole('button',{name:'Open car',exact:true}).click();
  await page.getByLabel('Active design').selectOption('team-ev-belt');
  const explorer=page.getByRole('region',{name:'Interactive vehicle explorer'});
  await explorer.locator('canvas').waitFor();
@@ -91,6 +93,8 @@ try{
  await page.getByLabel('Visualized vehicle').selectOption('team-ev-belt');
  assert.equal(await explorer.getAttribute('data-view'),'full');
  await page.reload({waitUntil:'domcontentloaded'});
+ await page.getByLabel('Choose a car',{exact:true}).selectOption('team-ev-belt');
+ await page.getByRole('button',{name:'Open car',exact:true}).click();
  assert.equal(await explorer.getAttribute('data-view'),'full');
  await page.setViewportSize({width:390,height:844});
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'Mobile horizontal overflow');
