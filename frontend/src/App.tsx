@@ -13,11 +13,14 @@ const Comparison=lazy(()=>import('./pages/Comparison').then(m=>({default:m.Compa
 const Projects=lazy(()=>import('./pages/Projects').then(m=>({default:m.Projects})));
 const VehicleViewer=lazy(()=>import('./visualization/VehicleViewer').then(m=>({default:m.VehicleViewer})));
 const DrivePlayback=lazy(()=>import('./visualization/DriveReplay').then(m=>({default:m.DrivePlayback})));
+const TestDrive=lazy(()=>import('./driving/TestDrive').then(m=>({default:m.TestDrive})));
 const nav=[['Home Dashboard',LayoutDashboard],['Component Library',Boxes],['Vehicle Builder',Wrench],['3D Vehicle Viewer',Box],['Simulation Lab',FlaskConical],['Performance Results',ChartNoAxesCombined],['Vehicle Comparison',GitCompareArrows],['Saved Projects',FolderOpen]] as const;
 const subtitles=['Your selected configuration, engineering inputs and recorded performance.','Traceable specifications for every system in your vehicle.','Configure your assemblies and review the inputs your model needs.','Explore the vehicle. Inspect its systems. Replay a recorded drive.','Define a test, review assumptions and run the FASTSim model.','Recorded performance, engineering limits and reproducible inputs.','Compare recorded drives or run a controlled design experiment.','Saved configurations and their simulation history.'];
 const groups=[{name:'DESIGN',pages:[0,3,2,1]},{name:'SIMULATE',pages:[4,5,6]},{name:'WORKSPACE',pages:[7]}];
 
 export default function App(){
+ const [driving,setDriving]=useState(false);
+ const exitDriving=useCallback(()=>setDriving(false),[]);
  const [narrow,setNarrow]=useState(()=>window.matchMedia('(max-width: 800px)').matches);
  const [choosing,setChoosing]=useState(true),[page,setPage]=useState(0),[mobileNav,setMobileNav]=useState(false),[runBusy,setRunBusy]=useState(false),[libraryFocus,setLibraryFocus]=useState<string>();
  const [parts,setParts]=useState<Part[]>([]),[vehicles,setVehicles]=useState<Vehicle[]>([]),[cycles,setCycles]=useState<{id:string;name:string}[]>([]),[runs,setRuns]=useState<Result[]>([]),[result,setResult]=useState<Result>();
@@ -64,10 +67,10 @@ export default function App(){
     <div className="page-heading"><div><span className="eyebrow">{page<4?'VEHICLE ENGINEERING':page<7?'TEST & ANALYSIS':'PROJECT WORKSPACE'}</span><h1>{nav[page][0]}</h1><p>{subtitles[page]}</p></div>{page===0&&<button className="primary" onClick={()=>navigate(4)}><FlaskConical size={16}/>New simulation<ArrowUpRight size={15}/></button>}</div>
     {error&&<Alert tone="error" title="Workspace request failed" action={<button onClick={reload}>Retry connection</button>}>{error}</Alert>}
     {loading?<Skeleton rows={5}/>:<Suspense fallback={<section className="panel"><Skeleton rows={5} label="Loading workspace tools"/></section>}>
-     {page===0&&<Overview vehicle={vehicle} vehicles={vehicles} parts={parts} installed={selectedParts} assembly={assembly} runs={runs} onSelect={selectCar} onNavigate={navigate} onResult={loadResult}/>}
+     {page===0&&<Overview vehicle={vehicle} vehicles={vehicles} parts={parts} installed={selectedParts} assembly={assembly} runs={runs} onSelect={selectCar} onNavigate={navigate} onResult={loadResult} onDrive={vehicle?()=>setDriving(true):undefined}/>}
      {page===1&&<Library parts={parts} catalog={catalog} reload={reload} initialPartId={libraryFocus} onOpened={()=>setLibraryFocus(undefined)}/>}
      {page===2&&<Builder key={selected} parts={parts} vehicles={vehicles} selected={selected} onSelect={selectCar} onLibrary={id=>{setLibraryFocus(id);navigate(1)}} onSave={async id=>{await reload();selectCar(id)}}/>}
-     {page===3&&<><div className="toolbar"><select aria-label="Visualized vehicle" value={selected} onChange={e=>selectCar(e.target.value)}>{vehicles.map(v=><option key={v.id} value={v.id}>{v.name}</option>)}</select><select aria-label="Playback result" disabled={resultBusy} value={result?.id??''} onChange={e=>{if(e.target.value)void loadResult(e.target.value,true);else setResult(undefined)}}><option value="">Current configuration · no playback</option>{runs.map(r=><option key={r.id} value={r.id}>{r.name} / {new Date(r.created_at).toLocaleDateString()}</option>)}</select></div>{resultBusy?<Skeleton rows={4}/>:<><VehicleViewer libraryParts={parts} parts={viewedParts} result={result?.request.vehicle_id===selected?result:undefined}/>{result&&result.request.vehicle_id===selected&&<DrivePlayback result={result} runs={runs}/>}</>}</>}
+     {page===3&&<><div className="toolbar"><select aria-label="Visualized vehicle" value={selected} onChange={e=>selectCar(e.target.value)}>{vehicles.map(v=><option key={v.id} value={v.id}>{v.name}</option>)}</select><select aria-label="Playback result" disabled={resultBusy} value={result?.id??''} onChange={e=>{if(e.target.value)void loadResult(e.target.value,true);else setResult(undefined)}}><option value="">Current configuration · no playback</option>{runs.map(r=><option key={r.id} value={r.id}>{r.name} / {new Date(r.created_at).toLocaleDateString()}</option>)}</select></div>{resultBusy?<Skeleton rows={4}/>:<><VehicleViewer onDrive={vehicle?()=>setDriving(true):undefined} libraryParts={parts} parts={viewedParts} result={result?.request.vehicle_id===selected?result:undefined}/>{result&&result.request.vehicle_id===selected&&<DrivePlayback result={result} runs={runs}/>}</>}</>}
      {page===4&&<Lab vehicles={vehicles} cycles={cycles} selected={selected} onSelect={selectCar} onResult={open} reload={reload} runs={runs} onOpenResult={loadResult} onBusy={setRunBusy}/>}
      {page===5&&<><div className="toolbar"><select aria-label="Saved result" disabled={resultBusy} value={result?.id??''} onChange={e=>void loadResult(e.target.value)}><option value="" disabled>Select a saved simulation</option>{runs.map(r=><option key={r.id} value={r.id}>{r.name} / {new Date(r.created_at).toLocaleString()}</option>)}</select></div>{resultBusy?<Skeleton rows={5}/>:<><Results result={result} onSimulate={()=>navigate(4)}/>{result&&<details className="panel"><summary>Replay this test drive</summary><div className="disclosure-body"><DrivePlayback result={result} runs={runs}/></div></details>}</>}</>}
      {page===6&&<><DrivePlayback runs={runs}/><Comparison key={selected} vehicles={vehicles} selected={selected} open={open}/></>}
@@ -77,5 +80,6 @@ export default function App(){
     <footer className="app-footer"><span>EV / TWIN · Local engineering workspace</span><span>Simulation estimates · Hardware validation required</span></footer>
    </div>
   </main>
+  {driving&&vehicle&&<Suspense fallback={<div role="status">Loading test drive…</div>}><TestDrive vehicle={vehicle} parts={selectedParts} onExit={exitDriving}/></Suspense>}
  </div>;
 }

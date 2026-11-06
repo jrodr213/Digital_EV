@@ -47,6 +47,8 @@ These settings use VS Code's [integrated browser and remote proxy](https://code.
 
 ## Use the workspace
 
+**Interactive driving:** choose a car and click **Test drive** in the dashboard's vehicle explorer or 3D Vehicle Viewer. Drive the selected build with WASD/arrows, Space to brake, C for cameras, P to pause, R to reset and Escape to exit. Choose among seven courses: paved test track, hills, uneven terrain, club circuit, city streets, cone slalom and gravel rally. A route map tracks your position. Every course uses the selected vehicle's Ecctrl/Rapier physics and explicit editable assumptions for missing specifications. [Driving controls, courses, parameter mapping and limitations](docs/DRIVING.md).
+
 Saved test drives now have a **Synchronized drive replay** in **Vehicle Comparison**, **Performance Results** and the **3D Vehicle Viewer** when a result is selected. Choose up to three saved runs, press **Play replay**, and compare moving cars on a shared elapsed-time and distance scale. Pause, restart, scrub or change viewing speed without changing the saved physics. New runs replay recorded FASTSim distance; older runs integrate saved achieved speed and label that approximation. Wheel rotation uses each run's saved wheel diameter. Different test conditions, demo assumptions and known torque shortfalls remain visible. [Replay screenshot](docs/screenshots/drive-replay-comparison.png).
 
 The replay is read-only. With the preview running and at least two saved tests, run `node scripts/drive-playback-smoke.mjs` from `frontend/` to check synchronized motion, pause/scrubbing, playback rate, mobile layout, the 3D wheel fix and unchanged saved records.

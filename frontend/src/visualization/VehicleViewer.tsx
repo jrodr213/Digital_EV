@@ -16,7 +16,7 @@ const assemblyIcons={powertrain:Cog,battery:Battery,electronics:Cpu,frame:Square
 const unitsToHide=['text','count','dimensionless','boolean'];
 const readable=(key:string)=>key.replace(/^listed_/,'').replaceAll('_',' ');
 
-export function VehicleViewer({parts,libraryParts=parts,result,compact=false}:{parts:Part[];libraryParts?:Part[];result?:Result;compact?:boolean}){
+export function VehicleViewer({parts,libraryParts=parts,result,compact=false,onDrive}:{parts:Part[];libraryParts?:Part[];result?:Result;compact?:boolean;onDrive?:()=>void}){
  const mount=useRef<HTMLDivElement>(null),sidebar=useRef<HTMLElement>(null),scene=useRef<VehicleScene|null>(null),wheelAngle=useRef(0);
  const [activeAssembly,setActiveAssembly]=useState<AssemblyId|null>(null),[trail,setTrail]=useState<string[]>([]),[exploded,setExploded]=useState(true);
  const [cameraPreset,setCameraPreset]=useState<CameraPreset|'custom'>('isometric'),[retry,setRetry]=useState(0),[ready,setReady]=useState(false);
@@ -77,6 +77,7 @@ export function VehicleViewer({parts,libraryParts=parts,result,compact=false}:{p
     {trail.map((id,index)=>{const part=byId.get(id);return part&&<span className="explorer-crumb-part" key={id}><span className="breadcrumb-separator">/</span><button onClick={()=>{setTrail(previous=>previous.slice(0,index+1));setHover(null)}} aria-current={index===trail.length-1?'page':undefined}>{partLabel(part)}</button></span>})}
    </div>
    <div className="explorer-tools">
+    {onDrive&&<button className="primary" aria-label="Test drive" onClick={onDrive} title="Drive the current saved configuration"><Gauge size={14}/><span>Test drive</span></button>}
     <select aria-label="Camera orientation" value={cameraPreset} disabled={!ready} onChange={e=>scene.current?.orient(e.target.value as CameraPreset)}><option value="isometric">Isometric</option><option value="front">Front</option><option value="side">Side</option><option value="top">Top</option>{cameraPreset==='custom'&&<option value="custom">Orbit</option>}</select>
     <button disabled={!ready} onClick={()=>scene.current?.reset()} aria-label="Reset camera" title="Reset camera to isometric view"><RotateCcw size={14}/></button>
     {activeAssembly&&!selected&&<button aria-pressed={exploded} onClick={()=>setExploded(!exploded)} title="Separate the assembly parts"><Layers size={14}/><span>Exploded</span></button>}

@@ -9,17 +9,20 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@react-three/fiber": "9.8.2",
+    "@react-three/rapier": "2.2.0",
+    "ecctrl": "2.0.2",
     "lucide-react": "^0.511.0",
     "plotly.js-dist-min": "^3.0.1",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "three": "^0.177.0"
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "three": "0.184.0"
   },
   "devDependencies": {
     "@types/plotly.js": "^2.35.1",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
-    "@types/three": "^0.177.0",
+    "@types/three": "^0.184.0",
     "@vitejs/plugin-react": "^4.4.1",
     "playwright-core": "^1.64.1",
     "typescript": "~5.8.3",
